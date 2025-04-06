@@ -1,0 +1,101 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "user  name"
+  }, 
+  "first_name": "First Name",
+  "@first_name": {
+    "description": "user first name"
+  },
+  "last_name": "Last Name",
+  "@last_name": {
+    "description": "user last name"
+  },
+  "email": "Email", 
+  "@email": {
+    "description": "user email"
+  },"phone_number": "Phone Number",
+  "@phone_number": {
+    "description": "user phone number"
+  },
+  "password": "password",
+  "@password": {
+    "description": "user email password"
+  },
+  "confirm_password": "confirm password",
+  "@confirm_password": {
+    "description": "user confirm password"
+  },
+  "canNotEmpty": "{parameter} can not be empty",
+  "@canNotEmpty": {
+    "description": "validate that parameter not empty",
+    "placeholders": {
+      "parameter":{
+        "type": "String",
+        "example": "name"
+      }
+    }
+  },
+  "unValid": "{parameter} entered is not valid",
+  "@unValid": {
+    "description": "validate that parameter is valid",
+    "placeholders": {
+      "parameter":{
+        "type": "String",
+        "example": "name"
+      }
+    }
+  },
+  "notMatched": "the two {parameter}s not matched",
+  "@notMatched": {
+    "description": "validate that parameter is matched another one",
+    "placeholders": {
+      "parameter":{
+        "type": "String",
+        "example": "password"
+      }
+    }
+  },
+  "isTooShort": "password must be at least 8 chars",
+  "@isTooShort": {
+    "description": "validate password length"    
+  },
+  "pass_not_valid": "password must contains letters numbers symbols",
+  "@pass_not_valid": {
+    "description": "validate password length"    
+  },
+  "register": "Register",
+  "@register": {
+    "description": "register to the app"    
+  },
+  "create": "Create {parameter}",
+  "@create": {
+    "description": "create word",
+    "placeholders": {
+      "parameter":{
+        "type": "String",
+        "example": "create email"
+      }
+    }
+  },
+  "logIn": "Log In",
+  "@logIn": {
+    "description": "log in to the app"    
+  },
+  "hasAccount": "Already have Account?",
+  "@hasAccount": {
+    "description": "if use has an account he can log in"    
+  },
+  "hasNoAccount": "Doesn't have an account?",
+  "@hasNoAccount": {
+    "description": "if use doesn't have an account he can create one"
+  },
+  "account": "account",
+  "@account": {
+    "description": "if use doesn't have an account he can create one"
+  }
+}

@@ -1,0 +1,23 @@
+
+{
+
+    "helloWorld": "مرحبا",
+    "first_name": "الاسم الاول",
+    "last_name": "اسم العائلة",
+    "email": "البريد الالكتروني", 
+    "password": "كلمة المرور",
+    "phone_number": "رقم الهاتف",
+    "confirm_password": "تأكيد كلمة المرور",
+      "canNotEmpty": "لا يمكن ان يكون فارغ {parameter}",
+    "unValid": "غير صحيح {parameter}",
+    "name": "الاسم",
+    "notMatched": "غير متطابقة {parameter}",
+    "isTooShort": "كلمه المرور يجب الا تقل عن 8 احرف",
+    "pass_not_valid": "كلمة المرور يجب ان تحتوي علي ارقام و حروف و رموز",
+    "register": "تسجيل",
+    "create": "{parameter} انشاء",
+    "logIn": "تسجيل الدخول",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "hasNoAccount": "ليس لديك حساب؟",
+    "account": "حساب"
+}

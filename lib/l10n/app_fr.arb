@@ -1,0 +1,22 @@
+{
+    "helloWorld": "Bonjour le monde",
+    "first_name": "prénom",
+    "last_name": "nom de famille",
+    "email": "e-mail", 
+    "password": "mot de passe",
+    "phone_number": "numéro de téléphone",
+    "confirm_password": "Confirmez le mot de passe",  
+    "canNotEmpty": "{parameter} saisie n'est pas valide",
+    "unValid": "{parameter} ne peut pas être vide",
+    "name": "nom",
+    "notMatched": "les deux {parameter} ne correspondent pas",
+    "isTooShort": "Le mot de passe ne doit pas contenir moins de 8 caractères",
+    "pass_not_valid": "le mot de passe doit contenir des lettres, des chiffres et des symboles",
+    "register": "registre",
+    "create": "créer {parameter}",
+    "logIn": "se connecter",
+    "hasAccount": "Vous avez déjà un compte ?",
+    "hasNoAccount": "Vous n'avez pas de compte ?",
+    "account": "un compte"
+}
+

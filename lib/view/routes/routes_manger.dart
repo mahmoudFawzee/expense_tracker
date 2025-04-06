@@ -1,0 +1,62 @@
+import 'package:expense_tracker/view/screens/auth/auth_base.dart';
+import 'package:expense_tracker/view/screens/auth/login_screen.dart';
+import 'package:expense_tracker/view/screens/auth/register_screen.dart';
+import 'package:expense_tracker/view/screens/home/base.dart';
+import 'package:expense_tracker/view/screens/home/home_page.dart';
+import 'package:expense_tracker/view/screens/home/profile_page.dart';
+import 'package:expense_tracker/view/screens/home/statistics_page.dart';
+import 'package:expense_tracker/view/screens/start/splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+final router = GoRouter(
+  initialLocation: RegisterScreen.pageRoute,
+  routes: [
+    GoRoute(
+      path: SplashScreen.pageRoute,
+      builder: (context, state) => const SplashScreen(),
+    ),
+    ShellRoute(
+      navigatorKey: GlobalKey<NavigatorState>(),
+      builder: (context, state, child) {
+        return AuthBase(child: child);
+      },
+      routes: [
+        GoRoute(
+          path: RegisterScreen.pageRoute,
+          builder: (context, state) {
+            return const RegisterScreen();
+          },
+        ),
+        GoRoute(
+          path: LoginScreen.pageRoute,
+          builder: (context, state) {
+            return const LoginScreen();
+          },
+        ),
+      ],
+    ),
+    ShellRoute(
+      navigatorKey: GlobalKey<NavigatorState>(),
+      builder: (context, state, child) {
+        return HomeBase(
+          child: child,
+        );
+      },
+      routes: [
+        GoRoute(
+          path: HomeScreen.pageRoute,
+          builder: (context, state) => const HomeScreen(),
+        ),
+        GoRoute(
+          path: ProfileScreen.pageRoute,
+          builder: (context, state) => const ProfileScreen(),
+        ),
+        GoRoute(
+          path: StatisticsScreen.pageRoute,
+          builder: (context, state) => const StatisticsScreen(),
+        ),
+      ],
+    ),
+  ],
+);
