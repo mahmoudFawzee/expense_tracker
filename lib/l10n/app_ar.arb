@@ -1,4 +1,3 @@
-
 {
 
     "helloWorld": "مرحبا",
@@ -15,9 +14,10 @@
     "isTooShort": "كلمه المرور يجب الا تقل عن 8 احرف",
     "pass_not_valid": "كلمة المرور يجب ان تحتوي علي ارقام و حروف و رموز",
     "register": "تسجيل",
-    "create": "{parameter} انشاء",
+    "create": "انشاء {parameter}",
     "logIn": "تسجيل الدخول",
     "hasAccount": "لديك حساب بالفعل؟",
     "hasNoAccount": "ليس لديك حساب؟",
-    "account": "حساب"
+    "account": "حساب",
+    "someError": "حدث خطأ ما"
 }

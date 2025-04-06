@@ -97,5 +97,9 @@
   "account": "account",
   "@account": {
     "description": "if use doesn't have an account he can create one"
+  },
+  "someError": "Something went wrong",
+  "@someError": {
+    "description": "when some error happened"
   }
 }

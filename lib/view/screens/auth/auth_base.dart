@@ -1,6 +1,13 @@
+import 'dart:developer';
+
+import 'package:expense_tracker/logic/cubits/localization_cubit.dart';
+import 'package:expense_tracker/view/components/custom_snack_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:expense_tracker/data/constants/lang_code.dart';
 import 'package:expense_tracker/view/components/custom_shape.dart';
 import 'package:expense_tracker/view/theme/color_manger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthBase extends StatelessWidget {
   const AuthBase({
@@ -12,6 +19,7 @@ class AuthBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
@@ -27,6 +35,37 @@ class AuthBase extends StatelessWidget {
             ),
           ),
           child,
+          Positioned(
+            right: 20,
+            top: 20,
+            child: DropdownButton<String>(
+              iconEnabledColor: ColorsMangerLight.surface,
+              hint: BlocBuilder<LocalizationCubit, String>(
+                builder: (context, state) {
+                  return Text(
+                    langCodeList[state]!,
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: ColorsMangerLight.surface,
+                        ),
+                  );
+                },
+              ),
+              items: langCodeList.keys.map((item) {
+                return DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(langCodeList[item]!),
+                );
+              }).toList(),
+              onChanged: (val) {
+                log('lang value: $val');
+                if (val == null) {
+                  showSnackBar(context, value: appLocalizations.someError);
+                  return;
+                }
+                context.read<LocalizationCubit>().setLocalization(val);
+              },
+            ),
+          ),
         ],
       ),
     );

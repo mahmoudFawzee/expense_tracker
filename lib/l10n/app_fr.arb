@@ -17,6 +17,7 @@
     "logIn": "se connecter",
     "hasAccount": "Vous avez déjà un compte ?",
     "hasNoAccount": "Vous n'avez pas de compte ?",
-    "account": "un compte"
+    "account": "un compte",
+    "someError": "Quelque chose s'est mal passé"
 }
 

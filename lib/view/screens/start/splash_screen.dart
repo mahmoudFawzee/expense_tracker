@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(microseconds: 100), () {
       // ignore: use_build_context_synchronously
       context.go(RegisterScreen.pageRoute);
     });

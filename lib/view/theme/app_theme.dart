@@ -2,7 +2,12 @@ import 'package:expense_tracker/view/theme/color_manger.dart';
 import 'package:expense_tracker/view/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 
-final ThemeData lightTheme = ThemeData(
+ThemeData getTheme(bool isDark) {
+  if (isDark) return _darkTheme;
+  return _lightTheme;
+}
+
+final ThemeData _lightTheme = ThemeData(
   scaffoldBackgroundColor: ColorsMangerLight.surface,
   appBarTheme: const AppBarTheme(
     color: ColorsMangerLight.surface,
@@ -25,11 +30,10 @@ final ThemeData lightTheme = ThemeData(
     labelLarge: lightThin(14),
     titleMedium: lightMedium(18),
     titleLarge: lightMedium(22),
-
   ),
 );
 
-final ThemeData darkTheme = ThemeData(
+final ThemeData _darkTheme = ThemeData(
   scaffoldBackgroundColor: ColorsMangerDark.backGroundColor,
   primaryColor: ColorsMangerDark.primaryColor,
 );

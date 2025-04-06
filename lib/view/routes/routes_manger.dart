@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: RegisterScreen.pageRoute,
+  initialLocation: SplashScreen.pageRoute,
   routes: [
     GoRoute(
       path: SplashScreen.pageRoute,
