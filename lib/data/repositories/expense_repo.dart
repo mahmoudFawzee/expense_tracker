@@ -8,18 +8,18 @@ final class ExpenseRepo implements ExpenseRepoInterface {
       : _expenseService = expenseService;
   @override
   Future addExpense(ExpenseModel expense) async =>
-      _expenseService.addExpense(expense);
+      await _expenseService.addExpense(expense);
 
   @override
-  Future deleteExpense(int id) async => _expenseService.deleteExpense(id);
+  Future deleteExpense(int id) async => await _expenseService.deleteExpense(id);
 
   @override
-  Future getExpense(int id) async => _expenseService.getExpense(id);
+  Future getExpense(int id) async => await _expenseService.getExpense(id);
 
   @override
-  Future listExpenses() async => _expenseService.listExpenses();
+  Future listExpenses() async => await _expenseService.listExpenses();
 
   @override
   Future updateExpense(int id, {required ExpenseModel expense}) async =>
-      _expenseService.updateExpense(id, expense: expense);
+      await _expenseService.updateExpense(id, expense: expense);
 }
