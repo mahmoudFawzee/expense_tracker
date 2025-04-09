@@ -8,18 +8,19 @@ final class CategoryRepo implements CategoryRepoInterface {
 
   @override
   Future addCategory(CategoryModel category) async =>
-      _categoryService.addCategory(category);
+      await _categoryService.addCategory(category);
 
   @override
-  Future deleteCategory(int id) async => _categoryService.deleteCategory(id);
+  Future deleteCategory(int id) async =>
+      await _categoryService.deleteCategory(id);
 
   @override
-  Future getCategory(int id) async => _categoryService.getCategory(id);
+  Future getCategory(int id) async => await _categoryService.getCategory(id);
 
   @override
-  Future listCategories() async => _categoryService.listCategories();
+  Future listCategories() async => await _categoryService.listCategories();
 
   @override
   Future updateCategory(int id, {required CategoryModel category}) async =>
-      _categoryService.updateCategory(id, category: category);
+      await _categoryService.updateCategory(id, category: category);
 }
