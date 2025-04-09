@@ -1,4 +1,4 @@
-import 'package:expense_tracker/view/screens/auth/register_screen.dart';
+import 'package:expense_tracker/presentation/screens/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

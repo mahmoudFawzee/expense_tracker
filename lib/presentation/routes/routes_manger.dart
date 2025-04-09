@@ -1,11 +1,11 @@
-import 'package:expense_tracker/view/screens/auth/auth_base.dart';
-import 'package:expense_tracker/view/screens/auth/login_screen.dart';
-import 'package:expense_tracker/view/screens/auth/register_screen.dart';
-import 'package:expense_tracker/view/screens/home/base.dart';
-import 'package:expense_tracker/view/screens/home/home_page.dart';
-import 'package:expense_tracker/view/screens/home/profile_page.dart';
-import 'package:expense_tracker/view/screens/home/statistics_page.dart';
-import 'package:expense_tracker/view/screens/start/splash_screen.dart';
+import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
+import 'package:expense_tracker/presentation/screens/auth/login_screen.dart';
+import 'package:expense_tracker/presentation/screens/auth/register_screen.dart';
+import 'package:expense_tracker/presentation/screens/home/base.dart';
+import 'package:expense_tracker/presentation/screens/home/home_page.dart';
+import 'package:expense_tracker/presentation/screens/home/profile_page.dart';
+import 'package:expense_tracker/presentation/screens/home/statistics_page.dart';
+import 'package:expense_tracker/presentation/screens/start/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
