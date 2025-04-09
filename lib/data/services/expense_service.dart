@@ -1,4 +1,5 @@
 import 'package:expense_tracker/data/models/expense/m_expense.dart';
+import 'package:expense_tracker/logic/entities/expense.dart';
 import 'package:expense_tracker/logic/services/i_expense.dart';
 
 final class ExpenseService implements ExpenseInterface {
@@ -21,7 +22,7 @@ final class ExpenseService implements ExpenseInterface {
   }
 
   @override
-  Future listExpenses() {
+  Future<List<Expense>> fetchExpenses() {
     // TODO: implement listExpenses
     throw UnimplementedError();
   }
