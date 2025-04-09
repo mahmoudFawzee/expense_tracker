@@ -6,7 +6,7 @@ part 'expense_event.dart';
 part 'expense_state.dart';
 
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
-  final ExpenseReps expenseReps;
+  final ExpenseRepo expenseReps;
 
   ExpenseBloc(this.expenseReps) : super(ExpenseInitial()) {
     on<ExpenseEvent>((event, emit) {
