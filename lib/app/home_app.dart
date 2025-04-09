@@ -16,20 +16,19 @@ class MyApp extends StatelessWidget {
           create: (context) => LocalizationCubit()..getLocalization(),
         ),
         BlocProvider<ThemeCubit>(
-          create: (context) => ThemeCubit()..isDark(),
+          create: (context) => ThemeCubit()..isDarkTheme(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, bool>(
-        builder: (context, themeState) {
+        builder: (context, isDark) {
           return BlocBuilder<LocalizationCubit, String>(
-            builder: (context, langState) {
-              
+            builder: (context, langState) {              
               return MaterialApp.router(
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
                 routerConfig: router,
                 locale: Locale(langState),
-                theme: getTheme(themeState),
+                theme: getTheme(isDark),
               );
             },
           );

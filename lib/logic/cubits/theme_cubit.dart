@@ -5,16 +5,21 @@ class ThemeCubit extends Cubit<bool> {
   ThemeCubit() : super(false);
   final _themeRepo = ThemeRepo();
   void setDarkTheme() async {
-    await _themeRepo.setTheme(isDark: true);
-    emit(true);
+    await _themeRepo.setDarkTheme();
+    await isDarkTheme();
   }
 
   void setLightTheme() async {
-    await _themeRepo.setTheme(isDark: false);
-    emit(false);
+    await _themeRepo.setLightTheme();
+    await isDarkTheme();
   }
 
-  void isDark() async {
+  void setTheme({required bool isDark}) async {
+    await _themeRepo.setTheme(isDark: isDark);
+    await isDarkTheme();
+  }
+
+  Future isDarkTheme() async {
     final isDark = await _themeRepo.isDark();
     emit(isDark);
   }
