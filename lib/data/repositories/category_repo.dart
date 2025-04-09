@@ -7,32 +7,19 @@ final class CategoryRepo implements CategoryRepoInterface {
   const CategoryRepo(this._categoryService);
 
   @override
-  Future addCategory(CategoryModel category) {
-    // TODO: implement addCategory
-    throw UnimplementedError();
-  }
+  Future addCategory(CategoryModel category) async =>
+      _categoryService.addCategory(category);
 
   @override
-  Future deleteCategory(int id) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
-  }
+  Future deleteCategory(int id) async => _categoryService.deleteCategory(id);
 
   @override
-  Future getCategory(int id) {
-    // TODO: implement getCategory
-    throw UnimplementedError();
-  }
+  Future getCategory(int id) async => _categoryService.getCategory(id);
 
   @override
-  Future listCategories() {
-    // TODO: implement listCategories
-    throw UnimplementedError();
-  }
+  Future listCategories() async => _categoryService.listCategories();
 
   @override
-  Future updateCategory(int id, {required CategoryModel category}) {
-    // TODO: implement updateCategory
-    throw UnimplementedError();
-  }
-  }
+  Future updateCategory(int id, {required CategoryModel category}) async =>
+      _categoryService.updateCategory(id, category: category);
+}
