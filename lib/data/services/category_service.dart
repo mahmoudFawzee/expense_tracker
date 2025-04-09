@@ -15,13 +15,13 @@ final class CategoryService implements CategoryInterface {
   }
 
   @override
-  Future getCategory(int id) async {
+  Future fetchCategory(int id) async {
     // TODO: implement getCategory
     throw UnimplementedError();
   }
 
   @override
-  Future listCategories() async {
+  Future fetchCategories() async {
     // TODO: implement listCategories
     throw UnimplementedError();
   }
