@@ -1,3 +1,4 @@
+import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
 import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
 import 'package:expense_tracker/presentation/screens/auth/login_screen.dart';
 import 'package:expense_tracker/presentation/screens/auth/register_screen.dart';
@@ -7,10 +8,13 @@ import 'package:expense_tracker/presentation/screens/profile/profile_screen.dart
 import 'package:expense_tracker/presentation/screens/statistics/statistics_screen.dart';
 import 'package:expense_tracker/presentation/screens/start/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+final _categorySelectionCubit = CategorySelectionCubit();
+
 final router = GoRouter(
-  initialLocation: SplashScreen.pageRoute,
+  initialLocation: ExpensesScreen.pageRoute,
   routes: [
     GoRoute(
       path: SplashScreen.pageRoute,
@@ -50,7 +54,10 @@ final router = GoRouter(
             return _buildPageWithDefaultTransition(
               context: context,
               state: state,
-              child: const ExpensesScreen(),
+              child: BlocProvider.value(
+                value: _categorySelectionCubit,
+                child: const ExpensesScreen(),
+              ),
             );
           },
         ),

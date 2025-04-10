@@ -3,8 +3,12 @@ import 'package:json_annotation/json_annotation.dart';
 part 'm_category.g.dart';
 
 @JsonSerializable()
-final class CategoryModel extends Category{
-  const CategoryModel(super.title);
+final class CategoryModel extends Category {
+  const CategoryModel(
+     {
+    required super.title,
+    required super.imgUrl,
+  });
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$CategoryModelFromJson(json);
 

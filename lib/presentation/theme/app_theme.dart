@@ -24,12 +24,18 @@ final ThemeData _lightTheme = ThemeData(
     surface: ColorsMangerLight.surface,
     onSurface: ColorsMangerLight.onSurface,
   ),
+  iconTheme: const IconThemeData(
+    color: ColorsMangerLight.surface,
+  ),
   textTheme: TextTheme(
     labelSmall: lightThin(11),
     labelMedium: lightMedium(12),
     labelLarge: lightThin(14),
-    titleMedium: lightMedium(18),
+    titleMedium: lightBold(18),
     titleLarge: lightMedium(22),
+    bodySmall: lightMedium(18),
+    bodyMedium: lightMedium(20),
+    bodyLarge: lightMedium(22),
   ),
 );
 

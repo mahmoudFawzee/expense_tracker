@@ -6,7 +6,7 @@
   "name": "Name",
   "@name": {
     "description": "user  name"
-  }, 
+  },
   "first_name": "First Name",
   "@first_name": {
     "description": "user first name"
@@ -15,10 +15,11 @@
   "@last_name": {
     "description": "user last name"
   },
-  "email": "Email", 
+  "email": "Email",
   "@email": {
     "description": "user email"
-  },"phone_number": "Phone Number",
+  },
+  "phone_number": "Phone Number",
   "@phone_number": {
     "description": "user phone number"
   },
@@ -34,7 +35,7 @@
   "@canNotEmpty": {
     "description": "validate that parameter not empty",
     "placeholders": {
-      "parameter":{
+      "parameter": {
         "type": "String",
         "example": "name"
       }
@@ -44,7 +45,7 @@
   "@unValid": {
     "description": "validate that parameter is valid",
     "placeholders": {
-      "parameter":{
+      "parameter": {
         "type": "String",
         "example": "name"
       }
@@ -54,7 +55,7 @@
   "@notMatched": {
     "description": "validate that parameter is matched another one",
     "placeholders": {
-      "parameter":{
+      "parameter": {
         "type": "String",
         "example": "password"
       }
@@ -62,21 +63,21 @@
   },
   "isTooShort": "password must be at least 8 chars",
   "@isTooShort": {
-    "description": "validate password length"    
+    "description": "validate password length"
   },
   "pass_not_valid": "password must contains letters numbers symbols",
   "@pass_not_valid": {
-    "description": "validate password length"    
+    "description": "validate password length"
   },
   "register": "Register",
   "@register": {
-    "description": "register to the app"    
+    "description": "register to the app"
   },
   "create": "Create {parameter}",
   "@create": {
     "description": "create word",
     "placeholders": {
-      "parameter":{
+      "parameter": {
         "type": "String",
         "example": "create email"
       }
@@ -84,11 +85,11 @@
   },
   "logIn": "Log In",
   "@logIn": {
-    "description": "log in to the app"    
+    "description": "log in to the app"
   },
   "hasAccount": "Already have Account?",
   "@hasAccount": {
-    "description": "if use has an account he can log in"    
+    "description": "if use has an account he can log in"
   },
   "hasNoAccount": "Doesn't have an account?",
   "@hasNoAccount": {
@@ -101,5 +102,25 @@
   "someError": "Something went wrong",
   "@someError": {
     "description": "when some error happened"
+  },
+  "expenses": "Expenses",
+  "@expenses": {
+    "description": "expense app bar title"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "notifications app bar title"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "profile app bar title"
+  },
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "statistics app bar title"
+  },
+  "balance": "Balance",
+  "@balance": {
+    "description": "user balance"
   }
 }
