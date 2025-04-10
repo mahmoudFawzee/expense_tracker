@@ -17,7 +17,7 @@ Features:
 4. Data Visualization
    Pie charts for category-wise expense breakdown.
    Bar charts to show expenses over time (daily, weekly, monthly).
-   Line graphs for spending trends.
+   Line graphs for spending trends.   
 
 5. Filtering & Sorting
    Filter expenses by date range, category, or amount.

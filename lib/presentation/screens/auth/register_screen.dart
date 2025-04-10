@@ -138,6 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         label: appLocalizations.register,
                         onPressed: () {
                           log('validate');
+                          context.go(LoginScreen.pageRoute);
                           if (validateForm()) {
                             //todo call create user method.
                           }

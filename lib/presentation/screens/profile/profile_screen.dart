@@ -5,6 +5,8 @@ class ProfileScreen extends StatelessWidget {
   static const pageRoute = '/profile_page';
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.red,
+    );
   }
 }

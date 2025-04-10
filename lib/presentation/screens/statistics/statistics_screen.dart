@@ -5,6 +5,8 @@ class StatisticsScreen extends StatelessWidget {
   static const pageRoute = '/statistics_page';
   @override
   Widget build(BuildContext context) {
-    return  Scaffold();
+    return Scaffold(
+      
+    );
   }
 }

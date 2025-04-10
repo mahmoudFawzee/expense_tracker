@@ -5,6 +5,7 @@ import 'package:expense_tracker/presentation/components/custom_text_from_field.d
 import 'package:expense_tracker/presentation/functions/text_field_validator.dart';
 import 'package:expense_tracker/presentation/resources/image_manger.dart';
 import 'package:expense_tracker/presentation/screens/auth/register_screen.dart';
+import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -97,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: appLocalizations.logIn,
                         onPressed: () {
                           log('validate');
+                          context.go(ExpensesScreen.pageRoute);
                           if (validateForm()) {
                             //todo call create user method.
                           }
