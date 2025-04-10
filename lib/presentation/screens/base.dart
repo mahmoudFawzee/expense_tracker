@@ -38,7 +38,7 @@ class HomeBase extends StatelessWidget {
               items: [
                 _bottomNavBarItem(
                   label: appLocalizations.statistics,
-                  icon: Icons.view_column,
+                  icon: Icons.bar_chart_rounded,
                 ),
                 _bottomNavBarItem(
                   label: appLocalizations.expenses,

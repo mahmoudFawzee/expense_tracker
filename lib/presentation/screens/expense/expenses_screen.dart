@@ -73,31 +73,42 @@ class ExpensesScreen extends StatelessWidget {
                               ],
                             ),
                             IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.add_rounded)),
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.add_circle_sharp,
+                              ),
+                            ),
                           ],
                         ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            CustomAnimatedContainer(
-                              label: 'Food',
-                              endHeight: 100,
-                            ),
-                            CustomAnimatedContainer(
-                              label: 'Transport',
-                              endHeight: 30,
-                            ),
-                            CustomAnimatedContainer(
-                              label: 'Shopping',
-                              endHeight: 50,
-                            ),
-                            CustomAnimatedContainer(
-                              label: 'Clothes',
-                              endHeight: 80,
-                            ),
-                          ],
+                        SizedBox(
+                          height: 120,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              const CustomAnimatedContainer(
+                                label: 'Food',
+                                endHeight: 100,
+                              ),
+                              const CustomAnimatedContainer(
+                                label: 'Transport',
+                                endHeight: 30,
+                              ),
+                              const CustomAnimatedContainer(
+                                label: 'Shopping',
+                                endHeight: 50,
+                              ),
+                              const CustomAnimatedContainer(
+                                label: 'Clothes',
+                                endHeight: 80,
+                              ),
+                              ...List.generate(10, (index) {
+                                return CustomAnimatedContainer(
+                                  label: 'Clothes$index',
+                                  endHeight: 5 * double.parse('$index'),
+                                );
+                              }),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -151,7 +162,6 @@ class ExpensesScreen extends StatelessWidget {
             const SliverSizedBox(height: 10),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                
                 (context, index) {
                   return const ExpenseWidget(
                     title: 'buy 1kg apple',

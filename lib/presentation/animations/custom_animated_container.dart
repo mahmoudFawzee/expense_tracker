@@ -18,31 +18,35 @@ class CustomAnimatedContainer extends StatelessWidget {
   final String label;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BlocProvider(
-          create: (context) => AnimatedContainerCubit(endHeight)..start(),
-          child: Builder(builder: (context) {
-            return BlocBuilder<AnimatedContainerCubit, double>(
-              builder: (context, state) {
-                log('container height $state');
-                return AnimatedContainer(
-                  height: state,
-                  width: 30,
-                  duration: const Duration(seconds: 1),
-                  decoration: const BoxDecoration(
-                      color: Color(0xA1F8CE94),
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                );
-              },
-            );
-          }),
-        ),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white),
-        ),
-      ],
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          BlocProvider(
+            create: (context) => AnimatedContainerCubit(endHeight)..start(),
+            child: Builder(builder: (context) {
+              return BlocBuilder<AnimatedContainerCubit, double>(
+                builder: (context, state) {
+                  log('container height $state');
+                  return AnimatedContainer(
+                    height: state,
+                    width: 30,
+                    duration: const Duration(seconds: 1),
+                    decoration: const BoxDecoration(
+                        color: Color(0xA1F8CE94),
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                  );
+                },
+              );
+            }),
+          ),
+          Text(
+            label,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ],
+      ),
     );
   }
 }
