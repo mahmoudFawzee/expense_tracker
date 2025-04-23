@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/models/category/m_category.dart';
+import 'package:expense_tracker/logic/entities/models/category/m_category.dart';
 import 'package:expense_tracker/logic/entities/expense.dart';
 import 'package:json_annotation/json_annotation.dart';
 

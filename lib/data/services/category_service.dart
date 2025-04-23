@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/models/category/m_category.dart';
+import 'package:expense_tracker/logic/entities/models/category/m_category.dart';
 import 'package:expense_tracker/logic/services/i_category.dart';
 
 final class CategoryService implements CategoryInterface {

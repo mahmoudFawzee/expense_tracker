@@ -1,13 +1,14 @@
 import 'dart:developer';
-
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
 import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
-import 'package:expense_tracker/presentation/functions/text_field_validator.dart';
 import 'package:expense_tracker/presentation/resources/image_manger.dart';
-import 'package:expense_tracker/presentation/screens/auth/register_screen.dart';
+import 'package:expense_tracker/presentation/screens/auth/login/login_cubit/login_cubit.dart';
+import 'package:expense_tracker/presentation/screens/auth/login/login_validator.dart';
+import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,19 +21,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  bool validateForm() {
-    final valid = _formKey.currentState?.validate();
-    if (valid == null) return false;
-    return valid;
-  }
+  final _validator = LoginValidator();
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _validator.dispose();
     super.dispose();
   }
 
@@ -60,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         const SizedBox(height: 32),
         Form(
-          key: _formKey,
+          key: _validator.formKey,
           child: AutofillGroup(
             child: Expanded(
               child: Container(
@@ -77,31 +70,66 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       //email
-                      CustomTextFromField(
-                        controller: emailController,
-                        label: appLocalizations.email,
-                        kbInputType: TextInputType.emailAddress,
-                        validator: (value) => validateEmail(context, value),
-                        onFieldSubmitted: (_) => validateForm(),
-                      ),
-                      //password
-                      CustomTextFromField(
-                        controller: passwordController,
-                        isPassword: true,
-                        label: appLocalizations.password,
-                        kbInputType: TextInputType.visiblePassword,
-                        validator: (value) => validatePassword(context, value),
-                        onFieldSubmitted: (_) => validateForm(),
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          if (state is LoginLoadingState) {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(
+                                backgroundColor: ColorsMangerLight.surface,
+                              ),
+                            );
+                          }
+                          final failure = state is LoginFailure;
+                          return Column(
+                            children: [
+                              CustomTextFromField(
+                                controller: _validator.emailController,
+                                label: appLocalizations.email,
+                                errorText: failure ? state.emailError : null,
+                                kbInputType: TextInputType.emailAddress,
+                                validator: (value) => _validator
+                                    .validateEmail(context, value: value),
+                                onFieldSubmitted: (_) =>
+                                    _validator.validateForm(),
+                              ),
+                              //password
+                              CustomTextFromField(
+                                controller: _validator.passwordController,
+                                errorText: failure ? state.passwordError : null,
+                                isPassword: true,
+                                label: appLocalizations.password,
+                                kbInputType: TextInputType.visiblePassword,
+                                validator: (value) => _validator
+                                    .validatePassword(context, value: value),
+                                onFieldSubmitted: (_) =>
+                                    _validator.validateForm(),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                       const SizedBox(height: 20),
-                      CustomElevatedButton(
-                        label: appLocalizations.logIn,
-                        onPressed: () {
-                          log('validate');
-                          context.go(ExpensesScreen.pageRoute);
-                          if (validateForm()) {
-                            //todo call create user method.
+                      BlocConsumer<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state is LoginSuccess) {
+                            context.go(ExpensesScreen.pageRoute);
                           }
+                        },
+                        builder: (context, state) {
+                          return CustomElevatedButton(
+                            label: appLocalizations.logIn,
+                            enabled: state is! LoginLoadingState,
+                            onPressed: () {
+                              log('validate');
+
+                              if (_validator.validateForm()) {
+                                context.read<LoginCubit>().login(
+                                      _validator.email!,
+                                      _validator.password!,
+                                    );
+                              }
+                            },
+                          );
                         },
                       ),
 

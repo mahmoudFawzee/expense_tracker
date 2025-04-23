@@ -8,6 +8,7 @@ class CustomTextFromField extends StatelessWidget {
     super.key,
     this.maxLines = 1,
     this.isPassword = false,
+    this.errorText,
     required this.label,
     required this.kbInputType,
     required this.controller,
@@ -17,6 +18,7 @@ class CustomTextFromField extends StatelessWidget {
   final int maxLines;
   final bool isPassword;
   final String label;
+  final String? errorText;
   final TextInputType kbInputType;
   final TextEditingController controller;
   final String? Function(String?)? validator;
@@ -52,6 +54,7 @@ class CustomTextFromField extends StatelessWidget {
                       ? TextInputAction.next
                       : TextInputAction.newline,
                   decoration: InputDecoration(
+                    errorText: errorText,
                     suffixIcon: isPassword
                         ? IconButton(
                             onPressed: () {

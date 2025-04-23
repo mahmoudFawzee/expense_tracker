@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/models/expense/m_expense.dart';
+import 'package:expense_tracker/logic/entities/models/expense/m_expense.dart';
 
 abstract class ExpenseRepoInterface {
   Future addExpense(ExpenseModel expense);

@@ -10,8 +10,7 @@ Features:
    Users can add expenses with details like amount, category, date, and notes.
    Ability to edit or delete expenses.
 
-3. Category Management
-   Predefined categories (Food, Transport, Bills, Shopping, etc.).
+3. Category Management   
    Users can add custom categories.
 
 4. Data Visualization
@@ -42,7 +41,7 @@ Features:
 Tech Stack:
 Flutter (for UI/UX)
 Bloc (for state management)
-Hive / SQLite (for local storage)
+SQLite (for local storage)
 Firebase Firestore (for cloud storage)
 Fl_chart package (for visualizing data)
 CSV / PDF packages (for exporting data)

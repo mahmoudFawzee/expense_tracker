@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/models/category/m_category.dart';
+import 'package:expense_tracker/logic/entities/models/category/m_category.dart';
 
  class Expense {
   //?when we create the expense object we won't need to

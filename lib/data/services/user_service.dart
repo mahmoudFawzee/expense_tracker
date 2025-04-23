@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/logic/entities/models/user/m_user.dart';
 import 'package:expense_tracker/logic/services/i_user.dart';
 
 final class UserService implements UserInterface{

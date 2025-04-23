@@ -1,7 +1,9 @@
 import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
 import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
-import 'package:expense_tracker/presentation/screens/auth/login_screen.dart';
-import 'package:expense_tracker/presentation/screens/auth/register_screen.dart';
+import 'package:expense_tracker/presentation/screens/auth/login/login_cubit/login_cubit.dart';
+import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
+import 'package:expense_tracker/presentation/screens/auth/register/register_bloc/register_bloc.dart';
+import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_screen.dart';
@@ -14,7 +16,7 @@ import 'package:go_router/go_router.dart';
 final _categorySelectionCubit = CategorySelectionCubit();
 
 final router = GoRouter(
-  initialLocation: ExpensesScreen.pageRoute,
+  initialLocation: LoginScreen.pageRoute,
   routes: [
     GoRoute(
       path: SplashScreen.pageRoute,
@@ -29,13 +31,19 @@ final router = GoRouter(
         GoRoute(
           path: RegisterScreen.pageRoute,
           builder: (context, state) {
-            return const RegisterScreen();
+            return BlocProvider(
+              create: (context) => RegisterBloc(),
+              child: const RegisterScreen(),
+            );
           },
         ),
         GoRoute(
           path: LoginScreen.pageRoute,
           builder: (context, state) {
-            return const LoginScreen();
+            return BlocProvider(
+              create: (context) => LoginCubit(),
+              child: const LoginScreen(),
+            );
           },
         ),
       ],

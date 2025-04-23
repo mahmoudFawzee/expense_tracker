@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/logic/entities/models/user/m_user.dart';
 
 abstract class UserInterface {
   Future register(UserModel user, {required String password});

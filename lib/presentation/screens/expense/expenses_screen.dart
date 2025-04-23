@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
 import 'package:expense_tracker/logic/entities/category.dart';
 import 'package:expense_tracker/presentation/animations/custom_animated_container.dart';
@@ -132,7 +134,7 @@ class ExpensesScreen extends StatelessWidget {
                           label: item.title,
                           selected: item.id == selectedId,
                           onTap: () {
-                            print(' title:  ${item.title} and id : ${item.id}');
+                            log(' title:  ${item.title} and id : ${item.id}');
                             context
                                 .read<CategorySelectionCubit>()
                                 .choseCategory(item.id);
