@@ -20,9 +20,14 @@ final class CategoryRepo implements CategoryRepoInterface {
       await _categoryService.fetchCategory(id);
 
   @override
-  Future<List<Category>> fetchCategories() async => await _categoryService.fetchCategories();
+  Future<List<Category>> fetchCategories() async =>
+      await _categoryService.fetchCategories();
 
   @override
   Future updateCategory(int id, {required CategoryModel category}) async =>
       await _categoryService.updateCategory(id, category: category);
+
+  @override
+  Future<Map<String, double>> fetchCategoriesStatistics() async =>
+      _categoryService.fetchCategoriesStatistics();
 }

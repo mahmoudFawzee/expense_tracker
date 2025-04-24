@@ -122,5 +122,21 @@
   "balance": "Balance",
   "@balance": {
     "description": "user balance"
+  },
+  "categories": "Categories",
+  "@categories": {
+    "description": "categories word"
+  },
+  "expensePer": "Show Expense Per",
+  "@expensePer": {
+    "description": "Show Expense Per option in statistics screen option can be monthly or yearly"
+  },
+  "monthly": "Monthly",
+  "@monthly": {
+    "description": "Monthly word"
+  },
+  "yearly": "Yearly",
+  "@yearly": {
+    "description": "Yearly word"
   }
 }

@@ -8,6 +8,7 @@ part of 'm_category.dart';
 
 CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
     CategoryModel(
+      spendMony: (json['spendMony'] as num).toDouble(),
       title: json['title'] as String,
       imgUrl: json['imgUrl'] as String,
     );
@@ -16,4 +17,5 @@ Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) =>
     <String, dynamic>{
       'imgUrl': instance.imgUrl,
       'title': instance.title,
+      'spendMony': instance.spendMony,
     };

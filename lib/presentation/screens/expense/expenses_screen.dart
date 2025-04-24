@@ -168,7 +168,7 @@ class ExpensesScreen extends StatelessWidget {
                   return const ExpenseWidget(
                     title: 'buy 1kg apple',
                     category:
-                        Category(title: 'Food', imgUrl: ImageManger.appLogo),
+                        Category(title: 'Food', imgUrl: ImageManger.appLogo,spendMony: 15),
                     amount: 15,
                     date: '15/11/2025 03:15',
                   );

@@ -4,8 +4,8 @@ part 'm_category.g.dart';
 
 @JsonSerializable()
 final class CategoryModel extends Category {
-  const CategoryModel(
-     {
+  const CategoryModel({
+    required super.spendMony,
     required super.title,
     required super.imgUrl,
   });

@@ -23,6 +23,10 @@
   "notifications": "avis",
   "profile": "profil",
   "statistics": "statistiques",
-  "balance": "solde"
+  "balance": "solde",
+  "categories": "catégories",
+  "expensePer": "dépenses par",
+  "monthly": "mensuel",
+  "yearly": "annuel"
 }
 

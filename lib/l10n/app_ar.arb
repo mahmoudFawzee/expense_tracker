@@ -23,5 +23,9 @@
   "notifications": "الأشعارات",
   "profile": "الملف الشخصي",
   "statistics": "الاحصائيات",
-  "balance": "الرصيد"
+  "balance": "الرصيد",
+  "categories": "التصنيفات",
+  "expensePer": "المصروفات حسب",
+  "monthly": "شهري",
+  "yearly": "سنوي"
 }

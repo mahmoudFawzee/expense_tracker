@@ -14,7 +14,7 @@ Features:
    Users can add custom categories.
 
 4. Data Visualization
-   Pie charts for category-wise expense breakdown.
+   Pie charts for category-wise expense breakdown. done
    Bar charts to show expenses over time (daily, weekly, monthly).
    Line graphs for spending trends.   
 
