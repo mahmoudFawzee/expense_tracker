@@ -1,5 +1,5 @@
 import 'package:expense_tracker/data/keys/shared_preferences_keys.dart';
-import 'package:expense_tracker/data/services/localization_service.dart';
+import 'package:expense_tracker/data/services/apis/localization_service.dart';
 
 final class LocalizationRepo {
   final _localizationService = LocalizationService();

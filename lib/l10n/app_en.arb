@@ -131,9 +131,9 @@
   "@expensePer": {
     "description": "Show Expense Per option in statistics screen option can be monthly or yearly"
   },
-  "monthly": "Monthly",
-  "@monthly": {
-    "description": "Monthly word"
+  "weekly": "Weekly",
+  "@weekly": {
+    "description": "Weekly word"
   },
   "yearly": "Yearly",
   "@yearly": {

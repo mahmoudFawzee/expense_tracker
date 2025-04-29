@@ -1,6 +1,6 @@
-import 'package:expense_tracker/logic/entities/models/category/m_category.dart';
+import 'package:expense_tracker/data/models/category/m_category.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
-import 'package:expense_tracker/logic/entities/category.dart';
+import 'package:expense_tracker/domain/entities/category.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 

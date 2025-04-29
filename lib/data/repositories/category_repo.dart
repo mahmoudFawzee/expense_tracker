@@ -1,7 +1,7 @@
-import 'package:expense_tracker/logic/entities/models/category/m_category.dart';
-import 'package:expense_tracker/data/services/category_service.dart';
-import 'package:expense_tracker/logic/entities/category.dart';
-import 'package:expense_tracker/logic/repositories/i_category_repo.dart';
+import 'package:expense_tracker/data/models/category/m_category.dart';
+import 'package:expense_tracker/data/services/apis/category_service.dart';
+import 'package:expense_tracker/domain/entities/category.dart';
+import 'package:expense_tracker/domain/repositories/i_category_repo.dart';
 
 final class CategoryRepo implements CategoryRepoInterface {
   final CategoryService _categoryService;

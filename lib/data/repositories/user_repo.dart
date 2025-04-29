@@ -1,5 +1,5 @@
-import 'package:expense_tracker/logic/entities/models/user/m_user.dart';
-import 'package:expense_tracker/logic/repositories/i_user_repo.dart';
+import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/domain/repositories/i_user_repo.dart';
 
 final class UserRepo implements UserRepoInterface{
   @override

@@ -1,7 +1,7 @@
-import 'package:expense_tracker/logic/entities/models/expense/m_expense.dart';
-import 'package:expense_tracker/data/services/expense_service.dart';
-import 'package:expense_tracker/logic/entities/expense.dart';
-import 'package:expense_tracker/logic/repositories/i_expense_repo.dart';
+import 'package:expense_tracker/data/models/expense/m_expense.dart';
+import 'package:expense_tracker/data/services/apis/expense_service.dart';
+import 'package:expense_tracker/domain/entities/expense.dart';
+import 'package:expense_tracker/domain/repositories/i_expense_repo.dart';
 
 final class ExpenseRepo implements ExpenseRepoInterface {
   final ExpenseService _expenseService;

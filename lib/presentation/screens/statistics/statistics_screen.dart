@@ -1,9 +1,13 @@
+import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_details_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/bar_statistics/full_bar_statistics_item.dart';
 import 'package:expense_tracker/presentation/components/statistics/cubit/button_option_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/option_button/option_button.dart';
 import 'package:expense_tracker/presentation/components/statistics/pie_chart.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
-import 'package:expense_tracker/presentation/screens/statistics/cubit/category_statistics_cubit.dart';
+import 'package:expense_tracker/presentation/screens/statistics/bar_statistics_cubit/bar_statistics_cubit.dart';
+import 'package:expense_tracker/presentation/screens/statistics/pie_statistics_cubit/category_statistics_cubit.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
-
+import 'package:expense_tracker/util/maps/maps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,7 +20,6 @@ class StatisticsScreen extends StatelessWidget {
     final appLocalizations = AppLocalizations.of(context)!;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      //appBar: CustomAppBar(title: appLocalizations.statistics),
       body: Stack(
         children: [
           Container(
@@ -89,56 +92,133 @@ class StatisticsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
-                StatisticsCard(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            appLocalizations.expensePer,
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          BlocProvider(
-                            create: (context) => ButtonOptionCubit(),
-                            child: Builder(builder: (context) {
-                              return BlocBuilder<ButtonOptionCubit,
-                                  ButtonOption>(
-                                builder: (context, option) {
-                                  return Row(
-                                    children: [
-                                      StatisticsPerButton(
-                                        label: appLocalizations.monthly,
-                                        selected:
-                                            option == ButtonOption.monthly,
-                                        onTap: () {
-                                          context
-                                              .read<ButtonOptionCubit>()
-                                              .selectOption(
-                                                  ButtonOption.monthly);
-                                          //?this will request the monthly option
-                                        },
-                                      ),
-                                      StatisticsPerButton(
-                                        label: appLocalizations.yearly,
-                                        selected: option == ButtonOption.yearly,
-                                        onTap: () {
-                                          context
-                                              .read<ButtonOptionCubit>()
-                                              .selectOption(
-                                                  ButtonOption.yearly);
-                                          //?this will request the yearly option
-                                        },
-                                      ),
-                                    ],
+                //?bar card statistics
+                BlocProvider(
+                  create: (context) => BarDetailsCubit(),
+                  child: StatisticsCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        //?select statistics type buttons
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              appLocalizations.expensePer,
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                            BlocProvider(
+                              create: (context) => ButtonOptionCubit(),
+                              child: Builder(builder: (context) {
+                                return BlocBuilder<ButtonOptionCubit,
+                                    ButtonOption>(
+                                  builder: (context, option) {
+                                    return Row(
+                                      children: [
+                                        StatisticsOptionButton(
+                                          label: appLocalizations.weekly,
+                                          selected:
+                                              option == ButtonOption.monthly,
+                                          onTap: () {
+                                            context
+                                                .read<ButtonOptionCubit>()
+                                                .selectOption(
+                                                    ButtonOption.monthly);
+                                            //?this will request the monthly option
+                                            context
+                                                .read<BarStatisticsCubit>()
+                                                .fetchBarWeekStatistics();
+                                            context
+                                                .read<BarDetailsCubit>()
+                                                .select(null);
+                                          },
+                                        ),
+                                        StatisticsOptionButton(
+                                          label: appLocalizations.yearly,
+                                          selected:
+                                              option == ButtonOption.yearly,
+                                          onTap: () {
+                                            context
+                                                .read<ButtonOptionCubit>()
+                                                .selectOption(
+                                                    ButtonOption.yearly);
+                                            context
+                                                .read<BarStatisticsCubit>()
+                                                .fetchBarYearStatistics();
+                                            context
+                                                .read<BarDetailsCubit>()
+                                                .select(null);
+                                            //?this will request the yearly option
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }),
+                            ),
+                          ],
+                        ),
+
+                        BlocBuilder<BarStatisticsCubit, BarStatisticsState>(
+                          builder: (context, state) {
+                            if (state is BarStatisticsLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              );
+                            }
+                            if (state is FetchedBarWeekStatisticsState) {
+                              final days = state.statistics.days;
+                              final totalSpent = state.statistics.totalSpent;
+                              return BarStatisticsListView(
+                                length: days.length,
+                                totalSpent: totalSpent,
+                                itemBuilder: (context, index) {
+                                  final day = days[index];
+                                  //?we will take total spent per week or per year
+                                  //?when we will apply this formula: (spent_per_day/spent_per_week)*100
+                                  return FullBarStatisticsItem(
+                                    barIndex: index,
+                                    amount: day.amount,
+                                    date:
+                                        '${day.date.day}/${monthsName[day.date.month]}',
+                                    label: day.dayName,
+                                    totalSpent: totalSpent,
                                   );
                                 },
                               );
-                            }),
-                          ),
-                        ],
-                      ),
-                    ],
+                            }
+                            if (state is FetchedBarYearStatisticsState) {
+                              final months = state.statistics.months;
+                              final totalSpent = state.statistics.totalSpent;
+                              return BarStatisticsListView(
+                                  length: months.length,
+                                  totalSpent: totalSpent,
+                                  itemBuilder: (context, index) {
+                                    final month = months[index];
+                                    //?we will take total spent per week or per year
+                                    //?when we will apply this formula: (spent_per_day/spent_per_week)*100
+                                    return FullBarStatisticsItem(
+                                      barIndex: index,
+                                      totalSpent: totalSpent,
+                                      amount: month.amount,
+                                      date:
+                                          '${month.date.day}/${monthsName[month.date.month]}',
+                                      label: month.monthName,
+                                    );
+                                  });
+                            }
+
+                            if (state is BarStatisticsErrorState) {
+                              return Center(
+                                child: Text(state.error),
+                              );
+                            }
+                            return const SizedBox();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -150,37 +230,28 @@ class StatisticsScreen extends StatelessWidget {
   }
 }
 
-class StatisticsPerButton extends StatelessWidget {
-  const StatisticsPerButton({
+class BarStatisticsListView extends StatelessWidget {
+  const BarStatisticsListView({
     super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
+    required this.length,
+    required this.totalSpent,
+    required this.itemBuilder,
   });
-  final String label;
 
-  final bool selected;
-  final void Function()? onTap;
+  final int length;
+  final double totalSpent;
+  final Widget? Function(BuildContext, int) itemBuilder;
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: selected ? null : onTap,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: selected
-              ? const Color.fromARGB(152, 44, 120, 109)
-              : ColorsMangerDark.primaryColor,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
+    return Center(
+      child: SizedBox(
+        height: 180,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          
+          itemCount: length,
+          itemBuilder: itemBuilder,
         ),
       ),
     );

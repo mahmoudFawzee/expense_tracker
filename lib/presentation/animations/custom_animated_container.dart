@@ -9,13 +9,13 @@ class CustomAnimatedContainer extends StatelessWidget {
     super.key,
     required this.endHeight,
     required this.label,
+    this.barWidth = 30,
+    this.barColor,
   });
-  // TODO: ?how to handle end height?
-  // TODO: we will get the amount of money the category took.
-  // TODO: then we will calculate it.
-  // TODO: then pass it here as a ratio of 100
   final double endHeight;
   final String label;
+  final double barWidth;
+  final Color? barColor;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,11 +31,12 @@ class CustomAnimatedContainer extends StatelessWidget {
                   log('container height $state');
                   return AnimatedContainer(
                     height: state,
-                    width: 30,
+                    width: barWidth,
                     duration: const Duration(seconds: 1),
-                    decoration: const BoxDecoration(
-                        color: Color(0xA1F8CE94),
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    decoration: BoxDecoration(
+                        color: barColor ?? const Color(0xA1F8CE94),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5))),
                   );
                 },
               );
@@ -43,7 +44,10 @@ class CustomAnimatedContainer extends StatelessWidget {
           ),
           Text(
             label,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: barColor ?? Colors.white,
+              fontSize: 18,
+            ),
           ),
         ],
       ),
