@@ -24,6 +24,7 @@ final ThemeData _lightTheme = ThemeData(
     surface: ColorsMangerLight.surface,
     onSurface: ColorsMangerLight.onSurface,
     secondaryContainer: Color(0xffF2F2F2),
+    inversePrimary: ColorsMangerLight.successColor,
   ),
   iconTheme: const IconThemeData(
     color: ColorsMangerLight.surface,

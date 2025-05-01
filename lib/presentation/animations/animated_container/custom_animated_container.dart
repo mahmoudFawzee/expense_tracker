@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:expense_tracker/presentation/animations/animated_container_cubit.dart';
+import 'package:expense_tracker/presentation/animations/animated_container/animated_container_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +26,6 @@ class CustomAnimatedContainer extends StatelessWidget {
             child: Builder(builder: (context) {
               return BlocBuilder<AnimatedContainerCubit, double>(
                 builder: (context, state) {
-                  log('container height $state');
                   return AnimatedContainer(
                     height: state,
                     width: barWidth,
@@ -46,7 +43,7 @@ class CustomAnimatedContainer extends StatelessWidget {
             label,
             style: TextStyle(
               color: barColor ?? Colors.white,
-              fontSize: 18,
+              fontSize: 12,
             ),
           ),
         ],

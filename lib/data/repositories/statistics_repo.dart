@@ -1,7 +1,7 @@
 import 'package:expense_tracker/data/services/apis/statistics_service.dart';
 import 'package:expense_tracker/data/services/local/statistics_service.dart';
-import 'package:expense_tracker/domain/entities/statistics/week_statistics.dart';
-import 'package:expense_tracker/domain/entities/statistics/year_statistics.dart';
+import 'package:expense_tracker/domain/entities/statistics/week/week_statistics.dart';
+import 'package:expense_tracker/domain/entities/statistics/year/year_statistics.dart';
 import 'package:expense_tracker/domain/repositories/i_statistics_repo.dart';
 
 final class StatisticsRepo implements StatisticsRepoInterface {

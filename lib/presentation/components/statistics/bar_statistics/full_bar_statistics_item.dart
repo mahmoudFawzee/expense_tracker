@@ -1,4 +1,4 @@
-import 'package:expense_tracker/presentation/animations/custom_animated_container.dart';
+import 'package:expense_tracker/presentation/animations/animated_container/custom_animated_container.dart';
 import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,48 +20,27 @@ class FullBarStatisticsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      return BlocBuilder<BarDetailsCubit, int?>(
-        builder: (context, selectedIndex) {
+      return BlocBuilder<BarDetailsCubit, BarDetailsState>(
+        builder: (context, state) {
+          final isABarSelected = state is SelectedBarState;
+          final isTheBarSelected =
+              isABarSelected ? barIndex == state.selectedIndex : false;
           return InkWell(
             onTap: () {
-              if (selectedIndex == barIndex) {
-                context.read<BarDetailsCubit>().select(null);
+              if (isTheBarSelected) {
+                context.read<BarDetailsCubit>().deSelect();
                 return;
               }
-              context.read<BarDetailsCubit>().select(barIndex);
+              context.read<BarDetailsCubit>().select(
+                    barIndex,
+                    amount: amount,
+                    date: date,
+                  );
             },
-            child: Stack(
-              //mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                BarStatisticsItem(
-                  selected: barIndex == selectedIndex,
-                  label: label,
-                  endHeight: amount * 10,
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Visibility(
-                    visible: barIndex == selectedIndex,
-                    child: Container(
-                      height: 50,
-                      width: 85,
-                      decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).colorScheme.secondaryContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10))),
-                      child: Column(
-                        children: [
-                          Text(date),
-                          Text(
-                            '\$$amount',
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            child: BarStatisticsItem(
+              selected: isTheBarSelected,
+              label: label,
+              endHeight: amount,
             ),
           );
         },
@@ -88,7 +67,7 @@ class BarStatisticsItem extends StatelessWidget {
       label: label,
       barWidth: 20,
       barColor: selected
-          ? Theme.of(context).colorScheme.primary
+          ? Theme.of(context).colorScheme.inversePrimary
           : Theme.of(context).colorScheme.primary.withOpacity(.59),
     );
   }

@@ -4,7 +4,7 @@ import 'package:expense_tracker/app/cubits/localization_cubit.dart';
 import 'package:expense_tracker/presentation/components/custom_snack_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expense_tracker/data/constants/lang_code.dart';
-import 'package:expense_tracker/presentation/components/custom_shape.dart';
+import 'package:expense_tracker/presentation/components/custom_shapes/custom_shape.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

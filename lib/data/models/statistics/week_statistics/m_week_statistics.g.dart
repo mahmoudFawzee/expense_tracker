@@ -8,15 +8,17 @@ part of 'm_week_statistics.dart';
 
 WeekStatisticsModel _$WeekStatisticsModelFromJson(Map<String, dynamic> json) =>
     WeekStatisticsModel(
-      (json['totalSpent'] as num).toDouble(),
-      (json['days'] as List<dynamic>)
-          .map((e) => StatisticsDayModel.fromJson(e as Map<String, dynamic>))
+      totalSpent: (json['totalSpent'] as num).toDouble(),
+      items: (json['items'] as List<dynamic>)
+          .map((e) => TimeBasedStatistics.fromJson(e as Map<String, dynamic>))
           .toList(),
+      maxValue: (json['maxValue'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$WeekStatisticsModelToJson(
         WeekStatisticsModel instance) =>
     <String, dynamic>{
-      'days': instance.days,
+      'items': instance.items,
       'totalSpent': instance.totalSpent,
+      'maxValue': instance.maxValue,
     };

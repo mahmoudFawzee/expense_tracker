@@ -1,11 +1,8 @@
+import 'package:expense_tracker/util/enum/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ButtonOptionCubit extends Cubit<ButtonOption> {
-  ButtonOptionCubit() : super(ButtonOption.monthly);
+  ButtonOptionCubit() : super(ButtonOption.weekly);
   selectOption(ButtonOption option) => emit(option);
 }
 
-enum ButtonOption {
-  monthly,
-  yearly,
-}

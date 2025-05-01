@@ -10,12 +10,12 @@ StatisticsDayModel _$StatisticsDayModelFromJson(Map<String, dynamic> json) =>
     StatisticsDayModel(
       amount: (json['amount'] as num).toDouble(),
       date: DateTime.parse(json['date'] as String),
-      dayName: json['dayName'] as String,
+      name: json['name'] as String,
     );
 
 Map<String, dynamic> _$StatisticsDayModelToJson(StatisticsDayModel instance) =>
     <String, dynamic>{
-      'dayName': instance.dayName,
+      'name': instance.name,
       'amount': instance.amount,
       'date': instance.date.toIso8601String(),
     };

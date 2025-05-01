@@ -13,6 +13,7 @@ import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_screen.dart';
 import 'package:expense_tracker/presentation/screens/statistics/bar_statistics_cubit/bar_statistics_cubit.dart';
+import 'package:expense_tracker/presentation/screens/statistics/line_statistics_cubit/line_statistics_cubit.dart';
 import 'package:expense_tracker/presentation/screens/statistics/pie_statistics_cubit/category_statistics_cubit.dart';
 import 'package:expense_tracker/presentation/screens/statistics/statistics_screen.dart';
 import 'package:expense_tracker/presentation/screens/start/splash_screen.dart';
@@ -105,6 +106,10 @@ final router = GoRouter(
                   BlocProvider(
                     create: (context) => BarStatisticsCubit(_statisticsRepo)
                       ..fetchBarWeekStatistics(),
+                  ),
+                   BlocProvider(
+                    create: (context) => LineStatisticsCubit(_statisticsRepo)
+                      ..fetchLineWeekStatistics(),
                   ),
                 ],
                 child: const StatisticsScreen(),

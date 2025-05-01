@@ -49,10 +49,11 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.5.3
   flutter_secure_storage: ^9.2.4
-  json_serializable: ^6.9.0  
+  
   firebase_storage: ^12.4.5
   page_transition: ^2.2.1
   pie_chart: ^5.4.0
+  json_serializable: ^6.9.0
   
   
 

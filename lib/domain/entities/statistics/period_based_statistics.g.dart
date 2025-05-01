@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'm_year_statistics.dart';
+part of 'period_based_statistics.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-YearStatisticsModel _$YearStatisticsModelFromJson(Map<String, dynamic> json) =>
-    YearStatisticsModel(
+PeriodBasedStatistics _$PeriodBasedStatisticsFromJson(
+        Map<String, dynamic> json) =>
+    PeriodBasedStatistics(
       totalSpent: (json['totalSpent'] as num).toDouble(),
       items: (json['items'] as List<dynamic>)
           .map((e) => TimeBasedStatistics.fromJson(e as Map<String, dynamic>))
@@ -15,8 +16,8 @@ YearStatisticsModel _$YearStatisticsModelFromJson(Map<String, dynamic> json) =>
       maxValue: (json['maxValue'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$YearStatisticsModelToJson(
-        YearStatisticsModel instance) =>
+Map<String, dynamic> _$PeriodBasedStatisticsToJson(
+        PeriodBasedStatistics instance) =>
     <String, dynamic>{
       'items': instance.items,
       'totalSpent': instance.totalSpent,

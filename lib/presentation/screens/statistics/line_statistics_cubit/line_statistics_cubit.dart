@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker/data/repositories/statistics_repo.dart';
-import 'package:expense_tracker/domain/entities/statistics/week_statistics.dart';
-import 'package:expense_tracker/domain/entities/statistics/year_statistics.dart';
+import 'package:expense_tracker/domain/entities/statistics/week/week_statistics.dart';
+import 'package:expense_tracker/domain/entities/statistics/year/year_statistics.dart';
 
 part 'line_statistics_state.dart';
 
@@ -14,6 +14,8 @@ class LineStatisticsCubit extends Cubit<LineStatisticsState> {
   //?this is the week days statistics
   void fetchLineWeekStatistics() async {
     try {
+      emit(const LineStatisticsLoading());
+      await Future.delayed(const Duration(seconds: 1));
       final statistics = await _statisticsRepo.fetchStatisticsWeek();
       emit(FetchedLineWeekStatisticsState(statistics));
     } catch (e) {
@@ -24,6 +26,8 @@ class LineStatisticsCubit extends Cubit<LineStatisticsState> {
 //?this is the year months statistics
   void fetchLineYearStatistics() async {
     try {
+      emit(const LineStatisticsLoading());
+      await Future.delayed(const Duration(seconds: 1));
       final statistics = await _statisticsRepo.fetchStatisticsYear();
       emit(FetchedLineYearStatisticsState(statistics));
     } catch (e) {
