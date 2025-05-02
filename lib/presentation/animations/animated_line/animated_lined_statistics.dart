@@ -1,6 +1,10 @@
 import 'package:expense_tracker/presentation/animations/animated_line/line_point.dart';
+import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_details_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_statistics_list_view.dart';
+import 'package:expense_tracker/presentation/components/statistics/statistics_details_card.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AnimatedLinedStatistics extends StatelessWidget {
   const AnimatedLinedStatistics({
@@ -17,43 +21,63 @@ class AnimatedLinedStatistics extends StatelessWidget {
     return Container(
       //?we need to center the content in the center of the widget.
       margin: const EdgeInsets.only(left: 5, top: 10),
-      child: Column(
+      child: Stack(
         children: [
-          Container(
-            //?we need to put the point exactly above the center of its label
-            margin: const EdgeInsets.only(left: 5),
-            child: AnimatedLineWidget(
-              //?we pass the points as list<AnimatedPoint> which contains both
-              //?point offset and label but we want to generate just the offset
-              //?of the points as list.
-              points: List.generate(points.length, (index) {
-                return points[index].offset;
-              }),
-              label: List.generate(points.length, (index) {
-                return points[index].label;
-              }),
-              width: width,
-              height: height,
-            ),
-          ),
-          SizedBox(
-            height: 25,
-            child: Stack(
-              fit: StackFit.loose,
-              children: List.generate(points.length, (index) {
-                return Positioned(
-                  left: points[index].offset.dx,
-                  //?we want to put the labels in the bottom of the widget
-                  bottom: 0,
-                  child: Text(
-                    points[index].label,
-                    style: TextStyle(
-                      fontSize: points.length > 8 ? 10 : 14,
-                    ),
+          BlocBuilder<StatisticsItemDetailsCubit, StatisticsItemDetailsState>(
+            builder: (context, state) {
+              final isSelected = state is SelectedBarState;
+              return Positioned(
+                top: isSelected ? state.itemOffset.dy : 0,
+                left: isSelected ? state.itemOffset.dx : 0,
+                child: Visibility(
+                  visible: isSelected,
+                  child: StatisticsDetailsCard(
+                    date: isSelected ? state.date : '',
+                    amount: isSelected ? '${state.amount}' : '',
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            },
+          ),
+          Column(
+            children: [
+              Container(
+                //?we need to put the point exactly above the center of its label
+                margin: const EdgeInsets.only(left: 5),
+                child: AnimatedLineWidget(
+                  //?we pass the points as list<AnimatedPoint> which contains both
+                  //?point offset and label but we want to generate just the offset
+                  //?of the points as list.
+                  points: List.generate(points.length, (index) {
+                    return points[index].offset;
+                  }),
+                  label: List.generate(points.length, (index) {
+                    return points[index].label;
+                  }),
+                  width: width,
+                  height: height,
+                ),
+              ),
+              SizedBox(
+                height: 25,
+                child: Stack(
+                  fit: StackFit.loose,
+                  children: List.generate(points.length, (index) {
+                    return Positioned(
+                      left: points[index].offset.dx,
+                      //?we want to put the labels in the bottom of the widget
+                      bottom: 0,
+                      child: Text(
+                        points[index].label,
+                        style: TextStyle(
+                          fontSize: points.length > 8 ? 10 : 14,
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ],
           ),
         ],
       ),
