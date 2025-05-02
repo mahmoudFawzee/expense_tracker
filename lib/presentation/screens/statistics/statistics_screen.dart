@@ -1,7 +1,7 @@
 import 'package:expense_tracker/domain/helper/service/bar_chart.dart';
 import 'package:expense_tracker/domain/helper/service/line_chart.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
-import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_details_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/cubit/statistics_item_details_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_statistics_list_view.dart';
 import 'package:expense_tracker/presentation/components/statistics/line_statistics/line_statistics.dart';
 import 'package:expense_tracker/presentation/components/statistics/option_button/statistics_options_widget.dart';
@@ -109,7 +109,7 @@ class StatisticsScreen extends StatelessWidget {
                             StatisticsOptions(
                               chartType: BarChart(
                                 context.read<BarStatisticsCubit>(),
-                                barDetailsCubit:
+                                itemDetailsCubit:
                                     context.read<StatisticsItemDetailsCubit>(),
                               ),
                             ),
@@ -159,43 +159,43 @@ class StatisticsScreen extends StatelessWidget {
                   //?line card statistics
                   BlocProvider(
                     create: (context) => StatisticsItemDetailsCubit(),
-                    child: Builder(
-                      builder: (context) {
-                        return StatisticsCard(
-                          child: Column(
-                            children: [
-                              StatisticsOptions(
-                                chartType: LineChart(
+                    child: Builder(builder: (context) {
+                      return StatisticsCard(
+                        child: Column(
+                          children: [
+                            StatisticsOptions(
+                              chartType: LineChart(
                                   context.read<LineStatisticsCubit>(),
-                                ),
-                              ),
-                              BlocBuilder<LineStatisticsCubit, LineStatisticsState>(
-                                builder: (context, state) {
-                                  if (state is LineStatisticsLoading) {
-                                    return const CustomLoadingIndicator(
-                                      widgetHeight: 200,
-                                    );
-                                  }
-                                  if (state is FetchedLineWeekStatisticsState) {
-                                    return LineStatisticsWidget(
-                                      maxValue: state.weekStatistics.maxValue,
-                                      items: state.weekStatistics.items,
-                                    );
-                                  }
-                                  if (state is FetchedLineYearStatisticsState) {
-                                    return LineStatisticsWidget(
-                                      maxValue: state.statistics.maxValue,
-                                      items: state.statistics.items,
-                                    );
-                                  }
-                                  return const SizedBox();
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    ),
+                                  itemDetailsCubit: context
+                                      .read<StatisticsItemDetailsCubit>()),
+                            ),
+                            BlocBuilder<LineStatisticsCubit,
+                                LineStatisticsState>(
+                              builder: (context, state) {
+                                if (state is LineStatisticsLoading) {
+                                  return const CustomLoadingIndicator(
+                                    widgetHeight: 200,
+                                  );
+                                }
+                                if (state is FetchedLineWeekStatisticsState) {
+                                  return LineStatisticsWidget(
+                                    maxValue: state.weekStatistics.maxValue,
+                                    items: state.weekStatistics.items,
+                                  );
+                                }
+                                if (state is FetchedLineYearStatisticsState) {
+                                  return LineStatisticsWidget(
+                                    maxValue: state.statistics.maxValue,
+                                    items: state.statistics.items,
+                                  );
+                                }
+                                return const SizedBox();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                   ),
                   const SizedBox(height: 20)
                 ],

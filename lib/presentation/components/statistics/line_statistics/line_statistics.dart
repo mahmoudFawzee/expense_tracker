@@ -25,16 +25,16 @@ class LineStatisticsWidget extends StatelessWidget {
         width: width,
         //?this actually set the height of the y axis.
         height: 150,
-        points: List.generate(items.length, (index) {
+        items: List.generate(items.length, (index) {
           final dx = (width / items.length) * index;
           //?this be sure that the point dy won't pass the maximum yD value(150).
           final dy = ((maxValue - items[index].amount) / maxValue) * 150;
           log('state offset: Offset($dx,$dy)');
           return LinePoint(
             //?actual value if the represented item
-            value: items[index].amount,
+
             //?the label on the x axis with yd=>0
-            label: items[index].name,
+            statisticsItem: items[index],
             //?the position of the point in the xy demotions
             offset: Offset(dx, dy),
           );
