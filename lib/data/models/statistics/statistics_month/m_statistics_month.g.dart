@@ -13,11 +13,3 @@ StatisticsMonthModel _$StatisticsMonthModelFromJson(
       date: DateTime.parse(json['date'] as String),
       name: json['name'] as String,
     );
-
-Map<String, dynamic> _$StatisticsMonthModelToJson(
-        StatisticsMonthModel instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'amount': instance.amount,
-      'date': instance.date.toIso8601String(),
-    };

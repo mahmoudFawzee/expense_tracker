@@ -1,9 +1,9 @@
 import 'package:expense_tracker/domain/helper/service/bar_chart.dart';
 import 'package:expense_tracker/domain/helper/service/line_chart.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
-import 'package:expense_tracker/presentation/components/statistics/cubit/statistics_item_details_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_statistics_list_view.dart';
-import 'package:expense_tracker/presentation/components/statistics/line_statistics/line_statistics.dart';
+import 'package:expense_tracker/presentation/components/statistics/line_statistics/line_statistics_widget.dart';
 import 'package:expense_tracker/presentation/components/statistics/option_button/statistics_options_widget.dart';
 import 'package:expense_tracker/presentation/components/statistics/pie_chart.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';

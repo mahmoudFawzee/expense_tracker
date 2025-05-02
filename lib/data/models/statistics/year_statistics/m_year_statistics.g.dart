@@ -14,11 +14,3 @@ YearStatisticsModel _$YearStatisticsModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       maxValue: (json['maxValue'] as num).toDouble(),
     );
-
-Map<String, dynamic> _$YearStatisticsModelToJson(
-        YearStatisticsModel instance) =>
-    <String, dynamic>{
-      'items': instance.items,
-      'totalSpent': instance.totalSpent,
-      'maxValue': instance.maxValue,
-    };

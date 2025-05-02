@@ -13,10 +13,3 @@ TimeBasedStatistics _$TimeBasedStatisticsFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$TimeBasedStatisticsToJson(
-        TimeBasedStatistics instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'amount': instance.amount,
-      'date': instance.date.toIso8601String(),
-    };

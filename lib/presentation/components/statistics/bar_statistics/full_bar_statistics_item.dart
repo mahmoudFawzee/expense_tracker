@@ -1,5 +1,5 @@
 import 'package:expense_tracker/presentation/animations/animated_container/custom_animated_container.dart';
-import 'package:expense_tracker/presentation/components/statistics/cubit/statistics_item_details_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:expense_tracker/domain/entities/statistics/time_based_statistics.dart';
-import 'package:expense_tracker/presentation/animations/animated_line/animated_lined_statistics.dart';
+import 'package:expense_tracker/presentation/components/statistics/line_statistics/full_animated_lined_statistics.dart';
 import 'package:expense_tracker/presentation/animations/animated_line/line_point.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class LineStatisticsWidget extends StatelessWidget {
     //?40 is the padding.
     final width = MediaQuery.of(context).size.width - 40;
     return Center(
-      child: AnimatedLinedStatistics(
+      child: FullAnimatedLinedStatistics(
         //?this is the number of items it can be 7 if week or 12 if year.
         width: width,
         //?this actually set the height of the y axis.

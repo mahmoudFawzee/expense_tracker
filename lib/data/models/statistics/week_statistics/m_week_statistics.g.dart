@@ -15,10 +15,3 @@ WeekStatisticsModel _$WeekStatisticsModelFromJson(Map<String, dynamic> json) =>
       maxValue: (json['maxValue'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$WeekStatisticsModelToJson(
-        WeekStatisticsModel instance) =>
-    <String, dynamic>{
-      'items': instance.items,
-      'totalSpent': instance.totalSpent,
-      'maxValue': instance.maxValue,
-    };

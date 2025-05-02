@@ -1,6 +1,5 @@
-import 'dart:developer';
 import 'package:expense_tracker/domain/entities/statistics/time_based_statistics.dart';
-import 'package:expense_tracker/presentation/components/statistics/cubit/statistics_item_details_cubit.dart';
+import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/bar_statistics/full_bar_statistics_item.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_details_card.dart';
 import 'package:expense_tracker/util/functions/functions.dart';

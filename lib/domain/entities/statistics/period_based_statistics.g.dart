@@ -15,11 +15,3 @@ PeriodBasedStatistics _$PeriodBasedStatisticsFromJson(
           .toList(),
       maxValue: (json['maxValue'] as num).toDouble(),
     );
-
-Map<String, dynamic> _$PeriodBasedStatisticsToJson(
-        PeriodBasedStatistics instance) =>
-    <String, dynamic>{
-      'items': instance.items,
-      'totalSpent': instance.totalSpent,
-      'maxValue': instance.maxValue,
-    };

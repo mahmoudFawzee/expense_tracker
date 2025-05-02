@@ -13,9 +13,3 @@ StatisticsDayModel _$StatisticsDayModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$StatisticsDayModelToJson(StatisticsDayModel instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'amount': instance.amount,
-      'date': instance.date.toIso8601String(),
-    };
