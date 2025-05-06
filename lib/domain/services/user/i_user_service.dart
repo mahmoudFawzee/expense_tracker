@@ -1,7 +1,6 @@
 import 'package:expense_tracker/data/models/user/m_user.dart';
 
-abstract class UserRepoInterface {
- 
+abstract class UserServiceInterface {
 
   Future getUser(int id);
 

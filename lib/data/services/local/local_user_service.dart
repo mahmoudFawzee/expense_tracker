@@ -1,7 +1,7 @@
 import 'package:expense_tracker/data/models/user/m_user.dart';
-import 'package:expense_tracker/domain/services/user/i_user_service.dart';
+import 'package:expense_tracker/domain/services/user/i_local_user_service.dart';
 
-final class UserServiceApi implements UserServiceInterface {
+final class LocalUserService implements LocalUserServiceInterface {
   @override
   Future deleteUser(int id) {
     // TODO: implement deleteUser
@@ -11,6 +11,13 @@ final class UserServiceApi implements UserServiceInterface {
   @override
   Future getUser(int id) {
     // TODO: implement getUser
+    throw UnimplementedError();
+  }
+
+  //?store data locally.
+  @override
+  Future storeData(UserModel user) {
+    // TODO: implement storeData
     throw UnimplementedError();
   }
 
