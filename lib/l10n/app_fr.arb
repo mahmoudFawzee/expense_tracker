@@ -27,6 +27,12 @@
   "categories": "catégories",
   "expensePer": "dépenses par",
   "weekly": "hebdomadaire",
-  "yearly": "annuel"
+  "yearly": "annuel",
+  "changePassword": "changer le mot de passe",
+  "oldPassword": "ancien mot de passe",
+  "newPassword": "nouveau mot de passe",
+  "confirmNewPassword": "confirmer le nouveau mot de passe",
+  "language": "langue",
+  "about": "à propos de l'application",
+  "privacyPolicy": "politique de confidentialité"
 }
-

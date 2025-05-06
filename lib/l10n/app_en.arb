@@ -138,5 +138,34 @@
   "yearly": "Yearly",
   "@yearly": {
     "description": "Yearly word"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "change password sentence"
+  },
+  "oldPassword": "Old Password",
+  "@oldPassword": {
+    "description": "old password word"
+  },
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "new password word"
+  },
+  "confirmNewPassword": "Confirm New Password",
+  "@confirmNewPassword": {
+    "description": "confirm new password word"
+  },  
+  "language": "Language",
+  "@language": {
+    "description": "language word"
+  },
+  "about": "about",
+  "@about": {
+    "description": "about word"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "privacy Policy word"
   }
+
 }

@@ -14,14 +14,14 @@ class StatisticsCard extends StatelessWidget {
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
         padding: const EdgeInsets.all(10.0),
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
+        decoration:  BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius:const BorderRadius.all(
               Radius.circular(
                 15,
               ),
             ),
-            boxShadow: [
+            boxShadow:const [
               BoxShadow(
                 color: Colors.grey,
                 offset: Offset(0, 3),

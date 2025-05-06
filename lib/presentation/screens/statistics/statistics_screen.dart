@@ -1,5 +1,6 @@
 import 'package:expense_tracker/domain/helper/service/bar_chart.dart';
 import 'package:expense_tracker/domain/helper/service/line_chart.dart';
+import 'package:expense_tracker/presentation/components/app_bar/underlayer_app_bar.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/bar_statistics/bar_statistics_list_view.dart';
@@ -10,7 +11,6 @@ import 'package:expense_tracker/presentation/components/statistics/statistics_ca
 import 'package:expense_tracker/presentation/screens/statistics/bar_statistics_cubit/bar_statistics_cubit.dart';
 import 'package:expense_tracker/presentation/screens/statistics/line_statistics_cubit/line_statistics_cubit.dart';
 import 'package:expense_tracker/presentation/screens/statistics/pie_statistics_cubit/category_statistics_cubit.dart';
-import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,36 +26,8 @@ class StatisticsScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            height: height * .13,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-                color: ColorsMangerLight.primaryColor,
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(255, 63, 173, 157),
-                  Color.fromARGB(135, 44, 120, 109)
-                ])),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  appLocalizations.statistics,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                      ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.notifications_active_outlined,
-                  ),
-                )
-              ],
-            ),
+          UnderLayerAppBar(
+            label: appLocalizations.statistics,
           ),
           Padding(
             padding: EdgeInsets.only(

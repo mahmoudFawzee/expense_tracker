@@ -1,5 +1,6 @@
 done: finish auth UI.
 done: finish expense and category data, domain layers.
 done: start work on expense and category presentation layer.
-TODO: work on statistics page design it on figma then work on it coding
-TODO: work on ui then work on services, repos, etc...
+done: work on statistics page design it on figma then work on it coding
+done: work on ui then work on services, repos, etc...
+TODO: work on profile page which contains profile data, theme and language

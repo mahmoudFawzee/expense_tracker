@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const borderGrey = Color(0xffD9D9D9);
+
 final class ColorsMangerLight {
   static const primaryColor = Color(0xff2C786C); //?Trust & financial stability
 
@@ -15,7 +17,7 @@ final class ColorsMangerLight {
 final class ColorsMangerDark {
   static const primaryColor = Color(0xff2C786C); //?Trust & financial stability
 
-  static const backGroundColor = Color(0xff121212); //?Clean and minimalistic
+  static const surface = Color(0xff121212); //?Clean and minimalistic
 
   static const secondaryText =
       Color(0xffE0E0E0); //?Readable, high contrast for text

@@ -4,7 +4,7 @@ import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
 import 'package:expense_tracker/domain/entities/category.dart';
 import 'package:expense_tracker/presentation/animations/animated_container/custom_animated_container.dart';
 import 'package:expense_tracker/presentation/components/category_widget.dart';
-import 'package:expense_tracker/presentation/components/custom_app_bar.dart';
+import 'package:expense_tracker/presentation/components/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker/presentation/components/expense_amount.dart';
 import 'package:expense_tracker/presentation/components/expense_widget.dart';
 import 'package:expense_tracker/presentation/components/sliver_sized_box.dart';

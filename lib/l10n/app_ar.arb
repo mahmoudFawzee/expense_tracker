@@ -27,5 +27,12 @@
   "categories": "التصنيفات",
   "expensePer": "المصروفات حسب",
   "weekly": "اسبوعي",
-  "yearly": "سنوي"
+  "yearly": "سنوي",
+  "changePassword": "تغيير كلمة المرور",
+  "oldPassword": "كلمة المرور القديمة",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+  "language": "اللغة",
+  "about": "حول التطبيق",
+  "privacyPolicy": "سياسة الخصوصية"
 }
