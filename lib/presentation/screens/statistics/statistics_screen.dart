@@ -1,5 +1,5 @@
-import 'package:expense_tracker/domain/helper/service/bar_chart.dart';
-import 'package:expense_tracker/domain/helper/service/line_chart.dart';
+import 'package:expense_tracker/data/helper/bar_chart.dart';
+import 'package:expense_tracker/data/helper/line_chart.dart';
 import 'package:expense_tracker/presentation/components/app_bar/underlayer_app_bar.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';

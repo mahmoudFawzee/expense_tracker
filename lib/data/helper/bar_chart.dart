@@ -1,4 +1,4 @@
-import 'package:expense_tracker/domain/helper/interface/i_chart_type.dart';
+import 'package:expense_tracker/domain/helper/i_chart_type.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';
 import 'package:expense_tracker/presentation/screens/statistics/bar_statistics_cubit/bar_statistics_cubit.dart';
 

@@ -1,4 +1,4 @@
-import 'package:expense_tracker/domain/helper/interface/i_chart_type.dart';
+import 'package:expense_tracker/domain/helper/i_chart_type.dart';
 import 'package:expense_tracker/presentation/components/statistics/option_button/button_option_cubit/button_option_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/option_button/option_button.dart';
 import 'package:expense_tracker/util/enum/enums.dart';

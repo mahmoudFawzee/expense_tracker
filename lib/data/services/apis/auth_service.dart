@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:expense_tracker/app/request/endpoints.dart';
 import 'package:expense_tracker/app/request/headers.dart';
@@ -32,9 +33,18 @@ final class AuthService implements AuthInterface {
   }
 
   @override
-  Future logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<bool> logout() async {
+    final response = await _dio.request(
+      logoutEndPoint,
+      options: Options(
+        method: 'DELETE',
+        headers: headers,
+        responseType: ResponseType.json,
+      ),
+    );
+    final statusCode = response.statusCode;
+    if (statusCode == HttpStatus.ok) return true;
+    return false;
   }
 
   @override

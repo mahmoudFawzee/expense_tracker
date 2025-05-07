@@ -22,9 +22,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
           confirmPassword: event.confirmPassword,
         );
-        //   await _userRepo.storeUserLocally(user);
-        log('created user: $user');
-        emit(const RegisterSuccessState());
+        final stored = await _userRepo.storeUserLocally(user);
+        if (stored) {
+          log('created user: $user');
+          emit(const RegisterSuccessState());
+          return;
+        }
+        emit(const RegisterFailure(error: "user data doesn't stored"));
+        final loggedOut = await _authRepo.logout();
+        log('user logged out: $loggedOut');
       } catch (e) {
         log('error ${e.toString()}');
         emit(RegisterFailure(error: e.toString()));
@@ -39,8 +45,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
         );
         log('logged in user: $user');
-        //await _userRepo.storeUserLocally(user);
-        emit(const LoginSuccessState());
+        final stored = await _userRepo.storeUserLocally(user);
+        if (stored) {
+          emit(const LoginSuccessState());
+          return;
+        }
+        final loggedOut = await _authRepo.logout();
+        log('user logged out: $loggedOut');
+        emit(const LoginFailureState());
       } catch (e) {
         log('error ${e.toString()}');
         emit(LoginFailureState(error: e.toString()));
@@ -50,9 +62,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutEvent>((event, emit) async {
       emit(const AuthLoadingState());
       try {
-        await _userRepo.deleteUserLocally();
-        await _authRepo.logout();
-        emit(const LogoutSuccessState());
+        final loggedOut = await _authRepo.logout();
+        if (loggedOut) {
+          final deleted = await _userRepo.deleteUserLocally();
+          if (deleted) {
+            emit(const LogoutSuccessState());
+            return;
+          }
+          emit(const LogoutErrorState('local data does not deleted'));
+        }
       } catch (e) {
         emit(LogoutErrorState(e.toString()));
       }

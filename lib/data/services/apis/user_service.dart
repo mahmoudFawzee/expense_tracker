@@ -9,13 +9,13 @@ final class UserServiceApi implements UserServiceInterface {
   }
 
   @override
-  Future getUser(int id) {
+  Future getUser() {
     // TODO: implement getUser
     throw UnimplementedError();
   }
 
   @override
-  Future updateUser(int id, {required UserModel user}) {
+  Future updateUser(UserModel user) {
     // TODO: implement updateUser
     throw UnimplementedError();
   }

@@ -1,11 +1,11 @@
 import 'package:expense_tracker/data/models/user/m_user.dart';
 
 abstract class UserRepoInterface {
-  Future getUser(int id);
+  Future getUser();
 
-  Future updateUser(int id, {required UserModel user});
+  Future updateUser(UserModel user);
 
-  Future deleteUser(int id);
+  Future deleteUser();
 
   Future storeUserLocally(UserModel user);
 

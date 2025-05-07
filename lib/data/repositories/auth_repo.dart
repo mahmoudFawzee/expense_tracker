@@ -16,7 +16,7 @@ final class AuthRepo implements AuthRepoInterface {
       );
 
   @override
-  Future logout() async => await _authService.logout();
+  Future<bool> logout() async => await _authService.logout();
 
   @override
   Future<UserModel> register(UserModel user,
