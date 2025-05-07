@@ -6,5 +6,5 @@ abstract class UserServiceInterface {
 
   Future updateUser(int id, {required UserModel user});
 
-  Future deleteUser(int id);
+  Future deleteUser();
 }

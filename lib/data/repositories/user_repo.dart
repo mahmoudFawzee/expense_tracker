@@ -9,9 +9,9 @@ final class UserRepo implements UserRepoInterface {
   const UserRepo(this._localUserService, this._userServiceApi);
   @override
   Future deleteUser(int id) async {
-    final result = await _userServiceApi.deleteUser(id);
+    final result = await _userServiceApi.deleteUser();
     if (result) {
-      await _localUserService.deleteUser(id);
+      await _localUserService.deleteUser();
     }
   }
 
@@ -27,4 +27,11 @@ final class UserRepo implements UserRepoInterface {
     final updatedUser = await _userServiceApi.updateUser(id, user: user);
     await _localUserService.updateUser(id, user: updatedUser);
   }
+
+  @override
+  Future storeUserLocally(UserModel user) async =>
+      await _localUserService.storeData(user);
+
+  @override
+  Future deleteUserLocally() async => await _localUserService.deleteUser();
 }

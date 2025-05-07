@@ -1,5 +1,7 @@
 import 'dart:developer';
-import 'package:expense_tracker/presentation/screens/auth/register/register_bloc/register_bloc.dart';
+import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
+import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
@@ -67,9 +69,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      BlocBuilder<RegisterBloc, RegisterState>(
+                      BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
-                          if (state is RegisterLoading) {
+                          if (state is AuthLoadingState) {
                             return const Center(
                               child: CircularProgressIndicator.adaptive(
                                 backgroundColor: ColorsMangerLight.surface,
@@ -82,8 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //first name
                               CustomTextFromField(
                                 controller: validator.firstNameController,
-                                errorText:
-                                    failure ? state.firstNameError : null,
+                                errorText: failure ? state.error : null,
                                 label: appLocalizations.first_name,
                                 kbInputType: TextInputType.name,
                                 validator: (value) => validator
@@ -94,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //last name
                               CustomTextFromField(
                                 controller: validator.lastNameController,
-                                errorText: failure ? state.lastNameError : null,
+                                errorText: failure ? state.error : null,
                                 label: appLocalizations.last_name,
                                 kbInputType: TextInputType.name,
                                 validator: (value) => validator
@@ -105,8 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //phone number
                               CustomTextFromField(
                                 controller: validator.phoneNumberController,
-                                errorText:
-                                    failure ? state.phoneNumberError : null,
+                                errorText: failure ? state.error : null,
                                 label: appLocalizations.phone_number,
                                 kbInputType: TextInputType.phone,
                                 validator: (value) => validator
@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               CustomTextFromField(
                                 controller: validator.emailController,
                                 label: appLocalizations.email,
-                                errorText: failure ? state.emailError : null,
+                                errorText: failure ? state.error : null,
                                 kbInputType: TextInputType.emailAddress,
                                 validator: (value) => validator
                                     .validateEmail(context, value: value),
@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //password
                               CustomTextFromField(
                                 controller: validator.passwordController,
-                                errorText: failure ? state.passwordError : null,
+                                errorText: failure ? state.error : null,
                                 isPassword: true,
                                 label: appLocalizations.password,
                                 kbInputType: TextInputType.visiblePassword,
@@ -140,8 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //confirm password
                               CustomTextFromField(
                                 controller: validator.confirmPasswordController,
-                                errorText:
-                                    failure ? state.confirmPasswordError : null,
+                                errorText: failure ? state.error : null,
                                 isPassword: true,
                                 label: appLocalizations.confirm_password,
                                 kbInputType: TextInputType.visiblePassword,
@@ -155,9 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(height: 10),
-                      BlocConsumer<RegisterBloc, RegisterState>(
+                      BlocConsumer<AuthBloc, AuthState>(
                         listener: (context, state) {
-                          if (state is RegisterSuccess) {
+                          if (state is RegisterSuccessState) {
                             //TODO this must be handled with the backend
                             //?we will get access token and refresh token and save it in the secure storage
                             //?we will save the user data in the shared preferences
@@ -168,20 +167,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         builder: (context, state) {
                           return CustomElevatedButton(
                             label: appLocalizations.register,
-                            enabled: state is! RegisterLoading,
+                            enabled: state is! AuthLoadingState,
                             onPressed: () {
                               log('validate');
 
                               if (validator.validateForm()) {
-                                context.read<RegisterBloc>().add(
-                                      CreateAccountEvent(
-                                        firstName: validator.firstName!,
-                                        lastName: validator.lastName!,
-                                        phoneNumber: validator.phoneNumber!,
-                                        email: validator.email!,
-                                        password: validator.password!,
-                                        confirmPassword:
-                                            validator.confirmedPassword!,
+                                final user = UserModel(
+                                  firstName: validator.firstName!,
+                                  lastName: validator.lastName!,
+                                  phoneNumber: validator.phoneNumber!,
+                                  email: validator.email!,
+                                );
+                                context.read<AuthBloc>().add(
+                                      RegisterEvent(
+                                        user,
+                                        validator.password!,
+                                        validator.confirmedPassword!,
                                       ),
                                     );
                               }

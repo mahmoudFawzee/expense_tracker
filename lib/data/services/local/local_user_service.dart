@@ -3,7 +3,7 @@ import 'package:expense_tracker/domain/services/user/i_local_user_service.dart';
 
 final class LocalUserService implements LocalUserServiceInterface {
   @override
-  Future deleteUser(int id) {
+  Future deleteUser() {
     // TODO: implement deleteUser
     throw UnimplementedError();
   }

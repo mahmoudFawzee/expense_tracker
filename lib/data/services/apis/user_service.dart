@@ -3,7 +3,7 @@ import 'package:expense_tracker/domain/services/user/i_user_service.dart';
 
 final class UserServiceApi implements UserServiceInterface {
   @override
-  Future deleteUser(int id) {
+  Future deleteUser() {
     // TODO: implement deleteUser
     throw UnimplementedError();
   }

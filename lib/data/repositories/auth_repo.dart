@@ -6,7 +6,10 @@ final class AuthRepo implements AuthRepoInterface {
   final AuthService _authService;
   const AuthRepo(this._authService);
   @override
-  Future login({required String email, required String password}) async =>
+  Future<UserModel> login({
+    required String email,
+    required String password,
+  }) async =>
       await _authService.login(
         email: email,
         password: password,
@@ -16,9 +19,11 @@ final class AuthRepo implements AuthRepoInterface {
   Future logout() async => await _authService.logout();
 
   @override
-  Future register(UserModel user, {required String password}) async =>
+  Future<UserModel> register(UserModel user,
+          {required String password, required String confirmPassword}) async =>
       await _authService.register(
         user,
         password: password,
+        confirmPassword: confirmPassword,
       );
 }

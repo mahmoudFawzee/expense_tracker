@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
 import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/resources/image_manger.dart';
-import 'package:expense_tracker/presentation/screens/auth/login/login_cubit/login_cubit.dart';
+import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_validator.dart';
 import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
@@ -70,22 +70,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       //email
-                      BlocBuilder<LoginCubit, LoginState>(
+                      BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
-                          if (state is LoginLoadingState) {
+                          if (state is AuthLoadingState) {
                             return const Center(
                               child: CircularProgressIndicator.adaptive(
                                 backgroundColor: ColorsMangerLight.surface,
                               ),
                             );
                           }
-                          final failure = state is LoginFailure;
+                          final failure = state is LoginFailureState;
                           return Column(
                             children: [
                               CustomTextFromField(
                                 controller: _validator.emailController,
                                 label: appLocalizations.email,
-                                errorText: failure ? state.emailError : null,
+                                errorText: failure ? state.error : null,
                                 kbInputType: TextInputType.emailAddress,
                                 validator: (value) => _validator
                                     .validateEmail(context, value: value),
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               //password
                               CustomTextFromField(
                                 controller: _validator.passwordController,
-                                errorText: failure ? state.passwordError : null,
+                                errorText: failure ? state.error : null,
                                 isPassword: true,
                                 label: appLocalizations.password,
                                 kbInputType: TextInputType.visiblePassword,
@@ -109,24 +109,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      BlocConsumer<LoginCubit, LoginState>(
+                      BlocConsumer<AuthBloc, AuthState>(
                         listener: (context, state) {
-                          if (state is LoginSuccess) {
+                          if (state is LoginSuccessState) {
                             context.go(ExpensesScreen.pageRoute);
                           }
                         },
                         builder: (context, state) {
                           return CustomElevatedButton(
                             label: appLocalizations.logIn,
-                            enabled: state is! LoginLoadingState,
+                            enabled: state is! AuthLoadingState,
                             onPressed: () {
                               log('validate');
 
                               if (_validator.validateForm()) {
-                                context.read<LoginCubit>().login(
+                                context.read<AuthBloc>().add(LoginEvent(
                                       _validator.email!,
                                       _validator.password!,
-                                    );
+                                    ));
                               }
                             },
                           );

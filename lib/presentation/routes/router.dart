@@ -1,13 +1,17 @@
 import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
+import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
 import 'package:expense_tracker/data/repositories/statistics_repo.dart';
+import 'package:expense_tracker/data/repositories/user_repo.dart';
+import 'package:expense_tracker/data/services/apis/auth_service.dart';
 import 'package:expense_tracker/data/services/apis/category_service.dart';
 import 'package:expense_tracker/data/services/apis/statistics_service.dart';
+import 'package:expense_tracker/data/services/apis/user_service.dart';
+import 'package:expense_tracker/data/services/local/local_user_service.dart';
 import 'package:expense_tracker/data/services/local/statistics_service.dart';
 import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
-import 'package:expense_tracker/presentation/screens/auth/login/login_cubit/login_cubit.dart';
+import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
-import 'package:expense_tracker/presentation/screens/auth/register/register_bloc/register_bloc.dart';
 import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
@@ -26,6 +30,8 @@ final _statisticsRepo = StatisticsRepo(
   remoteStatisticsService: RemoteStatisticsService(),
   localStatisticsService: LocalStatisticsService(),
 );
+final _authRepo = AuthRepo(AuthService());
+final _userRepo = UserRepo(LocalUserService(), UserServiceApi());
 
 final router = GoRouter(
   initialLocation: ExpensesScreen.pageRoute,
@@ -37,25 +43,22 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),
       builder: (context, state, child) {
-        return AuthBase(child: child);
+        return BlocProvider(
+          create: (context) => AuthBloc(_authRepo, _userRepo),
+          child: AuthBase(child: child),
+        );
       },
       routes: [
         GoRoute(
           path: RegisterScreen.pageRoute,
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => RegisterBloc(),
-              child: const RegisterScreen(),
-            );
+            return const RegisterScreen();
           },
         ),
         GoRoute(
           path: LoginScreen.pageRoute,
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => LoginCubit(),
-              child: const LoginScreen(),
-            );
+            return const LoginScreen();
           },
         ),
       ],
@@ -63,8 +66,27 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),
       builder: (context, state, child) {
-        return HomeBase(
-          child: child,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => CategorySelectionCubit(),
+            ),
+            BlocProvider(
+              create: (context) => CategoryStatisticsCubit(_categoryRepo)
+                ..fetchCategoriesStatistics(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  BarStatisticsCubit(_statisticsRepo)..fetchBarWeekStatistics(),
+            ),
+            BlocProvider(
+              create: (context) => LineStatisticsCubit(_statisticsRepo)
+                ..fetchLineWeekStatistics(),
+            ),
+          ],
+          child: HomeBase(
+            child: child,
+          ),
         );
       },
       routes: [
@@ -74,10 +96,7 @@ final router = GoRouter(
             return _buildPageWithDefaultTransition(
               context: context,
               state: state,
-              child: BlocProvider(
-                create: (context) => CategorySelectionCubit(),
-                child: const ExpensesScreen(),
-              ),
+              child: const ExpensesScreen(),
             );
           },
         ),
@@ -97,23 +116,7 @@ final router = GoRouter(
             return _buildPageWithDefaultTransition(
               context: context,
               state: state,
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => CategoryStatisticsCubit(_categoryRepo)
-                      ..fetchCategoriesStatistics(),
-                  ),
-                  BlocProvider(
-                    create: (context) => BarStatisticsCubit(_statisticsRepo)
-                      ..fetchBarWeekStatistics(),
-                  ),
-                   BlocProvider(
-                    create: (context) => LineStatisticsCubit(_statisticsRepo)
-                      ..fetchLineWeekStatistics(),
-                  ),
-                ],
-                child: const StatisticsScreen(),
-              ),
+              child: const StatisticsScreen(),
             );
           },
         ),

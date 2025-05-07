@@ -5,6 +5,7 @@ part 'm_user.g.dart';
 @JsonSerializable()
 final class UserModel extends User {
   const UserModel({
+    super.id,
     required super.firstName,
     required super.lastName,
     required super.phoneNumber,
