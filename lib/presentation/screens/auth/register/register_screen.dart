@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:expense_tracker/data/models/user/m_user.dart';
-import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
 import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
