@@ -83,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //first name
                               CustomTextFromField(
                                 controller: validator.firstNameController,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.firstNameError : null,
                                 label: appLocalizations.first_name,
                                 kbInputType: TextInputType.name,
                                 validator: (value) => validator
@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //last name
                               CustomTextFromField(
                                 controller: validator.lastNameController,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.lastNameError : null,
                                 label: appLocalizations.last_name,
                                 kbInputType: TextInputType.name,
                                 validator: (value) => validator
@@ -105,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //phone number
                               CustomTextFromField(
                                 controller: validator.phoneNumberController,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.phoneNumberError : null,
                                 label: appLocalizations.phone_number,
                                 kbInputType: TextInputType.phone,
                                 validator: (value) => validator
@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               CustomTextFromField(
                                 controller: validator.emailController,
                                 label: appLocalizations.email,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.emailError : null,
                                 kbInputType: TextInputType.emailAddress,
                                 validator: (value) => validator
                                     .validateEmail(context, value: value),
@@ -127,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //password
                               CustomTextFromField(
                                 controller: validator.passwordController,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.passwordError : null,
                                 isPassword: true,
                                 label: appLocalizations.password,
                                 kbInputType: TextInputType.visiblePassword,
@@ -139,7 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //confirm password
                               CustomTextFromField(
                                 controller: validator.confirmPasswordController,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.confirmPasswordError : null,
                                 isPassword: true,
                                 label: appLocalizations.confirm_password,
                                 kbInputType: TextInputType.visiblePassword,

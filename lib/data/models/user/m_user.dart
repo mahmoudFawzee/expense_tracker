@@ -1,3 +1,4 @@
+import 'package:expense_tracker/data/constants/json_keys.dart';
 import 'package:expense_tracker/domain/entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'm_user.g.dart';
@@ -12,7 +13,15 @@ final class UserModel extends User {
     required super.email,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  Map<String, dynamic> toSqliteJson() => {JsonKeys.userId: id, ...toJson()};
+
+  @override
+  String toString() {
+    return 'id: $id ${toJson()}';
+  }
 }

@@ -9,5 +9,5 @@ abstract class AuthRepoInterface {
 
   Future login({required String email, required String password});
 
-  Future logout();
+  Future logout(String accessToken);
 }

@@ -6,3 +6,4 @@ done: work on ui then work on services, repos, etc...
 done: work on profile page which contains profile data, theme and language
 done: work on auth and register and link them with backend
 TODO: work on storing user data locally after login and register.
+TODO: use flutter secure storage to store access token which will be used an all operations

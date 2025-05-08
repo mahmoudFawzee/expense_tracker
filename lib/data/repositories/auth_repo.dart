@@ -6,7 +6,7 @@ final class AuthRepo implements AuthRepoInterface {
   final AuthService _authService;
   const AuthRepo(this._authService);
   @override
-  Future<UserModel> login({
+  Future login({
     required String email,
     required String password,
   }) async =>
@@ -16,11 +16,15 @@ final class AuthRepo implements AuthRepoInterface {
       );
 
   @override
-  Future<bool> logout() async => await _authService.logout();
+  Future<bool> logout(String accessToken) async =>
+      await _authService.logout(accessToken);
 
   @override
-  Future<UserModel> register(UserModel user,
-          {required String password, required String confirmPassword}) async =>
+  Future register(
+    UserModel user, {
+    required String password,
+    required String confirmPassword,
+  }) async =>
       await _authService.register(
         user,
         password: password,

@@ -2,6 +2,7 @@ import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
 import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
 import 'package:expense_tracker/data/repositories/statistics_repo.dart';
+import 'package:expense_tracker/data/repositories/tokens_repo.dart';
 import 'package:expense_tracker/data/repositories/user_repo.dart';
 import 'package:expense_tracker/data/services/apis/auth_service.dart';
 import 'package:expense_tracker/data/services/apis/category_service.dart';
@@ -9,6 +10,7 @@ import 'package:expense_tracker/data/services/apis/statistics_service.dart';
 import 'package:expense_tracker/data/services/apis/user_service.dart';
 import 'package:expense_tracker/data/services/local/local_user_service.dart';
 import 'package:expense_tracker/data/services/local/statistics_service.dart';
+import 'package:expense_tracker/data/services/local/token_service.dart';
 import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
 import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
@@ -32,9 +34,10 @@ final _statisticsRepo = StatisticsRepo(
 );
 final _authRepo = AuthRepo(AuthService());
 final _userRepo = UserRepo(LocalUserService(), UserServiceApi());
+final _tokensRepo = TokensRepo(TokensService());
 
 final router = GoRouter(
-  initialLocation: ExpensesScreen.pageRoute,
+  initialLocation: SplashScreen.pageRoute,
   routes: [
     GoRoute(
       path: SplashScreen.pageRoute,
@@ -44,7 +47,7 @@ final router = GoRouter(
       navigatorKey: GlobalKey<NavigatorState>(),
       builder: (context, state, child) {
         return BlocProvider(
-          create: (context) => AuthBloc(_authRepo, _userRepo),
+          create: (context) => AuthBloc(_authRepo, _userRepo, _tokensRepo),
           child: AuthBase(child: child),
         );
       },

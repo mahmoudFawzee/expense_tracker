@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/constants/sqflite_keys.dart';
+import 'package:expense_tracker/data/constants/json_keys.dart';
 import 'package:expense_tracker/data/constants/sqflite_tables.dart';
 import 'package:expense_tracker/domain/helper/i_sqflite_helper.dart';
 import 'package:sqflite/sqflite.dart';
@@ -18,7 +18,7 @@ final class SqfliteHelper implements SqfliteHelperInterface {
 
   Future<Database> _initDb() async {
     String dbPath = await getDatabasesPath();
-    String path = join(dbPath, 'ai_assistant.db');
+    String path = join(dbPath, 'expense_tracker.db');
 
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
@@ -27,11 +27,12 @@ final class SqfliteHelper implements SqfliteHelperInterface {
   Future _onCreate(Database db, int version) async {
     await _createTable(db, '''
 CREATE TABLE $userTable(
-$id INTEGER PRIMARY KEY AUTOINCREMENT,
-$firstName TEXT,
-$lastName TEXT,
-$phoneNumber TEXT,
-$email TEXT
+${JsonKeys.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+${JsonKeys.userId} INTEGER,
+${JsonKeys.firstName} TEXT,
+${JsonKeys.lastName} TEXT,
+${JsonKeys.phoneNumber} TEXT,
+${JsonKeys.email} TEXT
 )
 ''');
   }

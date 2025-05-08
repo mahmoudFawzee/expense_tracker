@@ -6,6 +6,7 @@ import 'package:expense_tracker/domain/services/user/i_local_user_service.dart';
 
 final class LocalUserService implements LocalUserServiceInterface {
   final _sqfliteHelper = SqfliteHelper();
+  
   @override
   Future<bool> deleteUser() async {
     final user = await getUser();
@@ -28,13 +29,14 @@ final class LocalUserService implements LocalUserServiceInterface {
   //?store data locally.
   @override
   Future<bool> storeUser(UserModel user) async {
-    final result = await _sqfliteHelper.insert(userTable, row: user.toJson());
+    final result = await _sqfliteHelper.insert(userTable, row: user.toSqliteJson());
     return result;
   }
 
   @override
   Future updateUser(UserModel user) async {
-    final result = await _sqfliteHelper.update(userTable, row: user.toJson());
+    final result = await _sqfliteHelper.update(userTable, row: user.toSqliteJson());
     return result;
   }
+
 }
