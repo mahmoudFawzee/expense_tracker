@@ -34,5 +34,7 @@
   "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
   "language": "اللغة",
   "about": "حول التطبيق",
-  "privacyPolicy": "سياسة الخصوصية"
+  "privacyPolicy": "سياسة الخصوصية",
+  "update": "تحديث",
+  "personalInfo": "المعلومات الشخصية"
 }

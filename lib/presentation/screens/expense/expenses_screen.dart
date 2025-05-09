@@ -20,11 +20,7 @@ class ExpensesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
-    final height = MediaQuery.of(context).size.height;
-    return Container(
-      margin: EdgeInsets.only(
-        top: height * .1,
-      ),
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(

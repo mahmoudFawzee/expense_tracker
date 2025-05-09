@@ -17,13 +17,17 @@ class HomeBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
+    final height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             BlocBuilder<NavigationCubit, int>(
               builder: (context, pageIndex) {
-                String? label = pageLabel;
+                if (pageLabel != null) {
+                  return UnderLayerAppBar(label: pageLabel!);
+                }
+                String label;
                 if (pageIndex == 1) {
                   label = appLocalizations.expenses;
                 } else if (pageIndex == 0) {
@@ -34,7 +38,11 @@ class HomeBase extends StatelessWidget {
                 return UnderLayerAppBar(label: label);
               },
             ),
-            child,
+            Container(
+                margin: EdgeInsets.only(
+                  top: height * .1,
+                ),
+                child: child),
           ],
         ),
         bottomNavigationBar: BlocBuilder<NavigationCubit, int>(

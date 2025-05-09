@@ -8,19 +8,23 @@ class CustomTextFromField extends StatelessWidget {
     super.key,
     this.maxLines = 1,
     this.isPassword = false,
+    this.enabled = true,
     this.errorText,
+    this.initialValue,
     required this.label,
     required this.kbInputType,
-    required this.controller,
+    this.controller,
     required this.validator,
     required this.onFieldSubmitted,
   });
   final int maxLines;
   final bool isPassword;
+  final bool enabled;
   final String label;
   final String? errorText;
+  final String? initialValue;
   final TextInputType kbInputType;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Function(String)? onFieldSubmitted;
   @override
@@ -36,6 +40,7 @@ class CustomTextFromField extends StatelessWidget {
                 return TextFormField(
                   controller: controller,
                   validator: validator,
+                  initialValue: initialValue,
                   maxLines: maxLines,
                   obscureText: isPassword && hidePassword,
                   keyboardType: kbInputType,
@@ -44,7 +49,7 @@ class CustomTextFromField extends StatelessWidget {
                   autofocus: false,
                   textCapitalization: TextCapitalization.words,
                   onFieldSubmitted: onFieldSubmitted,
-
+                  enabled: enabled,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!

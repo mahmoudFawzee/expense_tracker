@@ -83,7 +83,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //first name
                               CustomTextFromField(
                                 controller: validator.firstNameController,
-                                errorText: failure ? state.firstNameError : null,
+                                errorText:
+                                    failure ? state.firstNameError : null,
                                 label: appLocalizations.first_name,
                                 kbInputType: TextInputType.name,
                                 validator: (value) => validator
@@ -105,7 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //phone number
                               CustomTextFromField(
                                 controller: validator.phoneNumberController,
-                                errorText: failure ? state.phoneNumberError : null,
+                                errorText:
+                                    failure ? state.phoneNumberError : null,
                                 label: appLocalizations.phone_number,
                                 kbInputType: TextInputType.phone,
                                 validator: (value) => validator
@@ -139,7 +141,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //confirm password
                               CustomTextFromField(
                                 controller: validator.confirmPasswordController,
-                                errorText: failure ? state.confirmPasswordError : null,
+                                errorText:
+                                    failure ? state.confirmPasswordError : null,
                                 isPassword: true,
                                 label: appLocalizations.confirm_password,
                                 kbInputType: TextInputType.visiblePassword,
@@ -156,10 +159,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       BlocConsumer<AuthBloc, AuthState>(
                         listener: (context, state) {
                           if (state is RegisterSuccessState) {
-                            //TODO this must be handled with the backend
-                            //?we will get access token and refresh token and save it in the secure storage
-                            //?we will save the user data in the shared preferences
-                            //?then we will navigate to the expenses screen
                             context.go(ExpensesScreen.pageRoute);
                           }
                         },

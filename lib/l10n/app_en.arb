@@ -154,7 +154,7 @@
   "confirmNewPassword": "Confirm New Password",
   "@confirmNewPassword": {
     "description": "confirm new password word"
-  },  
+  },
   "language": "Language",
   "@language": {
     "description": "language word"
@@ -166,6 +166,13 @@
   "privacyPolicy": "Privacy Policy",
   "@privacyPolicy": {
     "description": "privacy Policy word"
+  },
+  "personalInfo": "Personal Information",
+  "@personalInfo": {
+    "description": "Personal Information"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "update word"
   }
-
 }

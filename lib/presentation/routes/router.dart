@@ -18,6 +18,7 @@ import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dar
 import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
+import 'package:expense_tracker/presentation/screens/profile/profile_info_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_screen.dart';
 import 'package:expense_tracker/presentation/screens/statistics/bar_statistics_cubit/bar_statistics_cubit.dart';
 import 'package:expense_tracker/presentation/screens/statistics/line_statistics_cubit/line_statistics_cubit.dart';
@@ -129,9 +130,12 @@ final router = GoRouter(
         ),
       ],
     ),
-  
-  
-  
+    GoRoute(
+      path: ProfileInfoScreen.pageRoute,
+      builder: (context, state) {
+        return const ProfileInfoScreen();
+      },
+    ),
   ],
 );
 

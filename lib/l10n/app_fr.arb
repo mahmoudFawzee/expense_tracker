@@ -34,5 +34,7 @@
   "confirmNewPassword": "confirmer le nouveau mot de passe",
   "language": "langue",
   "about": "à propos de l'application",
-  "privacyPolicy": "politique de confidentialité"
+  "privacyPolicy": "politique de confidentialité",
+  "update": "mettre à jour",
+  "personalInfo": "Informations personnelles"
 }
