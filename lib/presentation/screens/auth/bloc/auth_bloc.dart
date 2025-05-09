@@ -15,7 +15,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepo _authRepo;
-  final UserRepo _userRepo;
+  final UserDataRepo _userRepo;
   final TokensRepo _tokensRepo;
   Future<bool> _storeUserData(dynamic result) async {
     try {

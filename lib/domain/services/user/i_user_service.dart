@@ -6,5 +6,5 @@ abstract class UserServiceInterface {
 
   Future updateUser(UserModel user);
 
-  Future deleteUser();
+  Future deleteUser(String password);
 }

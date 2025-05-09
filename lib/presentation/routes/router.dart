@@ -35,7 +35,7 @@ final _statisticsRepo = StatisticsRepo(
   localStatisticsService: LocalStatisticsService(),
 );
 final _authRepo = AuthRepo(AuthService());
-final _userRepo = UserRepo(LocalUserService(), UserServiceApi());
+final _userRepo = UserDataRepo(LocalUserService(), UserServiceApi());
 final _tokensRepo = TokensRepo(TokensService());
 
 final router = GoRouter(

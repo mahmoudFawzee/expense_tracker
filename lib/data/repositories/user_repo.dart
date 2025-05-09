@@ -1,25 +1,31 @@
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/services/apis/user_service.dart';
 import 'package:expense_tracker/data/services/local/local_user_service.dart';
+import 'package:expense_tracker/domain/entities/user.dart';
 import 'package:expense_tracker/domain/repositories/i_user_repo.dart';
 
-final class UserRepo implements UserRepoInterface {
+final class UserDataRepo implements UserRepoInterface {
   final LocalUserService _localUserService;
   final UserServiceApi _userServiceApi;
-  const UserRepo(this._localUserService, this._userServiceApi);
+  const UserDataRepo(this._localUserService, this._userServiceApi);
   @override
-  Future deleteUser() async {
-    final result = await _userServiceApi.deleteUser();
+  Future deleteUser(String password) async {
+    final result = await _userServiceApi.deleteUser(password);
     if (result) {
-      await _localUserService.deleteUser();
+      await _localUserService.deleteUser(password);
     }
   }
 
   @override
-  Future getUser() async {
+  Future<User?> getUser() async {
     final localUser = await _localUserService.getUser();
     if (localUser != null) return localUser;
-    return _userServiceApi.getUser();
+    final remoteUser = await _userServiceApi.getUser();
+    final isStored = await _localUserService.storeUser(remoteUser);
+    if (isStored) {
+      return await _localUserService.getUser();
+    }
+    return null;
   }
 
   @override
@@ -33,5 +39,5 @@ final class UserRepo implements UserRepoInterface {
       await _localUserService.storeUser(user);
 
   @override
-  Future deleteUserLocally() async => await _localUserService.deleteUser();
+  Future deleteUserLocally() async => await _localUserService.deleteUser('');
 }

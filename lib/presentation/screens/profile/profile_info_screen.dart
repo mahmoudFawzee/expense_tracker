@@ -44,7 +44,10 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                     children: [
                       BlocBuilder<UserDataBloc, UserDataState>(
                         builder: (context, state) {
-                          
+                          if (state is UserDataLoadingState) {
+                            return const CustomLoadingIndicator(
+                                widgetHeight: 150);
+                          }
                           return Column(
                             children: [
                               CustomTextFromField(

@@ -7,10 +7,35 @@ sealed class UserDataEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class StoreUserData extends UserDataEvent {
+final class FetchUserDataEvent extends UserDataEvent {
+  const FetchUserDataEvent();
+}
+
+final class UpdateUserDateEvent extends UserDataEvent {
   final UserModel user;
-  const StoreUserData(this.user);
+  const UpdateUserDateEvent(this.user);
   @override
-  
   List<Object> get props => [user];
+}
+
+final class DeleteAccountEvent extends UserDataEvent {
+  final String password;
+  const DeleteAccountEvent(this.password);
+  @override
+  List<Object> get props => [password];
+}
+
+final class ConfirmUserDeleteEvent extends UserDataEvent {
+  final String password;
+  const ConfirmUserDeleteEvent(this.password);
+  @override
+  List<Object> get props => [password];
+}
+
+final class ConfirmUpdateEmailEvent extends UserDataEvent {
+  final UserModel user;
+  final String password;
+  const ConfirmUpdateEmailEvent(this.user, this.password);
+  @override
+  List<Object> get props => [user, password];
 }
