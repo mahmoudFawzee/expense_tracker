@@ -1,4 +1,5 @@
 import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
+import 'package:expense_tracker/app/cubits/is_logged_in_cubit.dart';
 import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
 import 'package:expense_tracker/data/repositories/statistics_repo.dart';
@@ -41,7 +42,10 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: SplashScreen.pageRoute,
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => IsLoggedInCubit(_tokensRepo),
+        child: const SplashScreen(),
+      ),
     ),
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),

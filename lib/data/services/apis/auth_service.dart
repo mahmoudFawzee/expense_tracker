@@ -61,6 +61,8 @@ final class AuthService implements AuthInterface {
     return response.statusCode == HttpStatus.ok;
   }
 
+ 
+
   dynamic _handelAuthResponse(Response<dynamic> response) {
     final statusCode = response.statusCode;
     final responseData = response.data;
