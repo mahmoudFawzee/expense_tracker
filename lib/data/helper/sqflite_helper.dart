@@ -19,7 +19,6 @@ final class SqfliteHelper implements SqfliteHelperInterface {
   Future<Database> _initDb() async {
     String dbPath = await getDatabasesPath();
     String path = join(dbPath, 'expense_tracker.db');
-
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 

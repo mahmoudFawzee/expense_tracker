@@ -74,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             firstNameError: errors?[JsonKeys.firstName]?.first,
             lastNameError: errors?[JsonKeys.lastName]?.first,
             passwordError: errors?[JsonKeys.password]?.first,
-            confirmPasswordError: errors?[JsonKeys.confirmPassword]?.first,
+            confirmPasswordError: errors?[JsonKeys.password]?.first,
           ));
           return;
         }

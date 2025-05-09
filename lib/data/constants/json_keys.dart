@@ -12,7 +12,7 @@ final class JsonKeys {
   static const email = 'email';
   static const firstName = 'firstName';
   static const lastName = 'lastName';
-  static const password = 'password';
-  static const confirmPassword = 'confirmPassword';
+  static const password = 'password';  
+  static const passwordConfirmation = 'password_confirmation';
   static const authorization = 'Authorization';
 }
