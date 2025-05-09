@@ -4,7 +4,6 @@ import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
 import 'package:expense_tracker/domain/entities/category.dart';
 import 'package:expense_tracker/presentation/animations/animated_container/custom_animated_container.dart';
 import 'package:expense_tracker/presentation/components/category_widget.dart';
-import 'package:expense_tracker/presentation/components/app_bar/custom_app_bar.dart';
 import 'package:expense_tracker/presentation/components/expense_amount.dart';
 import 'package:expense_tracker/presentation/components/expense_widget.dart';
 import 'package:expense_tracker/presentation/components/sliver_sized_box.dart';
@@ -21,27 +20,29 @@ class ExpensesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: appLocalizations.expenses,
+    final height = MediaQuery.of(context).size.height;
+    return Container(
+      margin: EdgeInsets.only(
+        top: height * .1,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
+        ),
         child: CustomScrollView(
+          clipBehavior: Clip.antiAlias,
           slivers: [
             //?add the balance widget here.
             SliverAppBar(
               expandedHeight: 210,
               floating: true,
-              //backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               flexibleSpace: Container(
                 height: 210,
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(25),
-                  ),
                 ),
                 child: FlexibleSpaceBar(
                   title: const Align(
@@ -167,8 +168,10 @@ class ExpensesScreen extends StatelessWidget {
                 (context, index) {
                   return const ExpenseWidget(
                     title: 'buy 1kg apple',
-                    category:
-                        Category(title: 'Food', imgUrl: ImageManger.appLogo,spendMony: 15),
+                    category: Category(
+                        title: 'Food',
+                        imgUrl: ImageManger.appLogo,
+                        spendMony: 15),
                     amount: 15,
                     date: '15/11/2025 03:15',
                   );

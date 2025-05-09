@@ -15,105 +15,96 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
     final height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Stack(
-        children: [
-          UnderLayerAppBar(
-            label: appLocalizations.profile,
-          ),
-          Container(
-            margin: EdgeInsets.only(
-              top: height * .1,
-            ),
-            child: StatisticsCard(
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          BlocBuilder<ThemeCubit, bool>(
-                            builder: (context, isDark) {
-                              return IconButton(
-                                onPressed: () {
-                                  context
-                                      .read<ThemeCubit>()
-                                      .setTheme(isDark: !isDark);
-                                },
-                                icon: Icon(
-                                  isDark ? Icons.dark_mode : Icons.light_mode,
-                                ),
-                              );
-                            },
+    return Container(
+      margin: EdgeInsets.only(
+        top: height * .1,
+      ),
+      child: StatisticsCard(
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    BlocBuilder<ThemeCubit, bool>(
+                      builder: (context, isDark) {
+                        return IconButton(
+                          onPressed: () {
+                            context
+                                .read<ThemeCubit>()
+                                .setTheme(isDark: !isDark);
+                          },
+                          icon: Icon(
+                            isDark ? Icons.dark_mode : Icons.light_mode,
                           ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Icon(
-                            Icons.account_circle_rounded,
-                            size: 125,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          Text(
-                            'Ali Fawzy',
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          CustomListTile(
-                            leadingIcon: Icons.person,
-                            label: appLocalizations.profile,
-                            onTap: () {
-                              log('profile');
-                            },
-                          ),
-                          CustomListTile(
-                            leadingIcon: Icons.key,
-                            label: appLocalizations.changePassword,
-                            onTap: () {
-                              log('change password');
-                            },
-                          ),
-                          CustomListTile(
-                            leadingIcon: Icons.language,
-                            label: appLocalizations.language,
-                            trailing: const LanguageDropDownButton(),
-                            onTap: () {
-                              log('change lang');
-                            },
-                          ),
-                          CustomListTile(
-                            leadingIcon: Icons.info_outlined,
-                            label: appLocalizations.about,
-                            onTap: () {
-                              log('about');
-                            },
-                          ),
-                          CustomListTile(
-                            leadingIcon: Icons.privacy_tip_outlined,
-                            label: appLocalizations.privacyPolicy,
-                            onTap: () {
-                              log('privacy');
-                            },
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                Column(
+                  children: [
+                    Icon(
+                      Icons.account_circle_rounded,
+                      size: 125,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Text(
+                      'Ali Fawzy',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CustomListTile(
+                      leadingIcon: Icons.person,
+                      label: appLocalizations.profile,
+                      onTap: () {
+                        log('profile');
+                      },
+                    ),
+                    CustomListTile(
+                      leadingIcon: Icons.key,
+                      label: appLocalizations.changePassword,
+                      onTap: () {
+                        log('change password');
+                      },
+                    ),
+                    CustomListTile(
+                      leadingIcon: Icons.language,
+                      label: appLocalizations.language,
+                      trailing: const LanguageDropDownButton(),
+                      onTap: () {
+                        log('change lang');
+                      },
+                    ),
+                    CustomListTile(
+                      leadingIcon: Icons.info_outlined,
+                      label: appLocalizations.about,
+                      onTap: () {
+                        log('about');
+                      },
+                    ),
+                    CustomListTile(
+                      leadingIcon: Icons.privacy_tip_outlined,
+                      label: appLocalizations.privacyPolicy,
+                      onTap: () {
+                        log('privacy');
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

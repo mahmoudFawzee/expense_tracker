@@ -1,4 +1,5 @@
 import 'package:expense_tracker/app/cubits/navigation_cubit.dart';
+import 'package:expense_tracker/presentation/components/app_bar/underlayer_app_bar.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,16 +9,34 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HomeBase extends StatelessWidget {
   const HomeBase({
     super.key,
+    this.pageLabel,
     required this.child,
   });
-  static const pageRoute = '/home_base';
+  final String? pageLabel;
   final Widget child;
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
     return SafeArea(
       child: Scaffold(
-        body: child,
+        body: Stack(
+          children: [
+            BlocBuilder<NavigationCubit, int>(
+              builder: (context, pageIndex) {
+                String? label = pageLabel;
+                if (pageIndex == 1) {
+                  label = appLocalizations.expenses;
+                } else if (pageIndex == 0) {
+                  label = appLocalizations.statistics;
+                } else {
+                  label = appLocalizations.profile;
+                }
+                return UnderLayerAppBar(label: label);
+              },
+            ),
+            child,
+          ],
+        ),
         bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
           builder: (context, currentIndex) {
             return BottomNavigationBar(
@@ -46,7 +65,7 @@ class HomeBase extends StatelessWidget {
                 ),
                 _bottomNavBarItem(
                   label: appLocalizations.profile,
-                  icon: Icons.person,
+                  icon: Icons.account_circle_rounded,
                 ),
               ],
             );
