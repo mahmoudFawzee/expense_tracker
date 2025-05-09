@@ -118,12 +118,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final accessToken = await _tokensRepo.fetchAccessToken();
         final loggedOut = await _authRepo.logout(accessToken!);
         if (loggedOut) {
+          final deletedToken = await _tokensRepo.deleteAccessToken();
           final deleted = await _userRepo.deleteUserLocally();
-          if (deleted) {
+          if (deleted && deletedToken) {
             emit(const LogoutSuccessState());
             return;
           }
-          emit(const LogoutErrorState('local data does not deleted'));
+          emit(const LogoutErrorState('some error happened'));
         }
       } catch (e) {
         emit(LogoutErrorState(e.toString()));

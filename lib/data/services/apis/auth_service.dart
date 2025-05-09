@@ -53,7 +53,10 @@ final class AuthService implements AuthInterface {
   Future<bool> logout(String accessToken) async {
     final response = await _dioHelper.delete(
       logoutEndPoint,
-      headers: {JsonKeys.authorization: accessToken, ...headers},
+      headers: {
+        JsonKeys.authorization: accessToken,
+        ...headers,
+      },
     );
     return response.statusCode == HttpStatus.ok;
   }
