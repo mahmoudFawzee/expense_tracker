@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:expense_tracker/domain/entities/user.dart';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
 import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
@@ -40,84 +43,110 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
             child: Builder(builder: (context) {
               return BlocBuilder<EnableTextFieldCubit, bool>(
                 builder: (context, enabled) {
-                  return Column(
-                    children: [
-                      BlocBuilder<UserDataBloc, UserDataState>(
-                        builder: (context, state) {
-                          if (state is UserDataLoadingState) {
-                            return const CustomLoadingIndicator(
-                                widgetHeight: 150);
-                          }
-                          return Column(
-                            children: [
-                              CustomTextFromField(
-                                label: appLocalizations.first_name,
-                                kbInputType: TextInputType.name,
-                                enabled: enabled,
-                                initialValue: 'name',
-                                validator: (value) =>
-                                    validator.validateFirstName(
-                                  context,
-                                  value: value,
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        BlocConsumer<UserDataBloc, UserDataState>(
+                          listener: (context, state) {
+                            if (state is UserDateErrorState) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    state.error ?? "error",
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
                                 ),
-                                onFieldSubmitted: (_) =>
-                                    validator.validateForm(),
-                              ),
-                              CustomTextFromField(
-                                label: appLocalizations.last_name,
-                                kbInputType: TextInputType.name,
-                                enabled: enabled,
-                                initialValue: 'name',
-                                validator: (value) =>
-                                    validator.validateLastName(
-                                  context,
-                                  value: value,
+                              );
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is UserDataLoadingState) {
+                              return const CustomLoadingIndicator(
+                                  widgetHeight: 150);
+                            }
+                            log('user data status: $state');
+                            User? user;
+                            final isDataFetched = state is FetchedUserDataState;
+                            isDataFetched ? user = state.user : null;
+                            return Column(
+                              children: [
+                                CustomTextFromField(
+                                  label: appLocalizations.first_name,
+                                  textColor: Colors.black,
+                                  kbInputType: TextInputType.name,
+                                  enabled: enabled,
+                                  initialValue: user?.firstName,
+                                  validator: (value) =>
+                                      validator.validateFirstName(
+                                    context,
+                                    value: value,
+                                  ),
+                                  onFieldSubmitted: (_) =>
+                                      validator.validateForm(),
                                 ),
-                                onFieldSubmitted: (_) =>
-                                    validator.validateForm(),
-                              ),
-                              CustomTextFromField(
-                                label: appLocalizations.phone_number,
-                                kbInputType: TextInputType.phone,
-                                enabled: enabled,
-                                initialValue: '+201064551051',
-                                validator: (value) =>
-                                    validator.validatePhoneNumber(
-                                  context,
-                                  value: value,
+                                CustomTextFromField(
+                                  label: appLocalizations.last_name,
+                                  kbInputType: TextInputType.name,
+                                  textColor: Colors.black,
+                                  enabled: enabled,
+                                  initialValue: user?.lastName,
+                                  validator: (value) =>
+                                      validator.validateLastName(
+                                    context,
+                                    value: value,
+                                  ),
+                                  onFieldSubmitted: (_) =>
+                                      validator.validateForm(),
                                 ),
-                                onFieldSubmitted: (_) =>
-                                    validator.validateForm(),
-                              ),
-                              CustomTextFromField(
-                                label: appLocalizations.email,
-                                kbInputType: TextInputType.emailAddress,
-                                enabled: enabled,
-                                initialValue: 'name',
-                                validator: (value) => validator.validateEmail(
-                                  context,
-                                  value: value,
+                                CustomTextFromField(
+                                  label: appLocalizations.phone_number,
+                                  kbInputType: TextInputType.phone,
+                                  textColor: Colors.black,
+                                  enabled: enabled,
+                                  initialValue: user?.phoneNumber,
+                                  validator: (value) =>
+                                      validator.validatePhoneNumber(
+                                    context,
+                                    value: value,
+                                  ),
+                                  onFieldSubmitted: (_) =>
+                                      validator.validateForm(),
                                 ),
-                                onFieldSubmitted: (_) =>
-                                    validator.validateForm(),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      CustomElevatedButton(
-                        label: appLocalizations.update,
-                        onPressed: () {
-                          if (enabled) {
+                                CustomTextFromField(
+                                  label: appLocalizations.email,
+                                  kbInputType: TextInputType.emailAddress,
+                                  textColor: Colors.black,
+                                  enabled: enabled,
+                                  initialValue: user?.email,
+                                  validator: (value) => validator.validateEmail(
+                                    context,
+                                    value: value,
+                                  ),
+                                  onFieldSubmitted: (_) =>
+                                      validator.validateForm(),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 50),
+                        CustomElevatedButton(
+                          label: appLocalizations.update,
+                          onPressed: () {
+                            if (enabled) {
+                              context
+                                  .read<EnableTextFieldCubit>()
+                                  .changeState();
+                              //?now we already will update data.
+                              //?we call the user bloc to update user data event.
+                              return;
+                            }
                             context.read<EnableTextFieldCubit>().changeState();
-                            //?now we already will update data.
-                            //?we call the user bloc to update user data event.
-                            return;
-                          }
-                          context.read<EnableTextFieldCubit>().changeState();
-                        },
-                      ),
-                    ],
+                          },
+                        ),
+                      ],
+                    ),
                   );
                 },
               );

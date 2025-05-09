@@ -18,6 +18,7 @@ import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dar
 import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
+import 'package:expense_tracker/presentation/screens/profile/bloc/user_data_bloc.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_info_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_screen.dart';
 import 'package:expense_tracker/presentation/screens/statistics/bar_statistics_cubit/bar_statistics_cubit.dart';
@@ -37,6 +38,8 @@ final _statisticsRepo = StatisticsRepo(
 final _authRepo = AuthRepo(AuthService());
 final _userRepo = UserDataRepo(LocalUserService(), UserServiceApi());
 final _tokensRepo = TokensRepo(TokensService());
+
+final _userDataBloc = UserDataBloc(_userRepo);
 
 final router = GoRouter(
   initialLocation: SplashScreen.pageRoute,
@@ -133,7 +136,10 @@ final router = GoRouter(
     GoRoute(
       path: ProfileInfoScreen.pageRoute,
       builder: (context, state) {
-        return const ProfileInfoScreen();
+        return BlocProvider.value(
+          value: _userDataBloc..add(const FetchUserDataEvent()),
+          child: const ProfileInfoScreen(),
+        );
       },
     ),
   ],

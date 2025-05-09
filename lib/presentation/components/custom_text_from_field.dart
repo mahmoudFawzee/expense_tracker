@@ -9,6 +9,7 @@ class CustomTextFromField extends StatelessWidget {
     this.maxLines = 1,
     this.isPassword = false,
     this.enabled = true,
+    this.textColor = ColorsMangerLight.surface,
     this.errorText,
     this.initialValue,
     required this.label,
@@ -20,6 +21,7 @@ class CustomTextFromField extends StatelessWidget {
   final int maxLines;
   final bool isPassword;
   final bool enabled;
+  final Color textColor;
   final String label;
   final String? errorText;
   final String? initialValue;
@@ -48,12 +50,13 @@ class CustomTextFromField extends StatelessWidget {
                   autocorrect: true,
                   autofocus: false,
                   textCapitalization: TextCapitalization.words,
+
                   onFieldSubmitted: onFieldSubmitted,
                   enabled: enabled,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: ColorsMangerLight.surface),
+                      .copyWith(color: enabled ? textColor : Colors.grey),
                   //?focus on the next field.
                   textInputAction: maxLines < 2
                       ? TextInputAction.next
@@ -76,18 +79,18 @@ class CustomTextFromField extends StatelessWidget {
                     label: Text(label),
                     labelStyle:
                         Theme.of(context).textTheme.labelMedium!.copyWith(
-                              color: ColorsMangerLight.surface,
+                              color: enabled ? textColor : Colors.grey,
                             ),
                     //?default border
                     border: _border(),
                     //?border when the field is enabled
                     enabledBorder: _border(),
                     //?when we focus to write in the field
-                    focusedBorder: _border(color: Colors.white),
+                    focusedBorder: _border(color: textColor),
                     //?when error and not focused
                     errorBorder: _border(),
                     //?when the field not enabled
-                    disabledBorder: _border(),
+                    disabledBorder: _border(color: Colors.grey),
                     //?focused and error.
                     focusedErrorBorder: _border(),
                   ),
