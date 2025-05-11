@@ -7,5 +7,6 @@ done: work on profile page which contains profile data, theme and language
 done: work on auth and register and link them with backend
 done: work on storing user data locally after login and register.
 done: use flutter secure storage to store access token which will be used an all operations
-TODO: keep user logged in when access token exists
+done: keep user logged in when access token exists
 TODO: finish logout logic
+TODO: work on change password.
