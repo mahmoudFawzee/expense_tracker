@@ -164,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         builder: (context, state) {
                           return CustomElevatedButton(
-                            label: appLocalizations.register,
+                            text: appLocalizations.register,
                             enabled: state is! AuthLoadingState,
                             onPressed: () {
                               log('validate');

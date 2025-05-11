@@ -22,8 +22,8 @@ final class LocalUserServiceImpl implements LocalUserServiceInterface {
   }
 
   @override
-  Future<User?> getUser({int? id}) async {
-    final result = await _sqfliteHelper.show(userTable);
+  Future<User?> getUser({required int? id}) async {
+    final result = await _sqfliteHelper.show(userTable, id: id);
     if (result == null) return null;
     return UserModel.fromJson(result);
   }
@@ -31,14 +31,14 @@ final class LocalUserServiceImpl implements LocalUserServiceInterface {
   //?store data locally.
   @override
   Future<User?> storeUser(UserModel user) async {
-    await _sqfliteHelper.insert(userTable, row: user.toSqliteJson());
+    await _sqfliteHelper.insert(userTable, row: user.toJson());
 
     return await getUser(id: user.id);
   }
 
   @override
   Future<User?> updateUser(UserModel user) async {
-    final rowUser = user.toSqliteJson();
+    final rowUser = user.toSqlJson();
     log('row user: $rowUser');
     await _sqfliteHelper.update(userTable, row: rowUser);
     return getUser(id: user.id);

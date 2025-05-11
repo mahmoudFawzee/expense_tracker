@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expense_tracker/data/constants/json_keys.dart';
 import 'package:expense_tracker/data/constants/sqflite_tables.dart';
 import 'package:expense_tracker/domain/helper/i_sqflite_helper.dart';
@@ -17,14 +19,20 @@ final class SqfliteHelper implements SqfliteHelperInterface {
   //todo:initialize the data base
 
   Future<Database> _initDb() async {
-    String dbPath = await getDatabasesPath();
-    String path = join(dbPath, 'expense_tracker.db');
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    try {
+      String dbPath = await getDatabasesPath();
+      String path = join(dbPath, 'expense_tracker.db');
+      return await openDatabase(path, version: 1, onCreate: _onCreate);
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
 //?here when we start the chat we will create the history data base.
   Future _onCreate(Database db, int version) async {
-    await _createTable(db, '''
+    try {
+      await _createTable(db, '''
 CREATE TABLE $userTable(
 ${JsonKeys.id} INTEGER PRIMARY KEY AUTOINCREMENT,
 ${JsonKeys.userId} INTEGER,
@@ -34,17 +42,31 @@ ${JsonKeys.phoneNumber} TEXT,
 ${JsonKeys.email} TEXT
 )
 ''');
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDb();
-    return _database!;
+    try {
+      if (_database != null) return _database!;
+      _database = await _initDb();
+      return _database!;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
   //?query is the sql command to create the new table.
 
   Future _createTable(Database db, String query) async {
-    await db.execute(query);
+    try {
+      await db.execute(query);
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
@@ -53,13 +75,18 @@ ${JsonKeys.email} TEXT
     required String where,
     required List<Object?> whereArgs,
   }) async {
-    final db = await database;
-    final result = await db.delete(
-      tableName,
-      where: where,
-      whereArgs: whereArgs,
-    );
-    return result != 0;
+    try {
+      final db = await database;
+      final result = await db.delete(
+        tableName,
+        where: where,
+        whereArgs: whereArgs,
+      );
+      return result != 0;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
@@ -68,46 +95,71 @@ ${JsonKeys.email} TEXT
     required String where,
     required List<Object?> whereArgs,
   }) async {
-    final db = await database;
-    final result = await db.query(
-      tableName,
-      where: where,
-      whereArgs: whereArgs,
-    );
-    return result;
+    try {
+      final db = await database;
+      final result = await db.query(
+        tableName,
+        where: where,
+        whereArgs: whereArgs,
+      );
+      return result;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
   Future<List<Map<String, dynamic>>> index(String tableName) async {
-    final db = await database;
-    final result = await db.query(tableName);
-    return result;
+    try {
+      final db = await database;
+      final result = await db.query(tableName);
+      return result;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
   Future insert(String tableName, {required Map<String, dynamic> row}) async {
-    final db = await database;
-    final result = await db.insert(tableName, row);
-    return result != 0;
+    try {
+      final db = await database;
+      final result = await db.insert(tableName, row);
+      return result != 0;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
   Future update(String tableName, {required Map<String, dynamic> row}) async {
-    final db = await database;
-    final result = await db.update(
-      tableName,
-      row,
-      where: 'id=?',
-      whereArgs: [row['id']],
-    );
-    return result != 0;
+    try {
+      final db = await database;
+      final result = await db.update(
+        tableName,
+        row,
+        where: 'id=?',
+        whereArgs: [row['id']],
+      );
+      return result != 0;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
   Future dropTable(String tableName) async {
-    final db = await database;
-    final result = await db.delete(tableName);
-    return result != 0;
+    try {
+      final db = await database;
+      final result = await db.delete(tableName);
+      return result != 0;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 
   @override
@@ -115,14 +167,23 @@ ${JsonKeys.email} TEXT
     String tableName, {
     int? id,
   }) async {
-    final db = await database;
-    final result = await db.query(
-      tableName,
-      //?if the id = null then its no need to provide where
-      where: id == null ? null : 'id=?',
-      whereArgs: id == null ? null : [id],
-      limit: 1,
-    );
-    return result.first;
+    try {
+      final db = await database;
+      if (id == null) {
+        final data = await db.query(tableName);
+        return data.first;
+      }
+      final result = await db.query(
+        tableName,
+        //?if the id = null then its no need to provide where
+        where: 'id=?',
+        whereArgs: [id],
+        limit: 1,
+      );
+      return result.first;
+    } on DatabaseException catch (e) {
+      log('db error: $e');
+      throw Exception('Database error');
+    }
   }
 }

@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         builder: (context, state) {
                           return CustomElevatedButton(
-                            label: appLocalizations.logIn,
+                            text: appLocalizations.logIn,
                             enabled: state is! AuthLoadingState,
                             onPressed: () {
                               log('validate');

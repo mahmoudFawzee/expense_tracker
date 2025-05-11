@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
@@ -18,8 +16,6 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
         final user = await _userDataRepo.getUser();
 
         emit(FetchedUserDataState(user!));
-      } on SocketException catch (e) {
-        emit(UserDateErrorState(error: e.message));
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }
@@ -32,18 +28,24 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
         //?so we get the old user data and compare the email with the old one
         final oldUser = await _userDataRepo.getUser();
         final user = UserModel(
+          id: oldUser?.id,
           firstName: event.firstName ?? oldUser!.firstName,
           lastName: event.lastName ?? oldUser!.lastName,
           phoneNumber: event.phoneNumber ?? oldUser!.phoneNumber,
           email: event.email ?? oldUser!.email,
         );
+        if (oldUser == user) {
+          emit(const UserDateErrorState(error: 'you need to change any value'));
+          return;
+        }
         if (oldUser?.email != user.email) {
           emit(AskEmailUpdateConfirmationState(user));
           return;
         }
         //?now no need to ask any confirmation we just update data from backend
-        await _userDataRepo.updateUser(user);
-        emit(const UpdatedUserDataState());
+
+        final updatedUser = await _userDataRepo.updateUser(user);
+        emit(UpdatedUserDataState(updatedUser!));
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }
@@ -52,11 +54,11 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     on<ConfirmUpdateEmailEvent>((event, emit) async {
       emit(const UserDataLoadingState());
       try {
-        await _userDataRepo.updateUser(
+        final updatedUser = await _userDataRepo.updateUser(
           event.user,
           password: event.password,
         );
-        emit(const UpdatedUserEmailState());
+        emit(UpdatedUserDataState(updatedUser!));
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }

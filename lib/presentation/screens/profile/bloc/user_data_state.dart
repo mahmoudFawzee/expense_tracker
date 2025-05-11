@@ -23,11 +23,10 @@ final class FetchedUserDataState extends UserDataState {
 }
 
 final class UpdatedUserDataState extends UserDataState {
-  const UpdatedUserDataState();
-}
-
-final class UpdatedUserEmailState extends UserDataState {
-  const UpdatedUserEmailState();
+  final User updatedUser;
+  const UpdatedUserDataState(this.updatedUser);
+  @override
+  List<Object?> get props => [updatedUser];
 }
 
 final class DeletedUserState extends UserDataState {

@@ -9,11 +9,11 @@ final class InternalServerException implements Exception {
 }
 
 final class UserException implements Exception {
-  final String message;
-  const UserException(this.message);
+  final String? message;
+  const UserException([this.message = 'Unexpected Error']);
 
   @override
   String toString() {
-    return message;
+    return message??'unexpected error';
   }
 }

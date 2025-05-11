@@ -6,9 +6,11 @@ class UnderLayerAppBar extends StatelessWidget {
     super.key,
     required this.label,
     required this.actionIcon,
+    this.leading,
   });
   final String label;
   final Widget actionIcon;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,11 @@ class UnderLayerAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (leading != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: leading!,
+            ),
           Text(
             label,
             textAlign: TextAlign.center,

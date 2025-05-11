@@ -15,7 +15,7 @@ final class UserDataRepo implements UserRope {
     if (localUser == null) {
       final remoteUser = await _remoteUserRepo.getUser();
       if (remoteUser.user == null) {
-        throw UserException(remoteUser.exceptions!.message);
+        throw UserException(remoteUser.message);
       }
       final storedUser = await _localUserRepo.storeUser(remoteUser.user!);
       return storedUser;
@@ -45,11 +45,9 @@ final class UserDataRepo implements UserRope {
   Future<User?> updateUser(UserModel user, {String? password}) async {
     final updated = await _remoteUserRepo.updateUser(user, password: password);
     if (updated.user == null) {
-      throw UserException(updated.exceptions!.message);
+      throw UserException(updated.message);
     }
-    if (updated.user != null) {
-      return await _localUserRepo.updateUser(user);
-    }
-    return null;
+
+    return await _localUserRepo.updateUser(updated.user!);
   }
 }

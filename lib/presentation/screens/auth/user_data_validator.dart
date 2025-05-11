@@ -1,7 +1,7 @@
 import 'package:expense_tracker/presentation/screens/auth/base_validator.dart';
 import 'package:flutter/material.dart';
 
- class UserDataValidator extends BaseValidator{
+class UserDataValidator extends BaseValidator {
   final firstNameController = TextEditingController();
   //?first name holder
   String? _firstName;
@@ -40,6 +40,24 @@ import 'package:flutter/material.dart';
     if (result == null) _phoneNumber = value;
     return result;
   }
+
+  @override
+  void setFieldsValues({
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    String? email,
+    String? password,
+  }) {
+    firstNameController.text = firstName ?? '';
+    lastNameController.text = lastName ?? '';
+    phoneNumberController.text = phoneNumber ?? '';
+    super.setFieldsValues(
+      email: email,
+      password: password,
+    );
+  }
+
 //?dispose controllers
   @override
   void dispose() {
@@ -47,6 +65,5 @@ import 'package:flutter/material.dart';
     firstNameController.dispose();
     lastNameController.dispose();
     phoneNumberController.dispose();
-    
   }
 }

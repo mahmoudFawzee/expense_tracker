@@ -23,6 +23,7 @@ final class RemoteUserRepoImpl implements RemoteUserRepoInterface {
     final updatedUser = await _remoteUserServiceImpl.updateUser(
       user,
       accessToken: accessToken!,
+      password: password,
     );
     return updatedUser;
   }

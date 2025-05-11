@@ -2,6 +2,7 @@ import 'package:expense_tracker/presentation/components/custom_dialog.dart';
 import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/screens/auth/base_validator.dart';
 import 'package:expense_tracker/presentation/screens/profile/bloc/user_data_bloc.dart';
+import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,6 +29,8 @@ class DeleteAccount extends StatelessWidget {
             if (isValid) {
               context.read<UserDataBloc>().add(
                     DeleteAccountEvent(
+                      calledFrom:
+                          'calledFrom: delete account btnOk: profile_info_page',
                       _baseValidator.password!,
                     ),
                   );
@@ -53,7 +56,12 @@ class PasswordConfirmationForm extends StatelessWidget {
     final appLocalization = AppLocalizations.of(context)!;
     return Column(
       children: [
-        Text(appLocalization.passwordRequired),
+        Text(
+          appLocalization.passwordRequired,
+          style: const TextStyle(
+            color: ColorsMangerDark.secondaryText,
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -67,7 +75,6 @@ class PasswordConfirmationForm extends StatelessWidget {
               value: value,
             ),
             onFieldSubmitted: (_) => _baseValidator.validateForm(),
-            
           ),
         ),
       ],

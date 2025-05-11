@@ -16,6 +16,11 @@ final ThemeData _lightTheme = ThemeData(
       style: ButtonStyle(
     iconColor: WidgetStatePropertyAll(ColorsMangerDark.surface),
   )),
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+    backgroundColor: WidgetStatePropertyAll(Color(0xffF2F2F2)),
+    elevation: WidgetStatePropertyAll(5)
+  )),
   primaryIconTheme: const IconThemeData(
     color: ColorsMangerDark.surface,
   ),
@@ -59,6 +64,10 @@ final ThemeData _darkTheme = ThemeData(
       iconColor: WidgetStatePropertyAll(ColorsMangerLight.surface),
     ),
   ),
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(Color(0xffF2F2F2)),
+          elevation: WidgetStatePropertyAll(5))),
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: ColorsMangerLight.primaryColor,

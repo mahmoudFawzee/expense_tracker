@@ -1,6 +1,6 @@
-import 'package:expense_tracker/data/constants/json_keys.dart';
 import 'package:expense_tracker/domain/entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:expense_tracker/data/constants/json_keys.dart';
 part 'm_user.g.dart';
 
 @JsonSerializable()
@@ -18,10 +18,11 @@ final class UserModel extends User {
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
-  Map<String, dynamic> toSqliteJson() => {JsonKeys.userId: id, ...toJson()};
+  Map<String, dynamic> toSqlJson() => {JsonKeys.id: id, ...toJson()};
 
   @override
   String toString() {
-    return 'id: $id ${toJson()}';
+    final user = {'id':id,...toJson()};
+    return '$user';
   }
 }

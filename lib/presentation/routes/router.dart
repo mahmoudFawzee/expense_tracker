@@ -44,7 +44,7 @@ final _localUserRepo = LocalUserRepoImpl(LocalUserServiceImpl());
 final _remoteUserRepo =
     RemoteUserRepoImpl(RemoteUserServiceImpl(), _tokensRepo);
 final _authRepo = AuthRepo(AuthService());
-final _userRepo = UserDataRepo(_localUserRepo,_remoteUserRepo);
+final _userRepo = UserDataRepo(_localUserRepo, _remoteUserRepo);
 
 final _userDataBloc = UserDataBloc(_userRepo);
 
@@ -153,7 +153,7 @@ final router = GoRouter(
       path: ProfileInfoScreen.pageRoute,
       builder: (context, state) {
         return BlocProvider.value(
-          value: _userDataBloc..add(const FetchUserDataEvent()),
+          value: _userDataBloc,
           child: const ProfileInfoScreen(),
         );
       },

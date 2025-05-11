@@ -5,6 +5,6 @@ void showSnackBar(
   required String value,
 }) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.error,
       content: Text(value)));
 }

@@ -39,5 +39,8 @@
   "personalInfo": "Informations personnelles",
   "deleteAccount": "supprimer le compte",
   "passwordRequired": "Entrez votre mot de passe pour confirmer",
-  "changeEmail": "changer l'e-mail"
+  "changeEmail": "changer l'e-mail",
+  "cancel": "annuler",
+  "edit": "modifier",
+  "save": "sauvegarder"
 }

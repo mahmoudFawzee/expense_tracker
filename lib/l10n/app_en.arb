@@ -186,5 +186,17 @@
   "changeEmail": "Change Email",
   "@changeEmail": {
     "description": "ask user to change his email"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "edit word"
+  },
+  "cancel": "cancel",
+  "@cancel": {
+    "description": "cancel word"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "save word"
   }
 }

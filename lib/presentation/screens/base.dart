@@ -11,10 +11,12 @@ class HomeBase extends StatelessWidget {
   const HomeBase({
     super.key,
     this.pageLabel,
+    this.showNavBar = true,
     this.actionIcon = const NotificationsIcon(),
     required this.child,
   });
   final String? pageLabel;
+  final bool showNavBar;
   final Widget actionIcon;
   final Widget child;
   @override
@@ -30,6 +32,12 @@ class HomeBase extends StatelessWidget {
                 if (pageLabel != null) {
                   return UnderLayerAppBar(
                     label: pageLabel!,
+                    leading: showNavBar
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () => Navigator.pop(context),
+                          ),
                     actionIcon: actionIcon,
                   );
                 }
@@ -54,40 +62,42 @@ class HomeBase extends StatelessWidget {
                 child: child),
           ],
         ),
-        bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
-          builder: (context, currentIndex) {
-            return BottomNavigationBar(
-              selectedLabelStyle: Theme.of(context)
-                  .textTheme
-                  .labelMedium!
-                  .copyWith(color: ColorsMangerDark.primaryColor),
-              unselectedLabelStyle:
-                  Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: Colors.grey,
+        bottomNavigationBar: !showNavBar
+            ? null
+            : BlocBuilder<NavigationCubit, int>(
+                builder: (context, currentIndex) {
+                  return BottomNavigationBar(
+                    selectedLabelStyle: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(color: ColorsMangerDark.primaryColor),
+                    unselectedLabelStyle:
+                        Theme.of(context).textTheme.labelMedium!.copyWith(
+                              color: Colors.grey,
+                            ),
+                    currentIndex: currentIndex,
+                    onTap: (value) {
+                      //?it will give us
+                      context.go(NavigationCubit.routes[value]);
+                      context.read<NavigationCubit>().navigateTo(value);
+                    },
+                    items: [
+                      _bottomNavBarItem(
+                        label: appLocalizations.statistics,
+                        icon: Icons.bar_chart_rounded,
                       ),
-              currentIndex: currentIndex,
-              onTap: (value) {
-                //?it will give us
-                context.go(NavigationCubit.routes[value]);
-                context.read<NavigationCubit>().navigateTo(value);
-              },
-              items: [
-                _bottomNavBarItem(
-                  label: appLocalizations.statistics,
-                  icon: Icons.bar_chart_rounded,
-                ),
-                _bottomNavBarItem(
-                  label: appLocalizations.expenses,
-                  icon: Icons.home,
-                ),
-                _bottomNavBarItem(
-                  label: appLocalizations.profile,
-                  icon: Icons.account_circle_rounded,
-                ),
-              ],
-            );
-          },
-        ),
+                      _bottomNavBarItem(
+                        label: appLocalizations.expenses,
+                        icon: Icons.home,
+                      ),
+                      _bottomNavBarItem(
+                        label: appLocalizations.profile,
+                        icon: Icons.account_circle_rounded,
+                      ),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }
