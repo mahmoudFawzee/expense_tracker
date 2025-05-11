@@ -43,4 +43,4 @@ app.*.map.json
 /android/app/release
 /feature_lifecycle.log
 /.env
-/progress.todo
+/my_progress.todo
