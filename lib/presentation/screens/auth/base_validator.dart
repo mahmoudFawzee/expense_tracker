@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:expense_tracker/presentation/functions/text_field_validator.dart';
 
-class BaseValidator {
+class BaseValidator {  
   final _textFieldValidator = const TextFieldValidator();
   TextFieldValidator get textFieldValidator => _textFieldValidator;
   final _formKey = GlobalKey<FormState>();

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
-import 'package:expense_tracker/data/repositories/user_repo.dart';
+import 'package:expense_tracker/data/repositories/user/user_repo.dart';
 import 'package:expense_tracker/domain/entities/user.dart';
 
 part 'user_data_event.dart';
@@ -30,12 +30,18 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
         //?we are logged in so we already have a stored local user
         //?so we get the old user data and compare the email with the old one
         final oldUser = await _userDataRepo.getUser();
-        if (oldUser?.email != event.user.email) {
-          emit(AskEmailUpdateConfirmationState(event.user));
+        final user = UserModel(
+          firstName: event.firstName ?? oldUser!.firstName,
+          lastName: event.lastName ?? oldUser!.lastName,
+          phoneNumber: event.phoneNumber ?? oldUser!.phoneNumber,
+          email: event.email ?? oldUser!.email,
+        );
+        if (oldUser?.email != user.email) {
+          emit(AskEmailUpdateConfirmationState(user));
           return;
         }
         //?now no need to ask any confirmation we just update data from backend
-        final updatedUser = await _userDataRepo.updateUser(event.user) as User?;
+        final updatedUser = await _userDataRepo.updateRUser(user);
         if (updatedUser != null) {
           emit(const UpdatedUserDataState());
           return;
@@ -49,7 +55,10 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     on<ConfirmUpdateEmailEvent>((event, emit) async {
       emit(const UserDataLoadingState());
       try {
-        final updatedUser = await _userDataRepo.updateUser(event.user) as User?;
+        final updatedUser = await _userDataRepo.updateRUser(
+          event.user,
+          password: event.password,
+        );
         if (updatedUser != null) {
           emit(const UpdatedUserEmailState());
           return;

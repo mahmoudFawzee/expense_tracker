@@ -4,7 +4,7 @@ sealed class UserDataEvent extends Equatable {
   const UserDataEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class FetchUserDataEvent extends UserDataEvent {
@@ -12,10 +12,18 @@ final class FetchUserDataEvent extends UserDataEvent {
 }
 
 final class UpdateUserDateEvent extends UserDataEvent {
-  final UserModel user;
-  const UpdateUserDateEvent(this.user);
+  final String? firstName;
+  final String? lastName;
+  final String? phoneNumber;
+  final String? email;
+  const UpdateUserDateEvent({
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phoneNumber,
+  });
   @override
-  List<Object> get props => [user];
+  List<Object?> get props => [firstName, lastName, email, phoneNumber];
 }
 
 final class DeleteAccountEvent extends UserDataEvent {

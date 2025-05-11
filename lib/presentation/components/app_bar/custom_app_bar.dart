@@ -41,22 +41,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications,
-                ),
-              ),
-              if (actions != null) ...actions!
-            ],
+            children: [if (actions != null) ...actions!],
           )
         ],
       ),
     );
   }
 
-  @override
-  // TODO: implement preferredSize
+  @override  
   Size get preferredSize => const Size.fromHeight(80);
 }

@@ -36,5 +36,8 @@
   "about": "à propos de l'application",
   "privacyPolicy": "politique de confidentialité",
   "update": "mettre à jour",
-  "personalInfo": "Informations personnelles"
+  "personalInfo": "Informations personnelles",
+  "deleteAccount": "supprimer le compte",
+  "passwordRequired": "Entrez votre mot de passe pour confirmer",
+  "changeEmail": "changer l'e-mail"
 }

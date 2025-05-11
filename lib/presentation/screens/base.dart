@@ -1,4 +1,5 @@
 import 'package:expense_tracker/app/cubits/navigation_cubit.dart';
+import 'package:expense_tracker/presentation/components/app_bar/notifications.dart';
 import 'package:expense_tracker/presentation/components/app_bar/underlayer_app_bar.dart';
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,11 @@ class HomeBase extends StatelessWidget {
   const HomeBase({
     super.key,
     this.pageLabel,
+    this.actionIcon = const NotificationsIcon(),
     required this.child,
   });
   final String? pageLabel;
+  final Widget actionIcon;
   final Widget child;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,10 @@ class HomeBase extends StatelessWidget {
             BlocBuilder<NavigationCubit, int>(
               builder: (context, pageIndex) {
                 if (pageLabel != null) {
-                  return UnderLayerAppBar(label: pageLabel!);
+                  return UnderLayerAppBar(
+                    label: pageLabel!,
+                    actionIcon: actionIcon,
+                  );
                 }
                 String label;
                 if (pageIndex == 1) {
@@ -35,7 +41,10 @@ class HomeBase extends StatelessWidget {
                 } else {
                   label = appLocalizations.profile;
                 }
-                return UnderLayerAppBar(label: label);
+                return UnderLayerAppBar(
+                  label: label,
+                  actionIcon: actionIcon,
+                );
               },
             ),
             Container(

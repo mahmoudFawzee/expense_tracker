@@ -1,6 +1,11 @@
 import 'package:expense_tracker/data/models/user/m_user.dart';
-import 'package:expense_tracker/domain/services/user/i_user_service.dart';
 
-abstract class LocalUserServiceInterface extends UserServiceInterface {
+abstract class LocalUserServiceInterface{
   Future storeUser(UserModel user);
+
+  Future getUser({int? id});
+
+  Future updateUser(UserModel user);
+
+  Future deleteUser(int id);
 }

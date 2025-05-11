@@ -4,14 +4,18 @@ import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
 import 'package:expense_tracker/data/repositories/statistics_repo.dart';
 import 'package:expense_tracker/data/repositories/tokens_repo.dart';
-import 'package:expense_tracker/data/repositories/user_repo.dart';
+import 'package:expense_tracker/data/repositories/user/local_user_repo_impl.dart';
+import 'package:expense_tracker/data/repositories/user/remote_user_repo_impl.dart';
+import 'package:expense_tracker/data/repositories/user/user_repo.dart';
 import 'package:expense_tracker/data/services/apis/auth_service.dart';
 import 'package:expense_tracker/data/services/apis/category_service.dart';
 import 'package:expense_tracker/data/services/apis/statistics_service.dart';
-import 'package:expense_tracker/data/services/apis/user_service.dart';
-import 'package:expense_tracker/data/services/local/local_user_service.dart';
+import 'package:expense_tracker/data/services/user/remote_user_service_impl.dart';
+import 'package:expense_tracker/data/services/user/local_user_service_impl.dart';
 import 'package:expense_tracker/data/services/local/statistics_service.dart';
 import 'package:expense_tracker/data/services/local/token_service.dart';
+import 'package:expense_tracker/presentation/components/app_bar/logout.dart';
+import 'package:expense_tracker/presentation/components/app_bar/notifications.dart';
 import 'package:expense_tracker/presentation/screens/auth/auth_base.dart';
 import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
@@ -35,9 +39,12 @@ final _statisticsRepo = StatisticsRepo(
   remoteStatisticsService: RemoteStatisticsService(),
   localStatisticsService: LocalStatisticsService(),
 );
-final _authRepo = AuthRepo(AuthService());
-final _userRepo = UserDataRepo(LocalUserService(), UserServiceApi());
 final _tokensRepo = TokensRepo(TokensService());
+final _localUserRepo = LocalUserRepoImpl(LocalUserServiceImpl());
+final _remoteUserRepo =
+    RemoteUserRepoImpl(RemoteUserServiceImpl(), _tokensRepo);
+final _authRepo = AuthRepo(AuthService());
+final _userRepo = UserDataRepo(_localUserRepo,_remoteUserRepo);
 
 final _userDataBloc = UserDataBloc(_userRepo);
 
@@ -77,6 +84,11 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),
       builder: (context, state, child) {
+        final pageRoute = state.pageKey.value;
+        Widget actionIcon = const NotificationsIcon();
+        if (pageRoute == ProfileScreen.pageRoute) {
+          actionIcon = const LogoutIcon();
+        }
         return MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -94,8 +106,10 @@ final router = GoRouter(
               create: (context) => LineStatisticsCubit(_statisticsRepo)
                 ..fetchLineWeekStatistics(),
             ),
+            BlocProvider.value(value: _userDataBloc),
           ],
           child: HomeBase(
+            actionIcon: actionIcon,
             child: child,
           ),
         );
@@ -117,7 +131,9 @@ final router = GoRouter(
             return _buildPageWithDefaultTransition(
               context: context,
               state: state,
-              child: const ProfileScreen(),
+              child: const ProfileScreen(
+                key: PageStorageKey(ProfileScreen.pageRoute),
+              ),
             );
           },
         ),

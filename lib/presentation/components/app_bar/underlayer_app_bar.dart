@@ -1,14 +1,14 @@
 import 'package:expense_tracker/presentation/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 
-
-
 class UnderLayerAppBar extends StatelessWidget {
   const UnderLayerAppBar({
     super.key,
     required this.label,
+    required this.actionIcon,
   });
   final String label;
+  final Widget actionIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +35,7 @@ class UnderLayerAppBar extends StatelessWidget {
                   color: Colors.white,
                 ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications_active_outlined,
-            ),
-          )
+          actionIcon,
         ],
       ),
     );

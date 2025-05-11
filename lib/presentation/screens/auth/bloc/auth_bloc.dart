@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:expense_tracker/data/constants/json_keys.dart';
-import 'package:expense_tracker/data/exceptions/backend_validation_exceptions.dart';
+import 'package:expense_tracker/data/exceptions/response_exceptions.dart';
 import 'package:expense_tracker/data/models/user/logged_in_user.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/tokens_repo.dart';
-import 'package:expense_tracker/data/repositories/user_repo.dart';
+import 'package:expense_tracker/data/repositories/user/user_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -23,7 +23,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final tokenStored =
             await _tokensRepo.storeAccessToken(result.accessToken);
         if (tokenStored) {
-          return await _userRepo.storeUserLocally(result.user);
+          final userStored = await _userRepo.storeUser(result.user);
+          return userStored != null;
         }
       }
 
@@ -64,7 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(const RegisterFailure(error: 'error when storing data'));
           return;
         }
-        if (result is ValidationExceptions) {
+        if (result is ResponseExceptions) {
           final errors = result.errors;
           //?now we get errors
           emit(RegisterFailure(
@@ -119,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final loggedOut = await _authRepo.logout(accessToken!);
         if (loggedOut) {
           final deletedToken = await _tokensRepo.deleteAccessToken();
-          final deleted = await _userRepo.deleteUserLocally();
+          final deleted = await _userRepo.deleteLocalUser();
           if (deleted && deletedToken) {
             emit(const LogoutSuccessState());
             return;

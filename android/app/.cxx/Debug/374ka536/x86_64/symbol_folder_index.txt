@@ -1,0 +1,1 @@
+/media/mahmoud/programming/my new flutter projects/expense_tracker/build/app/intermediates/cxx/Debug/374ka536/obj/x86_64

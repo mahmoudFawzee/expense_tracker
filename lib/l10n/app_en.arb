@@ -174,5 +174,17 @@
   "update": "Update",
   "@update": {
     "description": "update word"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "delete account word"
+  },
+  "passwordRequired": "Enter your password to confirm",
+  "@passwordRequired": {
+    "description": "need user to enter his password to continue word"
+  },
+  "changeEmail": "Change Email",
+  "@changeEmail": {
+    "description": "ask user to change his email"
   }
 }

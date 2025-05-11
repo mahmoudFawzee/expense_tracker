@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:expense_tracker/app/request/endpoints.dart';
 import 'package:expense_tracker/app/request/headers.dart';
 import 'package:expense_tracker/data/constants/json_keys.dart';
-import 'package:expense_tracker/data/exceptions/backend_validation_exceptions.dart';
+import 'package:expense_tracker/data/exceptions/response_exceptions.dart';
 import 'package:expense_tracker/data/helper/dio_helper.dart';
 import 'package:expense_tracker/data/models/user/logged_in_user.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
@@ -61,8 +61,6 @@ final class AuthService implements AuthInterface {
     return response.statusCode == HttpStatus.ok;
   }
 
- 
-
   dynamic _handelAuthResponse(Response<dynamic> response) {
     final statusCode = response.statusCode;
     final responseData = response.data;
@@ -84,6 +82,6 @@ final class AuthService implements AuthInterface {
         tokenType: tokenType,
       );
     }
-    return ValidationExceptions(responseData);
+    return ResponseExceptions(responseData);
   }
 }

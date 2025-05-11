@@ -1,10 +1,14 @@
 import 'dart:developer';
-
 import 'package:expense_tracker/domain/entities/user.dart';
+import 'package:expense_tracker/presentation/components/app_bar/delete_account.dart';
+import 'package:expense_tracker/presentation/components/app_bar/logout.dart';
+import 'package:expense_tracker/presentation/components/custom_dialog.dart';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
+import 'package:expense_tracker/presentation/components/custom_snack_bar.dart';
 import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
+import 'package:expense_tracker/presentation/screens/auth/base_validator.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/profile/bloc/user_data_bloc.dart';
 import 'package:expense_tracker/presentation/screens/profile/edit_profile_info_validator.dart';
@@ -23,7 +27,7 @@ class ProfileInfoScreen extends StatefulWidget {
 
 class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
   final validator = EditProfileInfoValidator();
-
+  final passwordConfirmationFormValidator = BaseValidator();
   @override
   void dispose() {
     validator.dispose();
@@ -37,6 +41,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
       create: (context) => EnableTextFieldCubit(),
       child: HomeBase(
         pageLabel: appLocalizations.personalInfo,
+        actionIcon: const LogoutIcon(),
         child: Form(
           key: validator.formKey,
           child: StatisticsCard(
@@ -49,16 +54,41 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                         BlocConsumer<UserDataBloc, UserDataState>(
                           listener: (context, state) {
                             if (state is UserDateErrorState) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    state.error ?? "error",
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
+                              showSnackBar(context,
+                                  value: state.error ?? 'some error');
+                            }
+                            if (state is AskEmailUpdateConfirmationState) {
+                              CustomAwesomeDialog.showDialog(
+                                context: context,
+                                title: appLocalizations.changeEmail,
+                                body: PasswordConfirmationForm(
+                                  baseValidator:
+                                      passwordConfirmationFormValidator,
                                 ),
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () {
+                                  final isValid =
+                                      passwordConfirmationFormValidator
+                                          .validateForm();
+                                  if (isValid) {
+                                    context.read<UserDataBloc>().add(
+                                          ConfirmUpdateEmailEvent(
+                                            state.user,
+                                            passwordConfirmationFormValidator
+                                                .password!,
+                                          ),
+                                        );
+                                  }
+                                },
                               );
                             }
+                          },
+                          buildWhen: (previous, current) {
+                            log('current user data state is: $current');
+                            if (current is UserDataLoadingState) return true;
+                            if (current is FetchedUserDataState) return true;
+                            if (current is UpdatedUserDataState) return true;
+                            return false;
                           },
                           builder: (context, state) {
                             if (state is UserDataLoadingState) {
@@ -140,6 +170,18 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                   .changeState();
                               //?now we already will update data.
                               //?we call the user bloc to update user data event.
+                              final isValid = validator.validateForm();
+                              if (isValid) {
+                                context.read<UserDataBloc>().add(
+                                      UpdateUserDateEvent(
+                                        firstName: validator.firstName ?? '',
+                                        lastName: validator.lastName ?? '',
+                                        phoneNumber:
+                                            validator.phoneNumber ?? '',
+                                        email: validator.email ?? '',
+                                      ),
+                                    );
+                              }
                               return;
                             }
                             context.read<EnableTextFieldCubit>().changeState();

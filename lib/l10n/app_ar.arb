@@ -36,5 +36,8 @@
   "about": "حول التطبيق",
   "privacyPolicy": "سياسة الخصوصية",
   "update": "تحديث",
-  "personalInfo": "المعلومات الشخصية"
+  "personalInfo": "المعلومات الشخصية",
+  "deleteAccount": "حذف الحساب",
+  "passwordRequired": "ادخل كلمة المرور الخاصة بك للتأكيد",
+  "changeEmail": "تغيير البريد الالكتروني"
 }

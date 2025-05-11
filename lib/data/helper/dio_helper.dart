@@ -39,4 +39,42 @@ final class DioHelper {
     );
     return response;
   }
+
+
+  Future<Response> patch(
+    String url, {
+    required Map<String, dynamic> headers,
+    required Map<String, dynamic> body,
+  }) async {
+    final response = await _dio.request(
+      url,
+      data: json.encode(body),
+      options: Options(
+        method: 'PATCH',
+        headers: headers,
+        responseType: ResponseType.json,
+        validateStatus: (_) => true,
+      ),
+    );
+    return response;
+  }
+
+  Future<Response> get(
+    String url, {
+    required Map<String, dynamic> headers,    
+  }) async {
+    final response = await _dio.request(
+      url,      
+      options: Options(
+        method: 'GET',
+        headers: headers,
+        responseType: ResponseType.json,
+        validateStatus: (_) => true,
+      ),
+    );
+    return response;
+  }
+
+
+
 }

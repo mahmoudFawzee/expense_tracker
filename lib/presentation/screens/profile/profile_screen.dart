@@ -14,8 +14,7 @@ class ProfileScreen extends StatelessWidget {
   static const pageRoute = '/Profile_page';
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
-
+    final appLocalizations = AppLocalizations.of(context)!;    
     return StatisticsCard(
       child: Column(
         children: [
