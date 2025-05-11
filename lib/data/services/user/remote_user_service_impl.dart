@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:expense_tracker/app/request/endpoints.dart';
 import 'package:expense_tracker/app/request/headers.dart';
 import 'package:expense_tracker/data/constants/json_keys.dart';
+import 'package:expense_tracker/data/exceptions/exception.dart';
 import 'package:expense_tracker/data/helper/dio_helper.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/models/user/user_data_response.dart';
@@ -31,7 +32,10 @@ final class RemoteUserServiceImpl implements RemoteUserServiceInterface {
     );
     final statusCode = response.statusCode;
     if (statusCode == HttpStatus.ok) {
-      return UserDataResponse(user: UserModel.fromJson(response.data));
+      final user = UserModel.fromJson(response.data);      
+      return UserDataResponse(user: user);
+    } else if (statusCode == HttpStatus.internalServerError) {
+      throw const InternalServerException('Internal Server Error');
     }
     return UserDataResponse(exceptions: response.data[JsonKeys.errors]);
   }

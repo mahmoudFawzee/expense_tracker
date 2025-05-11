@@ -3,7 +3,7 @@ import 'package:expense_tracker/data/models/user/m_user.dart';
 abstract interface class UserRope {
   Future getUser();
   //?password: we may update email so we will need password.
-  Future updateRUser(
+  Future updateUser(
     UserModel user, {
     String? password,
   });

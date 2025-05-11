@@ -1,3 +1,4 @@
+import 'package:expense_tracker/data/exceptions/exception.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/repositories/user/local_user_repo_impl.dart';
 import 'package:expense_tracker/data/repositories/user/remote_user_repo_impl.dart';
@@ -13,7 +14,9 @@ final class UserDataRepo implements UserRope {
     final localUser = await _localUserRepo.getUser();
     if (localUser == null) {
       final remoteUser = await _remoteUserRepo.getUser();
-      if (remoteUser.user == null) return null;
+      if (remoteUser.user == null) {
+        throw UserException(remoteUser.exceptions!.message);
+      }
       final storedUser = await _localUserRepo.storeUser(remoteUser.user!);
       return storedUser;
     }
@@ -27,19 +30,23 @@ final class UserDataRepo implements UserRope {
   @override
   Future<bool> deleteUser(String password) async {
     final deleted = await _remoteUserRepo.deleteUser(password);
-    if (deleted) {
-      return await _localUserRepo.deleteUser();
+    if (!deleted) {
+      throw const UserException('User Deleting Failed');
     }
-    return false;
+    return await _localUserRepo.deleteUser();
   }
 
-  //?in case user logged out we need to delete his data from 
+  //?in case user logged out we need to delete his data from
   //?local storage.
   @override
   Future<bool> deleteLocalUser() async => await _localUserRepo.deleteUser();
+
   @override
-  Future<User?> updateRUser(UserModel user, {String? password}) async {
+  Future<User?> updateUser(UserModel user, {String? password}) async {
     final updated = await _remoteUserRepo.updateUser(user, password: password);
+    if (updated.user == null) {
+      throw UserException(updated.exceptions!.message);
+    }
     if (updated.user != null) {
       return await _localUserRepo.updateUser(user);
     }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
@@ -14,11 +16,10 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
       emit(const UserDataLoadingState());
       try {
         final user = await _userDataRepo.getUser();
-        if (user == null) {
-          emit(const UserDateErrorState(error: 'un expected error'));
-          return;
-        }
-        emit(FetchedUserDataState(user));
+
+        emit(FetchedUserDataState(user!));
+      } on SocketException catch (e) {
+        emit(UserDateErrorState(error: e.message));
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }
@@ -41,12 +42,8 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
           return;
         }
         //?now no need to ask any confirmation we just update data from backend
-        final updatedUser = await _userDataRepo.updateRUser(user);
-        if (updatedUser != null) {
-          emit(const UpdatedUserDataState());
-          return;
-        }
-        emit(const UserDateErrorState(error: 'user data update error'));
+        await _userDataRepo.updateUser(user);
+        emit(const UpdatedUserDataState());
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }
@@ -55,15 +52,11 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     on<ConfirmUpdateEmailEvent>((event, emit) async {
       emit(const UserDataLoadingState());
       try {
-        final updatedUser = await _userDataRepo.updateRUser(
+        await _userDataRepo.updateUser(
           event.user,
           password: event.password,
         );
-        if (updatedUser != null) {
-          emit(const UpdatedUserEmailState());
-          return;
-        }
-        emit(const UserDateErrorState(error: 'some error happened'));
+        emit(const UpdatedUserEmailState());
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }
@@ -72,12 +65,8 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
     on<DeleteAccountEvent>((event, emit) async {
       emit(const UserDataLoadingState());
       try {
-        final isDeleted = await _userDataRepo.deleteUser(event.password);
-        if (isDeleted) {
-          emit(const DeletedUserState());
-          return;
-        }
-        emit(const UserDateErrorState(error: 'user deleting error'));
+        await _userDataRepo.deleteUser(event.password);
+        emit(const DeletedUserState());
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }
