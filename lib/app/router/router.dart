@@ -1,4 +1,4 @@
-import 'package:expense_tracker/app/cubits/category_selection_cubit.dart';
+import 'package:expense_tracker/presentation/screens/categories/category_selection_cubit.dart';
 import 'package:expense_tracker/app/cubits/is_logged_in_cubit.dart';
 import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
@@ -22,6 +22,8 @@ import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dar
 import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
+import 'package:expense_tracker/presentation/screens/profile/change_password_cubit/change_password_cubit.dart';
+import 'package:expense_tracker/presentation/screens/profile/change_password_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_info_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_screen.dart';
@@ -47,6 +49,7 @@ final _authRepo = AuthRepo(AuthService());
 final _userRepo = UserDataRepo(_localUserRepo, _remoteUserRepo);
 
 final _userDataBloc = UserDataBloc(_userRepo);
+final _authBloc = AuthBloc(_authRepo, _userRepo, _tokensRepo);
 
 final router = GoRouter(
   initialLocation: SplashScreen.pageRoute,
@@ -61,8 +64,8 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),
       builder: (context, state, child) {
-        return BlocProvider(
-          create: (context) => AuthBloc(_authRepo, _userRepo, _tokensRepo),
+        return BlocProvider.value(
+          value: _authBloc,
           child: AuthBase(child: child),
         );
       },
@@ -84,9 +87,9 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),
       builder: (context, state, child) {
-        final pageRoute = state.pageKey.value;
+        final path = state.fullPath;
         Widget actionIcon = const NotificationsIcon();
-        if (pageRoute == ProfileScreen.pageRoute) {
+        if (path.toString() == ProfileScreen.pageRoute) {
           actionIcon = const LogoutIcon();
         }
         return MultiBlocProvider(
@@ -107,6 +110,7 @@ final router = GoRouter(
                 ..fetchLineWeekStatistics(),
             ),
             BlocProvider.value(value: _userDataBloc),
+            BlocProvider.value(value: _authBloc),
           ],
           child: HomeBase(
             actionIcon: actionIcon,
@@ -131,9 +135,7 @@ final router = GoRouter(
             return _buildPageWithDefaultTransition(
               context: context,
               state: state,
-              child: const ProfileScreen(
-                key: PageStorageKey(ProfileScreen.pageRoute),
-              ),
+              child: const ProfileScreen(),
             );
           },
         ),
@@ -155,6 +157,15 @@ final router = GoRouter(
         return BlocProvider.value(
           value: _userDataBloc,
           child: const ProfileInfoScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: ChangePasswordScreen.pageRoute,
+      builder: (context, state) {
+        return BlocProvider(
+          create: (context) => ChangePasswordCubit(_userRepo),
+          child: const ChangePasswordScreen(),
         );
       },
     ),

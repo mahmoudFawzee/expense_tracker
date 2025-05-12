@@ -6,4 +6,12 @@ abstract class RemoteUserServiceInterface {
   Future updateUser(UserModel user, {required String accessToken});
 
   Future deleteUser({required String password, required String accessToken});
+
+  
+  Future changePassword(
+    accessToken, {
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  });
 }

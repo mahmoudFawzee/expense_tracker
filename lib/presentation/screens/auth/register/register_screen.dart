@@ -4,11 +4,11 @@ import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
-import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
+import 'package:expense_tracker/presentation/components/text_field/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/resources/image_manger.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
-import 'package:expense_tracker/presentation/screens/auth/register/register_validator.dart';
-import 'package:expense_tracker/presentation/theme/color_manger.dart';
+import 'package:expense_tracker/core/util/validators/register_validator.dart';
+import 'package:expense_tracker/app/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -134,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 label: appLocalizations.password,
                                 kbInputType: TextInputType.visiblePassword,
                                 validator: (value) => validator
-                                    .validatePassword(context, value: value),
+                                    .validatePassword(context,value),
                                 onFieldSubmitted: (_) =>
                                     validator.validateForm(),
                               ),

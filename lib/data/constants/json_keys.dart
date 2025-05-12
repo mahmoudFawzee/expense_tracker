@@ -16,4 +16,7 @@ final class JsonKeys {
   static const password = 'password';
   static const passwordConfirmation = 'password_confirmation';
   static const authorization = 'Authorization';
+  static const oldPassword = "oldPassword";
+  static const newPassword = "newPassword";
+  static const newPasswordConfirmation = "newPassword_confirmation";
 }

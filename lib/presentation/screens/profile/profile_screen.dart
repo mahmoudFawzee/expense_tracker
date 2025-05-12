@@ -1,8 +1,9 @@
 import 'dart:developer';
-import 'package:expense_tracker/app/cubits/theme_cubit.dart';
+import 'package:expense_tracker/app/theme/theme_cubit.dart';
 import 'package:expense_tracker/presentation/components/custom_list_tile.dart';
 import 'package:expense_tracker/presentation/components/language_drop_down_button.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
+import 'package:expense_tracker/presentation/screens/profile/change_password_screen.dart';
 import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_info_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-  static const pageRoute = '/Profile_page';
+  static const pageRoute = '/Profile_page';  
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -63,9 +64,9 @@ class ProfileScreen extends StatelessWidget {
                     label: appLocalizations.profile,
                     onTap: () {
                       log('profile');
-                      context
-                          .read<UserDataBloc>()
-                          .add(FetchUserDataEvent(calledFrom: 'profile page',));
+                      context.read<UserDataBloc>().add(const FetchUserDataEvent(
+                            calledFrom: 'profile page',
+                          ));
                       context.push(ProfileInfoScreen.pageRoute);
                     },
                   ),
@@ -74,6 +75,7 @@ class ProfileScreen extends StatelessWidget {
                     label: appLocalizations.changePassword,
                     onTap: () {
                       log('change password');
+                      context.push(ChangePasswordScreen.pageRoute);
                     },
                   ),
                   CustomListTile(

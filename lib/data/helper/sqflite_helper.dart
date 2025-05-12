@@ -35,7 +35,6 @@ final class SqfliteHelper implements SqfliteHelperInterface {
       await _createTable(db, '''
 CREATE TABLE $userTable(
 ${JsonKeys.id} INTEGER PRIMARY KEY AUTOINCREMENT,
-${JsonKeys.userId} INTEGER,
 ${JsonKeys.firstName} TEXT,
 ${JsonKeys.lastName} TEXT,
 ${JsonKeys.phoneNumber} TEXT,
@@ -167,8 +166,12 @@ ${JsonKeys.email} TEXT
     String tableName, {
     int? id,
   }) async {
+    log('start get user in sqflite service: $id');
+
     try {
       final db = await database;
+      final allUsers = await index(tableName);
+      log('all users: $allUsers and l: ${allUsers.length}');
       if (id == null) {
         final data = await db.query(tableName);
         return data.first;

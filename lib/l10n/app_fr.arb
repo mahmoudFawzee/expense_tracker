@@ -42,5 +42,7 @@
   "changeEmail": "changer l'e-mail",
   "cancel": "annuler",
   "edit": "modifier",
-  "save": "sauvegarder"
+  "save": "sauvegarder",
+  "success": "succès",
+  "failure": "échec"
 }

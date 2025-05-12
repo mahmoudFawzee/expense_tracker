@@ -1,6 +1,6 @@
 import 'package:expense_tracker/presentation/components/custom_shapes/custom_shape.dart';
 import 'package:expense_tracker/presentation/components/language_drop_down_button.dart';
-import 'package:expense_tracker/presentation/theme/color_manger.dart';
+import 'package:expense_tracker/app/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 
 class AuthBase extends StatelessWidget {

@@ -1,27 +1,24 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:expense_tracker/app/request/endpoints.dart';
-import 'package:expense_tracker/app/request/headers.dart';
+import 'package:expense_tracker/core/request/endpoints.dart';
 import 'package:expense_tracker/data/constants/json_keys.dart';
-import 'package:expense_tracker/data/exceptions/response_exceptions.dart';
 import 'package:expense_tracker/data/helper/dio_helper.dart';
-import 'package:expense_tracker/data/models/user/logged_in_user.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/data/responses/auth_response.dart';
 import 'package:expense_tracker/domain/services/auth/i_auth.dart';
 import 'package:dio/dio.dart';
 
 final class AuthService implements AuthInterface {
   final _dioHelper = DioHelper();
   @override
-  Future register(
+  Future<AuthResponse> register(
     UserModel user, {
     required String password,
     required String confirmPassword,
   }) async {
     final response = await _dioHelper.post(
       registerEndPoint,
-      headers: headers,
+      headers: _dioHelper.headers,
       body: {
         ...user.toJson(),
         JsonKeys.password: password,
@@ -32,7 +29,7 @@ final class AuthService implements AuthInterface {
   }
 
   @override
-  Future login({
+  Future<AuthResponse> login({
     required String email,
     required String password,
   }) async {
@@ -43,45 +40,48 @@ final class AuthService implements AuthInterface {
 
     final response = await _dioHelper.post(
       loginEndPoint,
-      headers: headers,
+      headers: _dioHelper.headers,
       body: requestBody,
     );
     return _handelAuthResponse(response);
   }
 
   @override
-  Future<bool> logout(String accessToken) async {
+  Future<AuthResponse> logout(String accessToken) async {
     final response = await _dioHelper.delete(
       logoutEndPoint,
-      headers: {
-        JsonKeys.authorization: accessToken,
-        ...headers,
-      },
+      headers: _dioHelper.getHeaders(accessToken),
     );
-    return response.statusCode == HttpStatus.ok;
+    return AuthResponse(response);
   }
 
-  dynamic _handelAuthResponse(Response<dynamic> response) {
+  AuthResponse _handelAuthResponse(Response<dynamic> response) {
     final statusCode = response.statusCode;
     final responseData = response.data;
     log('handle auth response method: status code: $statusCode, body: $responseData');
     //?user created
     if (statusCode == HttpStatus.created) {
-      return UserModel.fromJson(responseData[JsonKeys.data]);
+      final user = UserModel.fromJson(responseData[JsonKeys.data]);
+      return AuthResponse(response, user: user);
     }
     //?user login accepted
     if (statusCode == HttpStatus.ok) {
+      final responseUser = responseData[JsonKeys.user] as Map<String, dynamic>;
+      log('response login user: $responseUser');
+      responseUser.remove(JsonKeys.id);
+      log('response login user without id: $responseUser');
       //?if we got everything works well.
-      final user = UserModel.fromJson(responseData[JsonKeys.user]);
+      final user = UserModel.fromJson(responseUser);
       final accessToken = responseData[JsonKeys.accessToken];
       final tokenType = responseData[JsonKeys.accessTokenType];
 
-      return LoggedInUser(
+      return AuthResponse(
+        responseData,
         user: user,
         accessToken: accessToken,
         tokenType: tokenType,
       );
     }
-    return ResponseExceptions(responseData);
+    return AuthResponse(responseData);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:expense_tracker/presentation/theme/color_manger.dart';
+import 'package:expense_tracker/app/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 
 const _fontFamily = 'WinkySans';

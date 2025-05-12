@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:expense_tracker/util/maps/maps.dart';
+import 'package:expense_tracker/core/util/maps/maps.dart';
 import 'package:flutter/material.dart';
 
 String handleCardDate(DateTime date) {

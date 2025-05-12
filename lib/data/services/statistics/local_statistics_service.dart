@@ -4,7 +4,7 @@ import 'package:expense_tracker/domain/entities/statistics/week/week_statistics.
 import 'package:expense_tracker/domain/entities/statistics/year/year_statistics.dart';
 
 import 'package:expense_tracker/domain/services/statistics/i_local_statistics.dart';
-import 'package:expense_tracker/util/maps/maps.dart';
+import 'package:expense_tracker/core/util/maps/maps.dart';
 
 final class LocalStatisticsService implements LocalStatisticsServiceInterface {
   @override

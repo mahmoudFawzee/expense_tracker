@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/exceptions/exception.dart';
+import 'package:expense_tracker/data/models/user/exceptions/user_exception.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/repositories/user/local_user_repo_impl.dart';
 import 'package:expense_tracker/data/repositories/user/remote_user_repo_impl.dart';
@@ -13,11 +13,12 @@ final class UserDataRepo implements UserRope {
   Future<User?> getUser() async {
     final localUser = await _localUserRepo.getUser();
     if (localUser == null) {
-      final remoteUser = await _remoteUserRepo.getUser();
-      if (remoteUser.user == null) {
-        throw UserException(remoteUser.message);
+      final apiResponse = await _remoteUserRepo.getUser();
+      if (apiResponse.user == null) {
+        throw UserException(
+            message: apiResponse.message, errors: apiResponse.errors);
       }
-      final storedUser = await _localUserRepo.storeUser(remoteUser.user!);
+      final storedUser = await _localUserRepo.storeUser(apiResponse.user!);
       return storedUser;
     }
     return localUser;
@@ -30,8 +31,8 @@ final class UserDataRepo implements UserRope {
   @override
   Future<bool> deleteUser(String password) async {
     final deleted = await _remoteUserRepo.deleteUser(password);
-    if (!deleted) {
-      throw const UserException('User Deleting Failed');
+    if (deleted.statusCode != 200) {
+      throw UserException(message: deleted.message);
     }
     return await _localUserRepo.deleteUser();
   }
@@ -45,9 +46,30 @@ final class UserDataRepo implements UserRope {
   Future<User?> updateUser(UserModel user, {String? password}) async {
     final updated = await _remoteUserRepo.updateUser(user, password: password);
     if (updated.user == null) {
-      throw UserException(updated.message);
+      throw UserException(message: updated.message, errors: updated.errors);
     }
 
     return await _localUserRepo.updateUser(updated.user!);
+  }
+
+  @override
+  Future<bool> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    final result = await _remoteUserRepo.changePassword(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
+    );
+    if (result.statusCode != 200) {
+      
+      throw UserException(
+        message: result.message,
+        errors: result.errors, //Map<String,List>
+      );
+    }
+    return true;
   }
 }

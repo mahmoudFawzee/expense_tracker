@@ -1,9 +1,23 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:expense_tracker/data/constants/json_keys.dart';
 
 final class DioHelper {
   final _dio = Dio();
+
+  Map<String, dynamic> getHeaders(String accessToken) {
+    return {
+      JsonKeys.authorization: accessToken,
+      ...headers,
+    };
+  }
+
+  static const _headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  };
+  Map<String, dynamic> get headers => _headers;
 
   Future<Response> post(
     String url, {

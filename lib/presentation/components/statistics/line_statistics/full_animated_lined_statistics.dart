@@ -2,7 +2,7 @@ import 'package:expense_tracker/presentation/animations/animated_line/animated_l
 import 'package:expense_tracker/presentation/animations/animated_line/line_point.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_item_details_cubit/statistics_item_details_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_details_card.dart';
-import 'package:expense_tracker/util/functions/functions.dart';
+import 'package:expense_tracker/core/util/functions/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,5 @@
 import 'package:expense_tracker/domain/entities/statistics/time_based_statistics.dart';
-import 'package:expense_tracker/util/functions/functions.dart';
+import 'package:expense_tracker/core/util/functions/functions.dart';
 import 'package:flutter/material.dart';
 
 final class LinePoint {

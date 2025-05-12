@@ -1,7 +1,7 @@
 import 'package:expense_tracker/domain/helper/i_chart_type.dart';
 import 'package:expense_tracker/presentation/components/statistics/option_button/button_option_cubit/button_option_cubit.dart';
 import 'package:expense_tracker/presentation/components/statistics/option_button/option_button.dart';
-import 'package:expense_tracker/util/enum/enums.dart';
+import 'package:expense_tracker/core/util/enum/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

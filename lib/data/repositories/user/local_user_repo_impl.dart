@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/services/user/local_user_service_impl.dart';
 import 'package:expense_tracker/domain/entities/user.dart';
@@ -17,8 +19,16 @@ final class LocalUserRepoImpl implements LocalUserRepoInterface {
 
   @override
   Future<bool> deleteUser() async {
-    final user = await getUser();
-    return _localUserServiceImpl.deleteUser(user!.id!);
+    try {
+      log('start delete user with ');
+      final user = await getUser();
+      log('delete user user: $user and id: ${user?.id}');
+      final deleted = await _localUserServiceImpl.deleteUser(user!.id!);
+      log('user deleted: $deleted');
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override

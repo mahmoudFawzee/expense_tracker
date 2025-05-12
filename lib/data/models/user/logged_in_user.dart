@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/domain/entities/user.dart';
 
 final class LoggedInUser extends Equatable {
-  final UserModel user;
+  final User user;
   final String _accessToken;
   final String _tokenType;
   final String? _refreshToken;

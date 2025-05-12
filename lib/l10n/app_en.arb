@@ -198,5 +198,13 @@
   "save": "Save",
   "@save": {
     "description": "save word"
+  },
+  "failure": "Failure",
+  "@failure": {
+    "description": "failure word"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "success word"
   }
 }

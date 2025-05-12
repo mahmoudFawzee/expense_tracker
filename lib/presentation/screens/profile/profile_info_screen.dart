@@ -1,19 +1,18 @@
 import 'dart:developer';
+import 'package:expense_tracker/core/util/validators/password_validator.dart';
+import 'package:expense_tracker/core/util/validators/user_data_validator.dart';
 import 'package:expense_tracker/domain/entities/user.dart';
 import 'package:expense_tracker/presentation/animations/animated_button/animated_button.dart';
 import 'package:expense_tracker/presentation/animations/animated_button/animated_button_cubit.dart';
 import 'package:expense_tracker/presentation/components/app_bar/delete_account.dart';
-import 'package:expense_tracker/presentation/components/app_bar/logout.dart';
 import 'package:expense_tracker/presentation/components/custom_dialog.dart';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
 import 'package:expense_tracker/presentation/components/custom_loading_indicator.dart';
 import 'package:expense_tracker/presentation/components/custom_snack_bar.dart';
-import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
+import 'package:expense_tracker/presentation/components/text_field/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
-import 'package:expense_tracker/presentation/screens/auth/base_validator.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
-import 'package:expense_tracker/presentation/screens/profile/edit_profile_info_validator.dart';
 import 'package:expense_tracker/presentation/screens/profile/enable_text_field_cubit/enable_text_field_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,13 +28,12 @@ class ProfileInfoScreen extends StatefulWidget {
 }
 
 class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
-  final validator = EditProfileInfoValidator();
-  final passwordConfirmationFormValidator = BaseValidator();
+  final validator = UserDataValidator();
+  final passwordFormValidator = PasswordValidator();
 
   User? _getUser(UserDataState state) {
     if (state is FetchedUserDataState) return state.user;
     if (state is UpdatedUserDataState) return state.updatedUser;
-    //if (state is AskEmailUpdateConfirmationState) return state.user;
     return null;
   }
 
@@ -67,7 +65,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
           child: HomeBase(
             pageLabel: appLocalizations.personalInfo,
             showNavBar: false,
-            actionIcon: const LogoutIcon(),
+            actionIcon: const DeleteAccount(),
             child: Form(
               key: validator.formKey,
               child: StatisticsCard(
@@ -100,24 +98,21 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                     context: context,
                                     title: appLocalizations.changeEmail,
                                     body: PasswordConfirmationForm(
-                                      baseValidator:
-                                          passwordConfirmationFormValidator,
+                                      baseValidator: passwordFormValidator,
                                     ),
                                     btnCancelOnPress: () {
                                       context.pop();
                                     },
                                     btnOkOnPress: () {
                                       final isValid =
-                                          passwordConfirmationFormValidator
-                                              .validateForm();
+                                          passwordFormValidator.validateForm();
                                       if (isValid) {
                                         context.read<UserDataBloc>().add(
                                               ConfirmUpdateEmailEvent(
                                                 calledFrom:
                                                     'calledFrom: btnOk: profile_info_page',
                                                 state.user,
-                                                passwordConfirmationFormValidator
-                                                    .password!,
+                                                passwordFormValidator.password!,
                                               ),
                                             );
                                         context.pop();

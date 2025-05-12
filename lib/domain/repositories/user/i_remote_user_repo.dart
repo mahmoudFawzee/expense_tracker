@@ -6,4 +6,10 @@ abstract interface class RemoteUserRepoInterface {
   Future updateUser(UserModel user, {String? password});
 
   Future deleteUser(String password);
+
+  Future changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  });
 }

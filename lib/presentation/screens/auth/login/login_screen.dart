@@ -1,12 +1,13 @@
 import 'dart:developer';
+import 'package:expense_tracker/core/util/validators/login_validator.dart';
 import 'package:expense_tracker/presentation/components/custom_elevated_button.dart';
-import 'package:expense_tracker/presentation/components/custom_text_from_field.dart';
+import 'package:expense_tracker/presentation/components/custom_snack_bar.dart';
+import 'package:expense_tracker/presentation/components/text_field/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/resources/image_manger.dart';
 import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
-import 'package:expense_tracker/presentation/screens/auth/login/login_validator.dart';
 import 'package:expense_tracker/presentation/screens/auth/register/register_screen.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
-import 'package:expense_tracker/presentation/theme/color_manger.dart';
+import 'package:expense_tracker/app/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -70,7 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       //email
-                      BlocBuilder<AuthBloc, AuthState>(
+                      BlocConsumer<AuthBloc, AuthState>(
+                        listener: (context, state) {
+                          if (state is LoginFailureState) {
+                            if(state.error!=null){
+                              showSnackBar(context, value: state.error!);
+                            }
+                            log('login fail: $state');
+                            return;
+                          }
+                        },
                         builder: (context, state) {
                           if (state is AuthLoadingState) {
                             return const Center(
@@ -85,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               CustomTextFromField(
                                 controller: _validator.emailController,
                                 label: appLocalizations.email,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.emailError : null,
                                 kbInputType: TextInputType.emailAddress,
                                 validator: (value) => _validator
                                     .validateEmail(context, value: value),
@@ -95,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               //password
                               CustomTextFromField(
                                 controller: _validator.passwordController,
-                                errorText: failure ? state.error : null,
+                                errorText: failure ? state.passwordError : null,
                                 isPassword: true,
                                 label: appLocalizations.password,
                                 kbInputType: TextInputType.visiblePassword,

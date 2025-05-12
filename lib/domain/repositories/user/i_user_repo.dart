@@ -10,6 +10,12 @@ abstract interface class UserRope {
 
   Future deleteUser(String password);
 
+  Future changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  });
+
   //?in case user logged out we need to delete his data from
   //?local storage.
   Future deleteLocalUser();

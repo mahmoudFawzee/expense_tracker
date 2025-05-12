@@ -1,11 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:expense_tracker/app/request/endpoints.dart';
-import 'package:expense_tracker/app/request/headers.dart';
+import 'package:expense_tracker/core/request/endpoints.dart';
 import 'package:expense_tracker/data/constants/json_keys.dart';
-import 'package:expense_tracker/data/exceptions/exception.dart';
-import 'package:expense_tracker/data/exceptions/response_exceptions.dart';
 import 'package:expense_tracker/data/helper/dio_helper.dart';
 import 'package:expense_tracker/data/models/user/m_user.dart';
 import 'package:expense_tracker/data/models/user/user_data_response.dart';
@@ -14,22 +10,24 @@ import 'package:expense_tracker/domain/services/user/i_remote_user_service.dart'
 final class RemoteUserServiceImpl implements RemoteUserServiceInterface {
   final _dioHelper = DioHelper();
   @override
-  Future<bool> deleteUser({
+  Future<UserDataResponse> deleteUser({
     required String password,
     required String accessToken,
   }) async {
-    {final response = await _dioHelper.delete(
-      userEndPoint,
-      headers: {JsonKeys.authorization: accessToken, ...headers},
-    );
-    return response.statusCode == HttpStatus.ok;}
+    {
+      final response = await _dioHelper.delete(
+        userEndPoint,
+        headers: _dioHelper.getHeaders(accessToken),
+      );
+      return UserDataResponse(response);
+    }
   }
 
   @override
   Future<UserDataResponse> getUser(String accessToken) async {
     final response = await _dioHelper.get(
       userEndPoint,
-      headers: {JsonKeys.authorization: accessToken, ...headers},
+      headers: _dioHelper.getHeaders(accessToken),
     );
     final statusCode = response.statusCode;
     if (statusCode == HttpStatus.ok) {
@@ -37,11 +35,9 @@ final class RemoteUserServiceImpl implements RemoteUserServiceInterface {
       final map = data.remove(JsonKeys.id);
       final user = UserModel.fromJson(map);
       log('map: $map and user: $user');
-      return UserDataResponse(user: user);
-    } else if (statusCode == HttpStatus.internalServerError) {
-      throw const InternalServerException('Internal Server Error');
+      return UserDataResponse(user: user, response);
     }
-    return UserDataResponse(exceptions: response.data[JsonKeys.errors]);
+    return UserDataResponse(response);
   }
 
   @override
@@ -57,13 +53,13 @@ final class RemoteUserServiceImpl implements RemoteUserServiceInterface {
     log('req body: $requestBody');
     final response = await _dioHelper.patch(
       userEndPoint,
-      headers: {JsonKeys.authorization: accessToken, ...headers},
+      headers: _dioHelper.getHeaders(accessToken),
       body: password == null ? user.toJson() : requestBody,
     );
 
     final statusCode = response.statusCode;
     final data = response.data as Map<String, dynamic>;
-    log('update email response: $data');
+    log('update email  $data');
     //?instead of removing the id
     //?we just need to replace it with the given user id
     //?user given in the function as an attribute.
@@ -73,12 +69,35 @@ final class RemoteUserServiceImpl implements RemoteUserServiceInterface {
     if (statusCode == HttpStatus.ok) {
       data['id'] = user.id;
       final formattedUser = UserModel.fromJson(data);
-      return UserDataResponse(user: formattedUser);
+      return UserDataResponse(user: formattedUser, response);
     }
 
-    return UserDataResponse(
-      exceptions: ResponseExceptions(data[JsonKeys.errors]),
-      message: data[JsonKeys.message],
+    return UserDataResponse(response);
+  }
+
+  @override
+  Future<UserDataResponse> changePassword(
+    accessToken, {
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    final body = {
+      JsonKeys.oldPassword: oldPassword,
+      JsonKeys.newPassword: newPassword,
+      JsonKeys.newPasswordConfirmation: confirmNewPassword,
+    };
+    final response = await _dioHelper.patch(
+      changePasswordEndPoint,
+      headers: _dioHelper.getHeaders(accessToken),
+      body: body,
     );
+    log('$response');
+    final statusCode = response.statusCode;
+    if (statusCode == HttpStatus.ok) {
+      return UserDataResponse(response);
+    }
+
+    return UserDataResponse(response);
   }
 }

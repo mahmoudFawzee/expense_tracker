@@ -5,7 +5,14 @@ final class TokensRepo implements TokensRepoInterface {
   final TokensService _tokenService;
   const TokensRepo(this._tokenService);
   @override
-  Future deleteAccessToken() async => _tokenService.deleteAccessToken();
+  Future<bool> deleteAccessToken() async {
+    try {
+      await _tokenService.deleteAccessToken();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   @override
   Future deleteRefreshToken() async => _tokenService.deleteRefreshToken();

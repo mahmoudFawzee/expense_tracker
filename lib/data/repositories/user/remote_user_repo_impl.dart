@@ -29,11 +29,26 @@ final class RemoteUserRepoImpl implements RemoteUserRepoInterface {
   }
 
   @override
-  Future<bool> deleteUser(String password) async {
+  Future<UserDataResponse> deleteUser(String password) async {
     final accessToken = await _tokensRepo.fetchAccessToken();
     return await _remoteUserServiceImpl.deleteUser(
-      password:password,
+      password: password,
       accessToken: accessToken!,
+    );
+  }
+
+  @override
+  Future<UserDataResponse> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    final token = await _tokensRepo.fetchAccessToken();
+    return await _remoteUserServiceImpl.changePassword(
+      token,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
     );
   }
 }

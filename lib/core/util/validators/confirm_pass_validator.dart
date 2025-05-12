@@ -1,7 +1,7 @@
-import 'package:expense_tracker/presentation/screens/auth/user_data_validator.dart';
-import 'package:flutter/widgets.dart';
+import 'package:expense_tracker/core/util/validators/password_validator.dart';
+import 'package:flutter/material.dart';
 
-final class RegisterValidator extends UserDataValidator {
+class ConfirmPassValidator extends PasswordValidator {
   final confirmPasswordController = TextEditingController();
   //?confirm password holder
   String? _confirmedPassword;
@@ -16,6 +16,12 @@ final class RegisterValidator extends UserDataValidator {
         .confirmPassword(context, super.passwordController.text, value);
     if (result == null) _confirmedPassword = value;
     return result;
+  }
+
+  @override
+  void setFieldsValues({String? password, String? confirmPassword}) {
+    confirmPasswordController.text = confirmPassword!;
+    super.setFieldsValues(password: password);
   }
 
   // //?dispose controllers
