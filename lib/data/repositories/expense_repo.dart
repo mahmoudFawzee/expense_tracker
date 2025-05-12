@@ -1,5 +1,5 @@
 import 'package:expense_tracker/data/models/expense/m_expense.dart';
-import 'package:expense_tracker/data/services/apis/expense_service.dart';
+import 'package:expense_tracker/data/services/expenses/expense_service.dart';
 import 'package:expense_tracker/domain/entities/expense.dart';
 import 'package:expense_tracker/domain/repositories/i_expense_repo.dart';
 

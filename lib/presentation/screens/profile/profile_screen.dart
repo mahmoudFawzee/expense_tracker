@@ -3,7 +3,7 @@ import 'package:expense_tracker/app/cubits/theme_cubit.dart';
 import 'package:expense_tracker/presentation/components/custom_list_tile.dart';
 import 'package:expense_tracker/presentation/components/language_drop_down_button.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
-import 'package:expense_tracker/presentation/screens/profile/bloc/user_data_bloc.dart';
+import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
 import 'package:expense_tracker/presentation/screens/profile/profile_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

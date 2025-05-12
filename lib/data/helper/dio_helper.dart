@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 
 final class DioHelper {
@@ -24,11 +22,11 @@ final class DioHelper {
         ),
       );
       return response;
-    } on DioException catch (dioException) {
-      throw Exception('unexpected error');
-    } on SocketException catch (e) {
-      log('internet error: $e');
-      throw Exception('No Internet Connection');
+    } on DioException catch (e) {
+      log('deo exception message: ${e.message}');
+      log('deo exception error: ${e.error}');
+      String errorMessage = _handelExceptionsMessage(e);
+      throw Exception(errorMessage);
     } catch (e) {
       rethrow;
     }
@@ -51,12 +49,11 @@ final class DioHelper {
         ),
       );
       return response;
-    } on DioException catch (dioException) {
-      log('deo exception: $dioException');
-      throw Exception('unexpected error');
-    } on SocketException catch (e) {
-      log('internet error: $e');
-      throw Exception('No Internet Connection');
+    } on DioException catch (e) {
+      log('deo exception message: ${e.message}');
+      log('deo exception error: ${e.error}');
+      String errorMessage = _handelExceptionsMessage(e);
+      throw Exception(errorMessage);
     } catch (e) {
       rethrow;
     }
@@ -104,12 +101,11 @@ final class DioHelper {
         ),
       );
       return response;
-    } on DioException catch (dioException) {
-      log('deo exception: $dioException');
-      throw Exception('unexpected error');
-    } on SocketException catch (e) {
-      log('internet error: $e');
-      throw Exception('No Internet Connection');
+    } on DioException catch (e) {
+      log('deo exception message: ${e.message}');
+      log('deo exception error: ${e.error}');
+      String errorMessage = _handelExceptionsMessage(e);
+      throw Exception(errorMessage);
     } catch (e) {
       rethrow;
     }

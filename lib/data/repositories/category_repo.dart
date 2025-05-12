@@ -1,5 +1,5 @@
 import 'package:expense_tracker/data/models/category/m_category.dart';
-import 'package:expense_tracker/data/services/apis/category_service.dart';
+import 'package:expense_tracker/data/services/expenses/category_service.dart';
 import 'package:expense_tracker/domain/entities/category.dart';
 import 'package:expense_tracker/domain/repositories/i_category_repo.dart';
 

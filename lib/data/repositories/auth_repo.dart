@@ -1,5 +1,5 @@
 import 'package:expense_tracker/data/models/user/m_user.dart';
-import 'package:expense_tracker/data/services/apis/auth_service.dart';
+import 'package:expense_tracker/data/services/auth/auth_service.dart';
 import 'package:expense_tracker/domain/repositories/i_auth_repo.dart';
 
 final class AuthRepo implements AuthRepoInterface {

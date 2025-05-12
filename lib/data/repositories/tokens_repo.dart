@@ -1,4 +1,4 @@
-import 'package:expense_tracker/data/services/local/token_service.dart';
+import 'package:expense_tracker/data/services/auth/token_service.dart';
 import 'package:expense_tracker/domain/repositories/i_tokens_repo.dart';
 
 final class TokensRepo implements TokensRepoInterface {

@@ -12,7 +12,7 @@ import 'package:expense_tracker/presentation/components/custom_text_from_field.d
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
 import 'package:expense_tracker/presentation/screens/auth/base_validator.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
-import 'package:expense_tracker/presentation/screens/profile/bloc/user_data_bloc.dart';
+import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
 import 'package:expense_tracker/presentation/screens/profile/edit_profile_info_validator.dart';
 import 'package:expense_tracker/presentation/screens/profile/enable_text_field_cubit/enable_text_field_cubit.dart';
 import 'package:flutter/material.dart';
