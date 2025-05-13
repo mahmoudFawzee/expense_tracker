@@ -56,32 +56,33 @@ final class AuthService implements AuthInterface {
   }
 
   AuthResponse _handelAuthResponse(Response<dynamic> response) {
-    final statusCode = response.statusCode;
-    final responseData = response.data;
-    log('handle auth response method: status code: $statusCode, body: $responseData');
+    final statusCode = response.statusCode;    
+    log('handle auth response method: status code: $statusCode, body: ${response.data}');
     //?user created
     if (statusCode == HttpStatus.created) {
-      final user = UserModel.fromJson(responseData[JsonKeys.data]);
+      final resBody = response.data;
+      final user = UserModel.fromJson(resBody[JsonKeys.data]);
       return AuthResponse(response, user: user);
     }
     //?user login accepted
     if (statusCode == HttpStatus.ok) {
-      final responseUser = responseData[JsonKeys.user] as Map<String, dynamic>;
+      final resBody = response.data;
+      final responseUser = resBody[JsonKeys.user] as Map<String, dynamic>;
       log('response login user: $responseUser');
       responseUser.remove(JsonKeys.id);
       log('response login user without id: $responseUser');
       //?if we got everything works well.
       final user = UserModel.fromJson(responseUser);
-      final accessToken = responseData[JsonKeys.accessToken];
-      final tokenType = responseData[JsonKeys.accessTokenType];
+      final accessToken = resBody[JsonKeys.accessToken];
+      final tokenType = resBody[JsonKeys.accessTokenType];
 
       return AuthResponse(
-        responseData,
+        response,
         user: user,
         accessToken: accessToken,
         tokenType: tokenType,
       );
     }
-    return AuthResponse(responseData);
+    return AuthResponse(response);
   }
 }

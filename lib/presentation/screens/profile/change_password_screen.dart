@@ -54,21 +54,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       );
                       return;
                     }
-                    //ChangePasswordSucceeded
-                    if (state is ChangePasswordSucceeded) {
-                      context.read<AuthBloc>().add(const LogoutEvent());
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SuccessScreen(
-                            btnLabel: appLocalizations.logIn,
-                            onTap: () {
-                              context.push(LoginScreen.pageRoute);
-                            },
-                          ),
+                  } //ChangePasswordSucceeded
+                  if (state is ChangePasswordSucceeded) {
+                    context.read<AuthBloc>().add(const LogoutEvent());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SuccessScreen(
+                          btnLabel: appLocalizations.logIn,
+                          onTap: () {
+                            context.push(LoginScreen.pageRoute);
+                          },
                         ),
-                      );
-                    }
+                      ),
+                    );
                   }
                 },
                 builder: (context, state) {

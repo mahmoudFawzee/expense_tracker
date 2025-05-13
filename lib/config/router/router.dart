@@ -163,8 +163,15 @@ final router = GoRouter(
     GoRoute(
       path: ChangePasswordScreen.pageRoute,
       builder: (context, state) {
-        return BlocProvider(
-          create: (context) => ChangePasswordCubit(_userRepo),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => ChangePasswordCubit(_userRepo),
+            ),
+            BlocProvider.value(
+              value:_authBloc,
+            ),
+          ],
           child: const ChangePasswordScreen(),
         );
       },

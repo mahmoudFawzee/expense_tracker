@@ -20,6 +20,7 @@ class BaseScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 50),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 width: 250,
@@ -29,8 +30,8 @@ class BaseScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 statusText,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color:textColor,
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: textColor,
                     ),
               )
             ],
@@ -49,8 +50,8 @@ class BaseScreen extends StatelessWidget {
               ),
               child: Text(
                 buttonLabel,
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color:textColor,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: textColor,
                     ),
               ),
             ),

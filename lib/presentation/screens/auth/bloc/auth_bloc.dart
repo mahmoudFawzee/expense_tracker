@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expense_tracker/data/constants/json_keys.dart';
 import 'package:expense_tracker/data/models/user/exceptions/auth_exception.dart';
 import 'package:expense_tracker/data/models/user/logged_in_user.dart';
@@ -47,7 +49,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
           confirmPassword: event.confirmPassword,
         );
-
         if (result is UserModel) {
           final loggedInResult = await _authRepo.login(
             email: result.email,
@@ -61,13 +62,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(const RegisterSuccessState());
             return;
           }
-          //?not stored
-          //await _authRepo.logout('access_token');
+
           emit(const RegisterFailure(error: 'error when storing data'));
           return;
         }
       } on AuthException catch (e) {
         final errors = e.errors;
+        log('register error exception: $errors');
         //?now we get errors
         emit(RegisterFailure(
           //?we got the errors as list we just need the first error
@@ -80,6 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           error: e.message,
         ));
       } catch (e) {
+        log('register error: ${e.toString()}');
         emit(RegisterFailure(error: e.toString()));
       }
     });
