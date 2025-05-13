@@ -1,14 +1,13 @@
 part of 'user_data_bloc.dart';
 
 sealed class UserDataEvent extends Equatable {
-  const UserDataEvent({ required this.calledFrom});
-  final String calledFrom;
+  const UserDataEvent();
   @override
-  List<Object?> get props => [calledFrom];
+  List<Object?> get props => [];
 }
 
 final class FetchUserDataEvent extends UserDataEvent {
-  const FetchUserDataEvent({required super.calledFrom});
+  const FetchUserDataEvent();
 }
 
 final class UpdateUserDateEvent extends UserDataEvent {
@@ -16,7 +15,7 @@ final class UpdateUserDateEvent extends UserDataEvent {
   final String? lastName;
   final String? phoneNumber;
   final String? email;
-  const UpdateUserDateEvent({required super.calledFrom,
+  const UpdateUserDateEvent({    
     this.firstName,
     this.lastName,
     this.email,
@@ -28,14 +27,14 @@ final class UpdateUserDateEvent extends UserDataEvent {
 
 final class DeleteAccountEvent extends UserDataEvent {
   final String password;
-  const DeleteAccountEvent(this.password, {required super.calledFrom});
+  const DeleteAccountEvent(this.password, );
   @override
   List<Object> get props => [password];
 }
 
 final class ConfirmUserDeleteEvent extends UserDataEvent {
   final String password;
-  const ConfirmUserDeleteEvent(this.password, {required super.calledFrom});
+  const ConfirmUserDeleteEvent(this.password, );
   @override
   List<Object> get props => [password];
 }
@@ -44,9 +43,11 @@ final class ConfirmUpdateEmailEvent extends UserDataEvent {
   final UserModel user;
   final String password;
   const ConfirmUpdateEmailEvent(this.user, this.password,
-      {required super.calledFrom});
+      );
   @override
   List<Object> get props => [user, password];
 }
 
-
+final class DeleteLocalEvent extends UserDataEvent {
+  const DeleteLocalEvent();
+}

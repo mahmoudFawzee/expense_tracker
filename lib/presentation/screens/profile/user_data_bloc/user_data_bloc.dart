@@ -9,6 +9,7 @@ part 'user_data_state.dart';
 
 class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
   final UserDataRepo _userDataRepo;
+
   UserDataBloc(this._userDataRepo) : super(const UserDataInitial()) {
     on<FetchUserDataEvent>((event, emit) async {
       emit(const UserDataLoadingState());
@@ -69,6 +70,16 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
       try {
         await _userDataRepo.deleteUser(event.password);
         emit(const DeletedUserState());
+      } catch (e) {
+        emit(UserDateErrorState(error: e.toString()));
+      }
+    });
+
+    on<DeleteLocalEvent>((event, emit) async {
+      emit(const UserDataLoadingState());
+      try {
+        await _userDataRepo.deleteLocalUser();
+        emit(const DeletedLocalUserState());
       } catch (e) {
         emit(UserDateErrorState(error: e.toString()));
       }

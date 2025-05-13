@@ -33,6 +33,11 @@ final class DeletedUserState extends UserDataState {
   const DeletedUserState();
 }
 
+
+final class DeletedLocalUserState extends UserDataState {
+  const DeletedLocalUserState();
+}
+
 final class AskEmailUpdateConfirmationState extends UserDataState {
   final UserModel user;
   const AskEmailUpdateConfirmationState(this.user);

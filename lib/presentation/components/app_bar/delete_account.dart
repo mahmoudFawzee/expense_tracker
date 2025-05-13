@@ -29,8 +29,6 @@ class DeleteAccount extends StatelessWidget {
             if (isValid) {
               context.read<UserDataBloc>().add(
                     DeleteAccountEvent(
-                      calledFrom:
-                          'calledFrom: delete account btnOk: profile_info_page',
                       _baseValidator.password!,
                     ),
                   );

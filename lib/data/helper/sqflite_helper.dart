@@ -69,7 +69,7 @@ ${JsonKeys.email} TEXT
   }
 
   @override
-  Future delete(
+  Future<bool> delete(
     String tableName, {
     required String where,
     required List<Object?> whereArgs,

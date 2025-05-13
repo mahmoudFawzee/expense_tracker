@@ -8,10 +8,10 @@ final class LocalUserServiceImpl implements LocalUserServiceInterface {
   final _sqfliteHelper = SqfliteHelper();
 
   @override
-  Future deleteUser(int id) async {
+  Future<bool> deleteUser(int id) async {
     final user = await getUser(id: id);
     if (user == null) return false;
-    await _sqfliteHelper.delete(
+   return  await _sqfliteHelper.delete(
       userTable,
       where: 'id=?',
       whereArgs: [user.id],

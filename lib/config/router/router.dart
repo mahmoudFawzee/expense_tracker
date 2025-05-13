@@ -42,7 +42,7 @@ final _statisticsRepo = StatisticsRepo(
   localStatisticsService: LocalStatisticsService(),
 );
 final _tokensRepo = TokensRepo(TokensService());
-final _localUserRepo = LocalUserRepoImpl(LocalUserServiceImpl());
+final _localUserRepo = LocalUserRepoImpl(LocalUserServiceImpl(), _tokensRepo);
 final _remoteUserRepo =
     RemoteUserRepoImpl(RemoteUserServiceImpl(), _tokensRepo);
 final _authRepo = AuthRepo(AuthService());
@@ -169,7 +169,7 @@ final router = GoRouter(
               create: (context) => ChangePasswordCubit(_userRepo),
             ),
             BlocProvider.value(
-              value:_authBloc,
+              value: _authBloc,
             ),
           ],
           child: const ChangePasswordScreen(),

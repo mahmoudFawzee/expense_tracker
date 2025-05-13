@@ -109,8 +109,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                       if (isValid) {
                                         context.read<UserDataBloc>().add(
                                               ConfirmUpdateEmailEvent(
-                                                calledFrom:
-                                                    'calledFrom: btnOk: profile_info_page',
+                                                
                                                 state.user,
                                                 passwordFormValidator.password!,
                                               ),
@@ -296,8 +295,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                                         .read<UserDataBloc>()
                                                         .add(
                                                           UpdateUserDateEvent(
-                                                            calledFrom:
-                                                                'calledFrom: update button: profile_info_page',
+                                                            
                                                             firstName: validator
                                                                     .firstName ??
                                                                 '',

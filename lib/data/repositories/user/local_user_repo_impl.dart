@@ -1,13 +1,15 @@
 import 'dart:developer';
 
 import 'package:expense_tracker/data/models/user/m_user.dart';
+import 'package:expense_tracker/data/repositories/tokens_repo.dart';
 import 'package:expense_tracker/data/services/user/local_user_service_impl.dart';
 import 'package:expense_tracker/domain/entities/user.dart';
 import 'package:expense_tracker/domain/repositories/user/i_local_user_repo.dart';
 
 final class LocalUserRepoImpl implements LocalUserRepoInterface {
   final LocalUserServiceImpl _localUserServiceImpl;
-  const LocalUserRepoImpl(this._localUserServiceImpl);
+  final TokensRepo _tokensRepo;
+  const LocalUserRepoImpl(this._localUserServiceImpl, this._tokensRepo);
 
   @override
   Future<User?> getUser({int? id}) async =>
@@ -23,9 +25,12 @@ final class LocalUserRepoImpl implements LocalUserRepoInterface {
       log('start delete user with ');
       final user = await getUser();
       log('delete user user: $user and id: ${user?.id}');
-      final deleted = await _localUserServiceImpl.deleteUser(user!.id!);
-      log('user deleted: $deleted');
-      return true;
+      final results = await Future.wait([
+        _localUserServiceImpl.deleteUser(user!.id!),
+        _tokensRepo.deleteAccessToken(),
+      ]);
+
+      return !results.contains(false);
     } catch (e) {
       return false;
     }

@@ -17,6 +17,7 @@ class BaseScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 50),
           Column(

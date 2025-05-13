@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-  static const pageRoute = '/Profile_page';  
+  static const pageRoute = '/Profile_page';
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -64,9 +64,9 @@ class ProfileScreen extends StatelessWidget {
                     label: appLocalizations.profile,
                     onTap: () {
                       log('profile');
-                      context.read<UserDataBloc>().add(const FetchUserDataEvent(
-                            calledFrom: 'profile page',
-                          ));
+                      context
+                          .read<UserDataBloc>()
+                          .add(const FetchUserDataEvent());
                       context.push(ProfileInfoScreen.pageRoute);
                     },
                   ),

@@ -7,10 +7,10 @@ import 'package:expense_tracker/presentation/components/custom_snack_bar.dart';
 import 'package:expense_tracker/presentation/components/screens/success_screen.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';
 import 'package:expense_tracker/presentation/components/text_field/custom_text_from_field.dart';
-import 'package:expense_tracker/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
 import 'package:expense_tracker/presentation/screens/base.dart';
 import 'package:expense_tracker/presentation/screens/profile/change_password_cubit/change_password_cubit.dart';
+import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,102 +43,124 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           key: _validator.formKey,
           child: StatisticsCard(
             child: SingleChildScrollView(
-              child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
-                listener: (context, state) {
-                  log('change pass state: $state');
-                  if (state is ChangePasswordFailed) {
-                    if (state.globalError != null) {
-                      showSnackBar(
-                        context,
-                        value: state.globalError!,
-                      );
-                      return;
+              child: MultiBlocListener(
+                listeners: [
+                  BlocListener<ChangePasswordCubit, ChangePasswordState>(
+                    listener: (context, state) {
+                      log('change pass state: $state');
+                      if (state is ChangePasswordFailed) {
+                        if (state.globalError != null) {
+                          showSnackBar(
+                            context,
+                            value: state.globalError!,
+                          );
+                          return;
+                        }
+                      } //ChangePasswordSucceeded
+                      if (state is ChangePasswordSucceeded) {
+                        context
+                            .read<UserDataBloc>()
+                            .add(const DeleteLocalEvent());
+                        return;
+                      }
+                    },
+                  ),
+                  BlocListener<UserDataBloc, UserDataState>(
+                    listenWhen: (previous, current) {
+                      return current is DeletedLocalUserState;
+                    },
+                    listener: (context, state) {
+                      if (state is DeletedLocalUserState) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SuccessScreen(
+                              btnLabel: appLocalizations.logIn,
+                              onTap: () {
+                                context.push(LoginScreen.pageRoute);
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+                child: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+                  builder: (context, state) {
+                    final isFailed = state is ChangePasswordFailed;
+                    if (state is ChangePasswordLoadingState) {
+                      return const CustomLoadingIndicator();
                     }
-                  } //ChangePasswordSucceeded
-                  if (state is ChangePasswordSucceeded) {
-                    context.read<AuthBloc>().add(const LogoutEvent());
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SuccessScreen(
-                          btnLabel: appLocalizations.logIn,
-                          onTap: () {
-                            context.push(LoginScreen.pageRoute);
+                    return Column(
+                      children: [
+                        Column(
+                          children: [
+                            CustomTextFromField(
+                              label: appLocalizations.oldPassword,
+                              textColor: Colors.black,
+                              kbInputType: TextInputType.visiblePassword,
+                              controller: _validator.oldPassController,
+                              errorText:
+                                  isFailed ? state.oldPasswordError : null,
+                              isPassword: true,
+                              validator: (value) => _validator
+                                  .validateOldPassword(context, value),
+                              onFieldSubmitted: (value) =>
+                                  _validator.validateForm(),
+                            ),
+                            CustomTextFromField(
+                              label: appLocalizations.newPassword,
+                              kbInputType: TextInputType.visiblePassword,
+                              textColor: Colors.black,
+                              controller: _validator.newPassController,
+                              errorText:
+                                  isFailed ? state.newPasswordError : null,
+                              isPassword: true,
+                              validator: (value) => _validator
+                                  .validateNewPassword(context, value),
+                              onFieldSubmitted: (value) =>
+                                  _validator.validateForm(),
+                            ),
+                            CustomTextFromField(
+                              label: appLocalizations.confirmNewPassword,
+                              kbInputType: TextInputType.visiblePassword,
+                              textColor: Colors.black,
+                              controller: _validator.confirmNewPassController,
+                              errorText: isFailed
+                                  ? state.newPasswordConfirmationError
+                                  : null,
+                              isPassword: true,
+                              validator: (value) => _validator
+                                  .validateConfirmNewPassword(context, value),
+                              onFieldSubmitted: (value) =>
+                                  _validator.validateForm(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 100),
+                        CustomElevatedButton(
+                          text: appLocalizations.changePassword,
+                          onPressed: () {
+                            final isValid = _validator.validateForm();
+                            log('change password valid: //');
+                            if (isValid) {
+                              context
+                                  .read<ChangePasswordCubit>()
+                                  .changePassword(
+                                    oldPassword: _validator.oldPassword!,
+                                    newPassword: _validator.newPassword!,
+                                    confirmNewPassword:
+                                        _validator.confirmNewPassword!,
+                                  );
+                              return;
+                            }
                           },
                         ),
-                      ),
+                      ],
                     );
-                  }
-                },
-                builder: (context, state) {
-                  final isFailed = state is ChangePasswordFailed;
-                  if (state is ChangePasswordLoadingState) {
-                    return const CustomLoadingIndicator();
-                  }
-                  return Column(
-                    children: [
-                      Column(
-                        children: [
-                          CustomTextFromField(
-                            label: appLocalizations.oldPassword,
-                            textColor: Colors.black,
-                            kbInputType: TextInputType.visiblePassword,
-                            controller: _validator.oldPassController,
-                            errorText: isFailed ? state.oldPasswordError : null,
-                            isPassword: true,
-                            validator: (value) =>
-                                _validator.validateOldPassword(context, value),
-                            onFieldSubmitted: (value) =>
-                                _validator.validateForm(),
-                          ),
-                          CustomTextFromField(
-                            label: appLocalizations.newPassword,
-                            kbInputType: TextInputType.visiblePassword,
-                            textColor: Colors.black,
-                            controller: _validator.newPassController,
-                            errorText: isFailed ? state.newPasswordError : null,
-                            isPassword: true,
-                            validator: (value) =>
-                                _validator.validateNewPassword(context, value),
-                            onFieldSubmitted: (value) =>
-                                _validator.validateForm(),
-                          ),
-                          CustomTextFromField(
-                            label: appLocalizations.confirmNewPassword,
-                            kbInputType: TextInputType.visiblePassword,
-                            textColor: Colors.black,
-                            controller: _validator.confirmNewPassController,
-                            errorText: isFailed
-                                ? state.newPasswordConfirmationError
-                                : null,
-                            isPassword: true,
-                            validator: (value) => _validator
-                                .validateConfirmNewPassword(context, value),
-                            onFieldSubmitted: (value) =>
-                                _validator.validateForm(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 100),
-                      CustomElevatedButton(
-                        text: appLocalizations.changePassword,
-                        onPressed: () {
-                          final isValid = _validator.validateForm();
-                          log('change password valid: $isValid');
-                          if (isValid) {
-                            context.read<ChangePasswordCubit>().changePassword(
-                                  oldPassword: _validator.oldPassword!,
-                                  newPassword: _validator.newPassword!,
-                                  confirmNewPassword:
-                                      _validator.confirmNewPassword!,
-                                );
-                            return;
-                          }
-                        },
-                      ),
-                    ],
-                  );
-                },
+                  },
+                ),
               ),
             ),
           ),
