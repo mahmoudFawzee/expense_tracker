@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:expense_tracker/app/theme/theme_cubit.dart';
+import 'package:expense_tracker/config/theme/theme_cubit.dart';
 import 'package:expense_tracker/presentation/components/custom_list_tile.dart';
 import 'package:expense_tracker/presentation/components/language_drop_down_button.dart';
 import 'package:expense_tracker/presentation/components/statistics/statistics_card.dart';

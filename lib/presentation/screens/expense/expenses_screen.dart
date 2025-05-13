@@ -7,7 +7,7 @@ import 'package:expense_tracker/presentation/components/category_widget.dart';
 import 'package:expense_tracker/presentation/components/expense_amount.dart';
 import 'package:expense_tracker/presentation/components/expense_widget.dart';
 import 'package:expense_tracker/presentation/components/sliver_sized_box.dart';
-import 'package:expense_tracker/presentation/resources/image_manger.dart';
+import 'package:expense_tracker/config/resources/image_manger.dart';
 import 'package:expense_tracker/presentation/screens/fake_data/category_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

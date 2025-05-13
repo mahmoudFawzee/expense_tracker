@@ -2,7 +2,7 @@ import 'package:expense_tracker/core/util/validators/password_validator.dart';
 import 'package:expense_tracker/presentation/components/custom_dialog.dart';
 import 'package:expense_tracker/presentation/components/text_field/custom_text_from_field.dart';
 import 'package:expense_tracker/presentation/screens/profile/user_data_bloc/user_data_bloc.dart';
-import 'package:expense_tracker/app/theme/color_manger.dart';
+import 'package:expense_tracker/config/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

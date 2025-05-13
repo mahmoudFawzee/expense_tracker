@@ -1,5 +1,5 @@
 import 'package:expense_tracker/domain/entities/category.dart';
-import 'package:expense_tracker/presentation/resources/image_manger.dart';
+import 'package:expense_tracker/config/resources/image_manger.dart';
 
 const List<Category> categoriesList = [
   Category(

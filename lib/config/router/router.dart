@@ -1,5 +1,5 @@
 import 'package:expense_tracker/presentation/screens/categories/category_selection_cubit.dart';
-import 'package:expense_tracker/app/cubits/is_logged_in_cubit.dart';
+import 'package:expense_tracker/presentation/screens/start/is_logged_in_cubit/is_logged_in_cubit.dart';
 import 'package:expense_tracker/data/repositories/auth_repo.dart';
 import 'package:expense_tracker/data/repositories/category_repo.dart';
 import 'package:expense_tracker/data/repositories/statistics_repo.dart';

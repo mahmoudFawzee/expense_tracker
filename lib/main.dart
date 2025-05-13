@@ -1,4 +1,4 @@
-import 'package:expense_tracker/app.dart';
+import 'package:expense_tracker/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

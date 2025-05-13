@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:expense_tracker/app/localization/localization_cubit.dart';
+import 'package:expense_tracker/config/localization/localization_cubit.dart';
 import 'package:expense_tracker/data/constants/lang_code.dart';
 import 'package:expense_tracker/presentation/components/custom_snack_bar.dart';
 import 'package:flutter/material.dart';

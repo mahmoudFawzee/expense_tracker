@@ -1,5 +1,5 @@
-import 'package:expense_tracker/app/cubits/is_logged_in_cubit.dart';
-import 'package:expense_tracker/presentation/resources/image_manger.dart';
+import 'package:expense_tracker/presentation/screens/start/is_logged_in_cubit/is_logged_in_cubit.dart';
+import 'package:expense_tracker/config/resources/image_manger.dart';
 import 'package:expense_tracker/presentation/screens/auth/login/login_screen.dart';
 import 'package:expense_tracker/presentation/screens/expense/expenses_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

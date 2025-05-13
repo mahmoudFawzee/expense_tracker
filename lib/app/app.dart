@@ -1,8 +1,8 @@
-import 'package:expense_tracker/app/localization/localization_cubit.dart';
-import 'package:expense_tracker/app/router/navigation_cubit.dart';
-import 'package:expense_tracker/app/theme/theme_cubit.dart';
-import 'package:expense_tracker/app/router/router.dart';
-import 'package:expense_tracker/app/theme/app_theme.dart';
+import 'package:expense_tracker/config/localization/localization_cubit.dart';
+import 'package:expense_tracker/config/router/navigation_cubit.dart';
+import 'package:expense_tracker/config/theme/theme_cubit.dart';
+import 'package:expense_tracker/config/router/router.dart';
+import 'package:expense_tracker/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

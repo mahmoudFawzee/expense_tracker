@@ -1,4 +1,4 @@
-import 'package:expense_tracker/app/theme/color_manger.dart';
+import 'package:expense_tracker/config/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedLinePainter extends CustomPainter {

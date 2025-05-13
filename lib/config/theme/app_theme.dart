@@ -1,5 +1,5 @@
-import 'package:expense_tracker/app/theme/color_manger.dart';
-import 'package:expense_tracker/app/theme/text_theme.dart';
+import 'package:expense_tracker/config/theme/color_manger.dart';
+import 'package:expense_tracker/config/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getTheme(bool isDark) {

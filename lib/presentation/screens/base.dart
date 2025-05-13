@@ -1,7 +1,7 @@
-import 'package:expense_tracker/app/router/navigation_cubit.dart';
+import 'package:expense_tracker/config/router/navigation_cubit.dart';
 import 'package:expense_tracker/presentation/components/app_bar/notifications.dart';
 import 'package:expense_tracker/presentation/components/app_bar/underlayer_app_bar.dart';
-import 'package:expense_tracker/app/theme/color_manger.dart';
+import 'package:expense_tracker/config/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

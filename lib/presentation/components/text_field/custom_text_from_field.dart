@@ -1,5 +1,5 @@
 import 'package:expense_tracker/presentation/components/text_field/password_cubit.dart';
-import 'package:expense_tracker/app/theme/color_manger.dart';
+import 'package:expense_tracker/config/theme/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,6 +1,6 @@
-import 'package:expense_tracker/app/theme/color_manger.dart';
+import 'package:expense_tracker/config/theme/color_manger.dart';
 import 'package:expense_tracker/presentation/components/screens/base.dart';
-import 'package:expense_tracker/presentation/resources/image_manger.dart';
+import 'package:expense_tracker/config/resources/image_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
